@@ -598,7 +598,7 @@ textarea{
         width: 340px;
     }
     .t1{
-        width: 200px;
+        max-width: 200px;
     }
     .container{
         margin: auto;
@@ -618,7 +618,6 @@ textarea{
     }
 }
 /* For medium devices */
-
 @media screen and (min-width: 576px) {
     iframe{
         width: 560px;
