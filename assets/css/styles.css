@@ -12,7 +12,7 @@
     --text-color:#121111;
     --text-color-light: #1a1919;
     --input-color: #1a1919;
-    --body-color: hsl(var(--hue-color), 60%, 99%);
+    --body-color: white;
     --button-color: #2A3132;
     --button-text: #2A3132;
     --container-color: #D4a629;
@@ -237,8 +237,8 @@ img {
 /* Change background header */
 .scroll-header{
     box-shadow: 0 -1px 4px black;
+    background: white;
 }
-
 /*==================== HOME ====================*/
 .home__container{
     gap: 1rem;
@@ -545,11 +545,11 @@ textarea{
 }
 /*========== SCROLL UP ==========*/
 .scrollup{
+    color: black;
     position: fixed;
     right: 1rem;
     bottom: -20%;
     background-color: var(--first-color);
-    color: var(--scroll-thumb-color);
     opacity: .8;
     padding: 0, .3rem;
     border-radius: .4rem;
@@ -559,7 +559,6 @@ textarea{
 }
 .scrollup:hover{
     background-color: var(--first-color-alt);
-    color: black;
     font-weight: bold;
 }
 .scrollup__icon{
