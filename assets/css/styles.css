@@ -1,4 +1,4 @@
-/*==================== GOOGLE FONTS ====================*/
+/*==================== FONTS ====================*/
 @import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@300;400&family=Rubik:wght@500&display=swap');
 /*==================== VARIABLES CSS ====================*/
 :root {
@@ -19,8 +19,7 @@
     --scroll-bar-color: #c4a03b;
     --scroll-thumb-color: #094243;
     --footer-font-color: #f2d27c;
-
-    /*========== Font and typography ==========*/
+/*========== Font and typography ==========*/
     --body-font: 'Anek Malayalam', sans-serif;
     --title-font: 'Rubik', sans-serif;
     --big-font-size: 2rem;
@@ -30,12 +29,10 @@
     --normal-font-size: .938rem;
     --small-font-size: .813rem;
     --smaller-font-size: .75rem;
-
-    /*========== Font weight ==========*/
+/*========== Font weight ==========*/
     --font-medium: 500;
     --font-semi-bold: 600;
-
-    /*========== Margins Bottom ==========*/
+/*========== Margins Bottom ==========*/
     --mb-0-25: .25rem;
     --mb-0-5: .5rem;
     --mb-0-75: .75rem;
@@ -44,13 +41,11 @@
     --mb-2: 2rem;
     --mb-2-5: 2.5rem;
     --mb-3: 3rem;
-
-    /*========== z index ==========*/
+/*========== z index ==========*/
     --z-tooltip: 10;
     --z-fixed: 100;
     --z-modal: 1000;
 }
-
 /* Font size for large devices */
 @media screen and (min-width: 968px) {
     :root {
@@ -90,18 +85,15 @@ body.dark-theme{
 .change-theme:hover{
     color: var(--first-color);
 }
-
 /*==================== BASE ====================*/
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
-
 html {
   scroll-behavior: smooth;
 }
-
 body {
   margin: 0;
   font-family: var(--body-font);
@@ -254,7 +246,6 @@ img {
     grid-template-columns: max-content;
     row-gap: 1rem;
 }
-
 .home__social-icon{
     font-size: 1.25rem;
     color: var(--first-color);
@@ -283,7 +274,8 @@ img {
     margin-bottom: var(--mb-0-75);
 }
 .home__scroll{
-
+    display: none;
+    margin-left: 1.5rem;
 }
 .home__scroll-button{
     color: var(--first-color);
@@ -301,7 +293,6 @@ img {
 .home__scroll-arrow{
     font-size: 1.25rem;
 }
-
 /*==================== BUTTONS ====================*/
 .button{
     margin-top: 1rem;
@@ -324,10 +315,28 @@ img {
     display: inline-flex;
     align-items: center;
 }
-/*==================== ABOUT ====================*/
-.about__container {
-    grid-template-columns: repeat(2, 1fr);
+/*==================== ME ====================*/
+.grid-container {
+    display: inline-grid;
+    column-gap: 3rem;
+    row-gap: 3rem;
+    justify-content: center;
     align-items: center;
+}
+.grid-item p, h1{
+    color: black;
+}
+.grid-text{
+    background-color: #D4a629;
+    height: 250px;
+    width: 250px;
+    margin: auto;
+    padding-top: 20%;
+    padding-left: 5%;
+}
+.me_photo{
+    width: 300px;
+    height: 245px;
 }
 /*==================== SKILLS ====================*/
 #exactly{
@@ -365,36 +374,6 @@ img {
     display: flex;
     justify-content: center;
 }
-.grid-container {
-    display: inline-grid;
-    column-gap: 2rem;
-    row-gap: 3rem;
-    justify-content: center;
-    align-items: center;
-}
-.skills_photo{
-    width: 300px;
-    height: 245px;
-}
-.grid-item p, h1{
-    color: black;
-}
-.grid-text{
-    background-color: #D4a629;
-    height: 250px;
-    width: 250px;
-    margin: auto;
-    padding-top: 20%;
-    padding-left: 5%;
-}
-.skills__video{
-    margin: auto;
-    height: 250px;
-    width: 450px;
-}
-/* Active Modal */
-
-
 /*==================== WORK ====================*/
 .work__img:hover div{
     width: 150px;
@@ -585,17 +564,13 @@ textarea{
 /*==================== MEDIA QUERIES ====================*/
 /* For small devices */
 @media screen and (max-width: 350px){
-    iframe{
-        width: 340px;
-        height: 190px;
+    #video{
+        width: 330px;
+        height: 180px;
+        margin-left: 30px;
     }
-    .skills_photo{
+    .me_photo{
         display: 200px;
-    }
-    iframe{
-        margin: 0;
-        width: 340px;
-        height: 190px;
     }
     .contact__form{
         width: 340px;
@@ -604,7 +579,8 @@ textarea{
         max-width: 200px;
     }
     .container{
-        margin: auto;
+        margin-left: 1rem;
+        margin-right: 1rem;
         width: 300px;
     }
     .nav__menu{
@@ -622,14 +598,14 @@ textarea{
 }
 /* For medium devices */
 @media screen and (min-width: 576px) {
-    iframe{
+    #video{
         width: 560px;
         height: 315px;
     }
     .contact__data{
         grid-column: 2/3;
     }
-    .skills_photo{
+    .me_photo{
         width: 250px;
     }
     .contact__content{
@@ -650,6 +626,7 @@ textarea{
     }
     .grid-container{
         grid-template-columns: repeat(2, 1fr);
+        margin: 0;
     }
     .home__content{
         grid-template-columns: .5fr 2fr 4fr;
