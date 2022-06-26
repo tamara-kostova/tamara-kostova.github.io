@@ -468,6 +468,9 @@ textarea{
     row-span: 30;
 }
 /* ===== LANGUAGES =====*/
+.languages .section__title{
+    padding-top: 3rem;
+}
 .languages__container {
     row-gap: 2rem;
     text-align: center;
@@ -631,7 +634,6 @@ textarea{
     }
     .contact__content{
         grid-template-columns: .5fr 3fr;
-        padding-top: 3.5rem;
         align-items: center;
     }
     .contact__form{
