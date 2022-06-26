@@ -12,9 +12,10 @@
     --text-color-light: #1a1919;
     --input-color: #1a1919;
     --body-color: hsl(var(--hue-color), 60%, 99%);
+    --button-color: #2A3132;
     --container-color: #D4a629;
     --scroll-bar-color: #c4a03b;
-    --scroll-thumb-color: #1a4a3f;
+    --scroll-thumb-color: #094243;
     --footer-font-color: #f2d27c;
 
     /*========== Font and typography ==========*/
@@ -62,10 +63,31 @@
 }
 
 /*========== Variables Dark theme ==========*/
-
+body.dark-theme{
+    /*========== Colors ==========*/
+    --first-color-second: hsl(var(--hue-color), 30%, 8%);
+    --title-color: #f2d27c;
+    --text-color:#f2d27c;
+    --input-color: #1a1919;
+    --body-color: #094243;
+    --button-color: #D4a629;
+    --container-color: #D4a629;
+}
 
 /*========== Button Dark/Light ==========*/
-
+.nav__btns{
+    display: flex;
+    align-items: center;
+}
+.change-theme{
+    font-size: 1.25rem;
+    color: var(--title-color);
+    margin-right: var(--mb-1);
+    cursor: pointer;
+}
+.change-theme:hover{
+    color: var(--first-color);
+}
 
 /*==================== BASE ====================*/
 * {
@@ -262,11 +284,9 @@ img {
     font-weight: var(--font-medium);
     margin-bottom: var(--mb-0-75);
 }
-
 .home__scroll{
 
 }
-
 .home__scroll-button{
     color: var(--first-color);
     transition: .3s;
@@ -276,7 +296,7 @@ img {
 }
 .home__scroll-name{
     font-size: var(--small-font-size);
-    color: var(--title-color);
+    color: #2A3132;
     font-weight: var(--font-medium);
     margin-right: var(--mb-0-25);
 }
@@ -288,7 +308,7 @@ img {
 .button{
     margin-top: 1rem;
     display: inline-block;
-    background-color: #2A3132;
+    background-color: var(--button-color);
     color: #ffffff;
     padding: 1rem;
     border-radius: .5rem;
@@ -307,7 +327,10 @@ img {
     align-items: center;
 }
 /*==================== ABOUT ====================*/
-
+.about__container {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+}
 /*==================== SKILLS ====================*/
 .skills__description{
     text-align: center;
@@ -413,7 +436,9 @@ img {
 
 
 /*==================== GET IN TOUCH ====================*/
-
+input, ::placeholder{
+    color: black;
+}
 .contact__title{
     font-size: var(--big-font-size);
 }
@@ -441,17 +466,11 @@ img {
 textarea{
     row-span: 30;
 }
-
 /* ===== LANGUAGES =====*/
 .languages__container {
     row-gap: 2rem;
     text-align: center;
 }
-
-.languages__subtitle {
-    margin-bottom: var(--mb-2);
-}
-
 .languages__text {
     margin-bottom: var(--mb-4);
 }
@@ -496,7 +515,6 @@ textarea{
 .languages__img {
     border-radius: .5rem;
 }
-
 /*==================== FOOTER ====================*/
 .footer{
     padding-top: 2rem;
@@ -547,12 +565,10 @@ textarea{
     font-size: 1.5rem;
     color: #2A3132;
 }
-
 /* Show scroll */
 .show-scroll{
     bottom: 5rem;
 }
-
 /*========== SCROLL BAR ==========*/
 ::-webkit-scrollbar{
     width: .6rem;
@@ -563,7 +579,6 @@ textarea{
     background-color: var(--scroll-thumb-color);
     border-radius: .5rem;
 }
-
 /*==================== MEDIA QUERIES ====================*/
 /* For small devices */
 @media screen and (max-width: 350px){
@@ -623,10 +638,6 @@ textarea{
     }
     .home__content{
         grid-template-columns: .5fr 2fr 4fr;
-    }
-    .about__container {
-        grid-template-columns: repeat(2, 1fr);
-        align-items: center;
     }
     .skills__container {
         grid-template-columns: .7fr;
