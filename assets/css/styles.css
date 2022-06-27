@@ -423,6 +423,9 @@ img {
 input, ::placeholder{
     color: black;
 }
+.contact .section__title{
+    margin-top: 2rem;
+}
 .contact__title{
     font-size: var(--big-font-size);
 }
@@ -688,7 +691,6 @@ textarea{
         display: grid;
         grid-template-rows: repeat(1, 1fr);
         width: 360px;
-        padding-top: 2rem;
     }
     .t1{
         width: 38%;
@@ -722,7 +724,7 @@ textarea{
         margin: 0;
     }
     .section__subtitle{
-        margin-bottom: 4rem;
+        margin-bottom: 1rem;
     }
     .header{
         top: 0;
@@ -805,7 +807,6 @@ textarea{
         width: 500px;
         display: grid;
         grid-template-rows: repeat(1, 1fr);
-        padding-top: 2rem;
     }
     .t1{
         width: 38%;
