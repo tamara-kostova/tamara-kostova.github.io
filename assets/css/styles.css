@@ -584,7 +584,7 @@ textarea{
         display: 200px;
     }
     .contact__form{
-        width: 320px;
+        width: 200px;
     }
     .t1, .t2, textarea{
         width: 90%;
@@ -620,8 +620,48 @@ textarea{
         padding-left: 1.2rem;
     }
 }
+@media screen and (max-width: 400px) {
+    .home__img{
+        padding-left: 1rem;
+    }
+    .footer__social, .footer__link {
+        padding-left: 1rem;
+    }
+    .contact__form{
+        display: grid;
+        grid-template-rows: repeat(1, 1fr);
+    }
+    .contact__form{
+        width: 320px;
+    }
+    .t1, .t2, textarea{
+        width: 90%;
+    }
+    .work__img{
+        margin: auto;
+        width: 95%;
+        height: 90%;
+    }
+    .contact__data{
+        width: 95%;
+        padding-left: 1.2rem;
+    }
+    .me_photo{
+        width: 250px;
+    }
+    .skills__description, .skills__info{
+        padding-left: .7rem;
+        padding-right: .7rem;
+    }
+}
 /* For medium devices */
 @media screen and (min-width: 576px) {
+    .footer__link{
+        padding-left: 2rem;
+    }
+    .footer__social{
+        align-self: flex-end;
+    }
     #video{
         width: 560px;
         height: 315px;
