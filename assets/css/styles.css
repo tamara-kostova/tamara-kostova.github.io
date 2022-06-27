@@ -564,10 +564,15 @@ textarea{
 /*==================== MEDIA QUERIES ====================*/
 /* For small devices */
 @media screen and (max-width: 350px){
+    .skills__info{
+        grid-template-columns: repeat(2, 1fr);
+        width: 14rem;
+        margin: auto;
+    }
     #video{
-        width: 330px;
-        height: 180px;
-        margin-left: 30px;
+        width: 280px;
+        height: 150px;
+        margin: auto;
     }
     .me_photo{
         display: 200px;
@@ -581,10 +586,11 @@ textarea{
     .container{
         margin-left: 1rem;
         margin-right: 1rem;
-        width: 300px;
+        max-width: 300px;
     }
     .nav__menu{
         padding: 2rem .25rem 4rem;
+        ma
     }
     .nav__list{
         column-gap: 0;
@@ -594,6 +600,17 @@ textarea{
     }
     .home__img{
         width: 200px;
+    }
+    .bd-grid{
+        margin: auto;
+    }
+    .work__img{
+        margin: auto;
+        width: 95%;
+        height: 90%;
+    }
+    .contact__data{
+        width: 90%;
     }
 }
 /* For medium devices */
