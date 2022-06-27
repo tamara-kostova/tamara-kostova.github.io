@@ -635,7 +635,7 @@ textarea{
         width: 320px;
     }
     .t1, .t2, textarea{
-        width: 90%;
+        width: 100%;
     }
     .work__img{
         margin: auto;
