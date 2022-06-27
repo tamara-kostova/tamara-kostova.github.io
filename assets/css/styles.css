@@ -75,6 +75,7 @@ body.dark-theme{
 .nav__btns{
     display: flex;
     align-items: center;
+    padding-left: 1rem;
 }
 .change-theme{
     font-size: 1.25rem;
@@ -581,7 +582,7 @@ textarea{
         margin: auto;
     }
     .me_photo{
-        display: 200px;
+        width: 200px;
     }
     .contact__form{
         width: 200px;
@@ -596,7 +597,6 @@ textarea{
     }
     .nav__menu{
         padding: 2rem .25rem 4rem;
-        ma
     }
     .nav__list{
         column-gap: 0;
@@ -613,14 +613,14 @@ textarea{
     .work__img{
         margin: auto;
         width: 95%;
-        height: 90%;
+        height: 95%;
     }
     .contact__data{
         width: 90%;
         padding-left: 1.2rem;
     }
 }
-@media screen and (max-width: 400px) {
+@media screen and (min-width: 360px) {
     .home__img{
         padding-left: 1rem;
     }
@@ -639,8 +639,7 @@ textarea{
     }
     .work__img{
         margin: auto;
-        width: 95%;
-        height: 90%;
+        width: 90%;
     }
     .contact__data{
         width: 95%;
@@ -656,6 +655,15 @@ textarea{
 }
 /* For medium devices */
 @media screen and (min-width: 576px) {
+    .work__img{
+        margin: auto;
+        width: 95%;
+    }
+    .work__container {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 2rem;
+        padding-top: 2rem;
+    }
     .footer__link{
         padding-left: 2rem;
     }
@@ -691,6 +699,7 @@ textarea{
     .grid-container{
         grid-template-columns: repeat(2, 1fr);
         margin: 0;
+        justify-items: center;
     }
     .home__content{
         grid-template-columns: .5fr 2fr 4fr;
@@ -724,7 +733,7 @@ textarea{
     }
     .nav{
         height: 4.5rem;
-        column-gap: 1 rem;
+        column-gap: 1rem;
     }
     .nav__icon, .nav__close, .nav__toggle{
         display: none;
@@ -765,14 +774,20 @@ textarea{
     .footer__social{
         justify-self: flex-end;
     }
-}
-/* For large devices */
-@media screen and (min-width: 1024px) {
     .work__container {
         grid-template-columns: repeat(2, 1fr);
         column-gap: 2rem;
         padding-top: 2rem;
     }
+    .work__img{
+        margin: 0;
+    }
+    .grid-container{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+/* For large devices */
+@media screen and (min-width: 1024px) {
     .bd-grid {
         margin-left: auto;
         margin-right: auto;
@@ -797,8 +812,5 @@ textarea{
     }
     .t2, textarea{
         width: 80%;
-    }
-    .grid-container{
-        grid-template-columns: repeat(3, 1fr);
     }
 }
