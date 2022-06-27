@@ -317,11 +317,12 @@ img {
 }
 /*==================== ME ====================*/
 .grid-container {
-    display: inline-grid;
+    display: grid;
     column-gap: 3rem;
     row-gap: 3rem;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    margin: 0;
 }
 .grid-item p, h1{
     color: black;
@@ -401,6 +402,7 @@ img {
 }
 .work__container {
     row-gap: 2rem;
+    margin: 0;
 }
 .work__img {
     width: 30rem;
@@ -427,7 +429,8 @@ input, ::placeholder{
 }
 .contact__form{
     grid-column: 0/1;
-    margin-left: 5%;
+    margin: 0;
+    padding-left: 1rem;
 }
 .form__text, textarea{
     display: inline;
@@ -564,6 +567,9 @@ textarea{
 /*==================== MEDIA QUERIES ====================*/
 /* For small devices */
 @media screen and (max-width: 350px){
+    .me__grid{
+        margin-left: 60px;
+    }
     .skills__info{
         grid-template-columns: repeat(2, 1fr);
         width: 14rem;
@@ -578,10 +584,10 @@ textarea{
         display: 200px;
     }
     .contact__form{
-        width: 340px;
+        width: 320px;
     }
-    .t1{
-        max-width: 200px;
+    .t1, .t2, textarea{
+        width: 90%;
     }
     .container{
         margin-left: 1rem;
@@ -611,6 +617,7 @@ textarea{
     }
     .contact__data{
         width: 90%;
+        padding-left: 1.2rem;
     }
 }
 /* For medium devices */
