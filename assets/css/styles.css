@@ -657,7 +657,6 @@ textarea{
 @media screen and (min-width: 576px) {
     .work__img{
         margin: auto;
-        width: 95%;
     }
     .work__container {
         grid-template-columns: repeat(2, 1fr);
