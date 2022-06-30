@@ -2,7 +2,6 @@
 const navMenu = document.getElementById('nav-menu');
 const navToggle = document.getElementById('nav-toggle');
 const navClose = document.getElementById('nav-close');
-
 /* MENU SHOW */
 if(navToggle){
     navToggle.addEventListener('click', () => {
@@ -35,7 +34,6 @@ window.addEventListener("scroll", () => {
             current = section.getAttribute("id");
         }
     });
-
     navLi.forEach((li) => {
         li.classList.remove("active");
         if (li.classList.contains(current)) {
@@ -43,7 +41,6 @@ window.addEventListener("scroll", () => {
         }
     });
 });
-
 /* CHANGE BACKGROUND HEADER */
 function scrollHeader(){
     const nav = document.getElementById('header')
