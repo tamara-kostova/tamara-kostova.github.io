@@ -53,9 +53,8 @@
         --smaller-font-size: .813rem;
     }
 }
-/*========== Variables Dark theme ==========*/
+/* Dark theme */
 body.dark-theme{
-    /*========== Colors ==========*/
     --first-color-second: hsl(var(--hue-color), 30%, 8%);
     --title-color: #f2d27c;
     --text-color:#fae6b1;
@@ -66,7 +65,6 @@ body.dark-theme{
     --button-text: #f2d27c;
     --container-color: #D4a629;
 }
-/*========== Button Dark/Light ==========*/
 .nav__btns{
     display: flex;
     align-items: center;
@@ -81,7 +79,6 @@ body.dark-theme{
 .change-theme:hover{
     color: var(--first-color);
 }
-/*==================== BASE ====================*/
 * {
     box-sizing: border-box;
     padding: 0;
