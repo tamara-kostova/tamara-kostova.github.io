@@ -1,6 +1,6 @@
-/*==================== FONTS ====================*/
+/*FONTS*/
 @import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@300;400&family=Rubik:wght@500&display=swap');
-/*==================== VARIABLES CSS ====================*/
+/*VARIABLES*/
 :root {
     --header-height: 3rem;
     --hue-color: #D4a629;
@@ -19,7 +19,6 @@
     --scroll-bar-color: #c4a03b;
     --scroll-thumb-color: #094243;
     --footer-font-color: #f2d27c;
-    /*========== Font and typography ==========*/
     --body-font: 'Anek Malayalam', sans-serif;
     --title-font: 'Rubik', sans-serif;
     --big-font-size: 2rem;
@@ -29,10 +28,8 @@
     --normal-font-size: .938rem;
     --small-font-size: .813rem;
     --smaller-font-size: .75rem;
-    /*========== Font weight ==========*/
     --font-medium: 500;
     --font-semi-bold: 600;
-    /*========== Margins Bottom ==========*/
     --mb-0-25: .25rem;
     --mb-0-5: .5rem;
     --mb-0-75: .75rem;
@@ -41,12 +38,10 @@
     --mb-2: 2rem;
     --mb-2-5: 2.5rem;
     --mb-3: 3rem;
-    /*========== z index ==========*/
     --z-tooltip: 10;
     --z-fixed: 100;
     --z-modal: 1000;
 }
-/* Font size for large devices */
 @media screen and (min-width: 968px) {
     :root {
         --big-font-size: 3rem;
@@ -117,12 +112,11 @@ img {
     height: auto;
 }
 .bd-grid {
-    max-width: 1024px;
+    max-width: 980px;
     display: grid;
     margin-left: var(--mb-2);
     margin-right: var(--mb-2);
 }
-/*==================== CLASSES ====================*/
 .section {
     margin: auto;
 }
@@ -173,6 +167,10 @@ img {
 .nav__toggle{
     font-size: 1.1rem;
     cursor: pointer;
+    padding-right: 1rem;
+}
+.nav__logo{
+    padding-left: 1rem;
 }
 .nav__toggle:hover{
     color: var(--first-color-alt);
@@ -225,7 +223,7 @@ img {
     bottom: 0;
 }
 /* Active link */
-.active-link{
+.active{
     color: var(--first-color);
 }
 /* Change background header */
@@ -247,6 +245,7 @@ img {
     display: grid;
     grid-template-columns: max-content;
     row-gap: 1rem;
+    padding-left: 1rem;
 }
 .home__social-icon{
     font-size: 1.25rem;
@@ -291,6 +290,7 @@ img {
     color: var(--button-text);
     font-weight: var(--font-medium);
     margin-right: var(--mb-0-25);
+    padding-left: 1rem;
 }
 .home__scroll-arrow{
     font-size: 1.25rem;
@@ -379,10 +379,14 @@ img {
 }
 /*==================== WORK ====================*/
 .work__img:hover div{
-    width: 150px;
-    padding: 8px 15px;
+    width: 200px;
+    padding: 8px 8px;
     visibility: visible;
     opacity: 0.8;
+}
+.skills_text a{
+    color: #f2d27c;
+    font-weight: bold;
 }
 .work__img{
     position: relative;
@@ -408,7 +412,7 @@ img {
 }
 .work__img {
     width: 30rem;
-    height: 20rem;
+    height: 14rem;
     box-shadow: 0px 4px 25px rgba(14, 36, 49, 0.15);
     border-radius: .5rem;
     overflow: hidden;
@@ -422,6 +426,9 @@ img {
 /*==================== GET IN TOUCH ====================*/
 input, ::placeholder{
     color: black;
+}
+.form__label{
+    padding-left: 2rem;
 }
 .contact .section__title{
     margin-top: 2rem;
@@ -572,9 +579,6 @@ textarea{
 /*==================== MEDIA QUERIES ====================*/
 /* For small devices */
 @media screen and (max-width: 350px){
-    .me__grid{
-        margin-left: 60px;
-    }
     .skills__info{
         grid-template-columns: repeat(2, 1fr);
         width: 14rem;
@@ -584,9 +588,6 @@ textarea{
         width: 280px;
         height: 150px;
         margin: auto;
-    }
-    .me_photo{
-        width: 200px;
     }
     .contact__form{
         width: 200px;
@@ -725,6 +726,8 @@ textarea{
     }
     .section__subtitle{
         margin-bottom: 1rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
     }
     .header{
         top: 0;
