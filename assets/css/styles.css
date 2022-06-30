@@ -142,7 +142,7 @@ img {
     bottom: 0;
     left: 0;
     z-index: var(--z-fixed);
-    background-color: var(--body-color);
+    background-color: white;
 }
 .nav{
     max-width: 968px;
@@ -152,7 +152,7 @@ img {
     align-items: center;
 }
 .nav__logo, .nav__toggle{
-    color: var(--title-color);
+    color: #053536;
     font-weight: var(--font-medium);
 }
 .nav__logo:hover{
@@ -192,7 +192,7 @@ img {
     flex-direction: column;
     align-items: center;
     font-size: var(--small-font-size);
-    color: var(--title-color);
+    color: #053536;
     font-weight: var(--font-medium);
 }
 .nav__link:hover{
