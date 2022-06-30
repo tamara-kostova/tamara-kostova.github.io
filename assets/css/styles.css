@@ -371,7 +371,7 @@ img {
     display: flex;
     justify-content: center;
 }
-/*==================== WORK ====================*/
+/*WORK*/
 .work__img:hover div{
     width: 200px;
     padding: 8px 8px;
@@ -417,7 +417,7 @@ img {
 .work__img img:hover {
     transform: scale(1.1);
 }
-/*==================== GET IN TOUCH ====================*/
+/* GET IN TOUCH */
 input, ::placeholder{
     color: black;
 }
@@ -455,7 +455,7 @@ input, ::placeholder{
 textarea{
     row-span: 30;
 }
-/* ===== LANGUAGES =====*/
+/* LANGUAGES */
 .languages .section__title{
     padding-top: 3rem;
 }
@@ -507,7 +507,7 @@ textarea{
 .languages__img {
     border-radius: .5rem;
 }
-/*==================== FOOTER ====================*/
+/* FOOTER */
 .footer{
     padding-top: 2rem;
 }
@@ -534,7 +534,7 @@ textarea{
     font-size: 1.25rem;
     margin-right: var(--mb-1-5);
 }
-/*========== SCROLL UP ==========*/
+
 .scrollup{
     color: black;
     position: fixed;
@@ -556,11 +556,9 @@ textarea{
     font-size: 1.5rem;
     color: #2A3132;
 }
-/* Show scroll */
 .show-scroll{
     bottom: 5rem;
 }
-/*========== SCROLL BAR ==========*/
 ::-webkit-scrollbar{
     width: .6rem;
     background-color: var(--scroll-bar-color);
@@ -570,8 +568,8 @@ textarea{
     background-color: var(--scroll-thumb-color);
     border-radius: .5rem;
 }
-/*==================== MEDIA QUERIES ====================*/
-/* For small devices */
+/* MEDIA QUERIES */
+/* small devices */
 @media screen and (max-width: 350px){
     .skills__info{
         grid-template-columns: repeat(2, 1fr);
@@ -652,7 +650,7 @@ textarea{
         padding-right: .7rem;
     }
 }
-/* For medium devices */
+/* medium devices */
 @media screen and (min-width: 576px) {
     .work__img{
         margin: auto;
@@ -785,7 +783,7 @@ textarea{
         grid-template-columns: repeat(3, 1fr);
     }
 }
-/* For large devices */
+/* large devices */
 @media screen and (min-width: 1024px) {
     .bd-grid {
         margin-left: auto;
