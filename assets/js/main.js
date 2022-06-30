@@ -45,43 +45,25 @@ function scrollActive(){
     })
 }
 window.addEventListener('scroll', scrollActive)*/
-/*const sections = document.querySelectorAll('section');
-const navli=document.querySelectorAll('.nav__menu ul li');
-window.addEventListener('scroll', ()=>{
-  let current ='';
-  sections.forEach(section=>{
-      const sectiontop=section.offsetTop;
-      const sectionheight=section.clientHeight;
-      if (pageYOffset>=sectiontop){
-          current=section.getAttribute('id')
-      }
-  })
-    navli.forEach(li=>{
-        li.classList.remove('active');
-        if(li.classList.contains('current')){
-            li.classList.add('active')
+const sections = document.querySelectorAll("section");
+const navLi = document.querySelectorAll("nav .nav__menu ul li");
+window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= sectionTop - sectionHeight / 3) {
+            current = section.getAttribute("id");
         }
-    })
-})*/
-const sections = document.querySelectorAll('section[id]')
+    });
 
-window.addEventListener('scroll', scrollActive)
-
-function scrollActive(){
-    const scrollY = window.pageYOffset
-
-    sections.forEach(current =>{
-        const sectionHeight = current.offsetHeight
-        const sectionTop = current.offsetTop-100;
-        sectionId = current.getAttribute('id')
-
-        if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active')
-        }else{
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active')
+    navLi.forEach((li) => {
+        li.classList.remove("active");
+        if (li.classList.contains(current)) {
+            li.classList.add("active");
         }
-    })
-}
+    });
+});
 
 /*==================== CHANGE BACKGROUND HEADER ====================*/
 function scrollHeader(){
