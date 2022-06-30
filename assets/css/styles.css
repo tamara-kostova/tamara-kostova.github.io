@@ -132,7 +132,6 @@ img {
 .section__title, .section__subtitle {
     text-align: center;
 }
-/*==================== LAYOUT ====================*/
 .container {
     max-width: 768px;
     margin:auto;
@@ -149,7 +148,6 @@ img {
     z-index: var(--z-fixed);
     background-color: var(--body-color);
 }
-/*==================== NAV ====================*/
 .nav{
     max-width: 968px;
     height: var(--header-height);
@@ -218,20 +216,17 @@ img {
 .nav__close:hover{
     color: var(--first-color-alt);
 }
-/* show menu */
 .show-menu{
     bottom: 0;
 }
-/* Active link */
 .active{
     color: var(--first-color);
 }
-/* Change background header */
 .scroll-header{
     box-shadow: 0 -1px 4px black;
     background: white;
 }
-/*==================== HOME ====================*/
+/*HOME*/
 .home__container{
     gap: 1rem;
 }
@@ -295,7 +290,6 @@ img {
 .home__scroll-arrow{
     font-size: 1.25rem;
 }
-/*==================== BUTTONS ====================*/
 .button{
     margin-top: 1rem;
     display: inline-block;
@@ -317,7 +311,7 @@ img {
     display: inline-flex;
     align-items: center;
 }
-/*==================== ME ====================*/
+/*ME*/
 .grid-container {
     display: grid;
     column-gap: 2rem;
@@ -341,7 +335,7 @@ img {
     width: 200px;
     height: 220px;
 }
-/*==================== SKILLS ====================*/
+/*SKILLS*/
 #exactly{
     color: var(--exactly-color);
 }
