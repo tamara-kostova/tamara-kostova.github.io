@@ -221,9 +221,12 @@ const Portfolio = () => {
       <div className="min-h-screen bg-white dark:bg-[#094243] text-gray-900 dark:text-white transition-colors duration-200">
         {/* Navigation */}
         <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-[#094243] shadow-md z-50 transition-colors duration-200">
-          <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <a href="#top" className="text-4xl font-bold hover:text-yellow-600 transition-colors">Tamara<span className="text-yellow-600">.</span></a>
-            <div className="flex space-x-8">
+          <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
+            <a href="#top" className="text-4xl font-bold hover:text-yellow-600 transition-colors mb-4 md:mb-0">
+              Tamara<span className="text-yellow-600">.</span>
+            </a>
+
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
               <a href="#experience" className="hover:text-yellow-600 transition-colors">Experience</a>
               <a href="#projects" className="hover:text-yellow-600 transition-colors">Projects</a>
               <a href="#education" className="hover:text-yellow-600 transition-colors">Education</a>
@@ -233,7 +236,8 @@ const Portfolio = () => {
                 {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
               </button>
             </div>
-            <div className="flex space-x-6">
+
+            <div className="flex space-x-6 mt-4 md:mt-0">
               <a 
                 href="https://github.com/tamara-kostova" 
                 target="_blank" 
