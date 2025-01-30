@@ -69,7 +69,7 @@ const Portfolio = () => {
       title: "Hot and Cold",
       description: "Pygame maze game",
       link: "https://github.com/tamara-kostova/Hot-and-cold",
-      video: "/assets/img/HotAndCold.mp4"
+      video: "/assets/videos/HotAndCold.mp4"
     },
     {
       title: "Bitcoin Price Prediction",
