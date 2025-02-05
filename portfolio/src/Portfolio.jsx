@@ -105,7 +105,7 @@ const Portfolio = () => {
   const projects = [
     {
       title: "ecoGrad",
-      description: "ITLabs and Best Hackaton, December 2023",
+      description: "Eco-friendly web app - 3rd Prize at ITLabs and Best Hackaton, December 2023",
       link: "https://github.com/tamara-kostova/ecoGrad",
       image: "/assets/img/ecoGrad.jpg"
     },
@@ -119,7 +119,7 @@ const Portfolio = () => {
       title: "Hybrid RAG",
       description: "Graph-enhanced retrieval-augmented generation for medical literature search.",
       link: "https://github.com/tamara-kostova/HybridRAG",
-      image: "/assets/img/project2.jpg"
+      image: "/assets/img/hybridrag.png"
     },
     {
       title: "Hot and Cold",
@@ -135,13 +135,13 @@ const Portfolio = () => {
     },
     {
       title: "Super Mario The Plumber, February 2020",
-      description: "A game created in 48 hours for Game Jam 2020.",
+      description: "A game created in 48 hours - 1st Prize at Global Game Jam, February 2020.",
       link: "https://github.com/tamara-kostova/supermariotheplumber",
       image: "/assets/img/gamejam.jpg"
     },
     {
       title: "AI Football",
-      description: "Reinforcement learning-powered AI soccer agents (Robomac 2023). Robomac Second Prize, May 2023",
+      description: "Reinforcement learning-powered AI soccer agents - 2nd Prize at Robomac, May 2023",
       link: "https://github.com/tamara-kostova/RoboMac2023_AIFootball",
       image: "/assets/img/robomac.jpg"
     },
@@ -362,41 +362,54 @@ const Portfolio = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project, index) => (
                 <div 
-                  key={index}
-                  data-animate={`project-${index}`}
-                  className={`group relative overflow-hidden rounded-lg transition-all duration-500 ${
-                    isVisible[`project-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                  }`}
-                >
-                  {project.video ? (
+                key={index}
+                data-animate={`project-${index}`}
+                className={`group relative overflow-hidden rounded-lg transition-all duration-500 ${
+                  isVisible[`project-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                }`}
+              >
+                {project.video ? (
+                  <div className="relative">
                     <video 
-                      controls 
                       className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                     >
                       <source src={project.video} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
-                  ) : (
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-center items-center text-white p-6">
-                    <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                    <p className="text-center mb-4">{project.description}</p>
-                    {project.link && (
-                      <a 
-                        href={project.link}
-                        target="_blank"
-                        className="inline-flex items-center text-yellow-400 hover:text-yellow-300"
-                      >
-                        View on GitHub <ExternalLink className="ml-2" size={16} />
-                      </a>
-                    )}
+                    <button 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.currentTarget.previousElementSibling.play();
+                      }}
+                      className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    >
+                      <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-6.44-4.96a1 1 0 00-1.56.82v9.92a1 1 0 001.56.82l6.44-4.96a1 1 0 000-1.64z" />
+                      </svg>
+                    </button>
                   </div>
+                ) : (
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                )}
+              
+                <div className="mt-4 text-center">
+                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                  <p className="text-center mb-4">{project.description}</p>
+                  {project.link && (
+                    <a 
+                      href={project.link}
+                      target="_blank"
+                      className="inline-flex items-center text-yellow-400 hover:text-yellow-300"
+                    >
+                      View on GitHub <ExternalLink className="ml-2" size={16} />
+                    </a>
+                  )}
                 </div>
+              </div>
               ))}
             </div>
           </div>
