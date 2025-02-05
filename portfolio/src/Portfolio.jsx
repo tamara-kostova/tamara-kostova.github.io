@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Twitter, ChevronUp, ExternalLink, Moon, Sun } from 'lucide-react';
+import { Github, Linkedin, Twitter, ChevronUp, ExternalLink, Moon, Sun, Menu, X } from 'lucide-react';
 import { FaPython, FaJava, FaDocker, FaGit } from 'react-icons/fa';
 import { SiCplusplus, SiC, SiFastapi, SiSpring, SiLangchain } from 'react-icons/si';
 import { VscAzure } from "react-icons/vsc";
@@ -8,6 +8,8 @@ const Portfolio = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isVisible, setIsVisible] = useState({});
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +23,27 @@ const Portfolio = () => {
           [element.dataset.animate]: isElementVisible
         }));
       });
+
+      const sections = ['experience', 'projects', 'skills', 'education', 'contact'];
+      let currentSection = '';
+
+      sections.forEach(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            currentSection = section;
+          }
+        }
+      });
+
+      if (window.scrollY < 100) {
+        currentSection = 'home';
+      }
+
+      setActiveSection(currentSection);
     };
+    
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -29,6 +51,9 @@ const Portfolio = () => {
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
+  };
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const tagCloudStyles = `
@@ -216,33 +241,59 @@ const Portfolio = () => {
     }
   ];
 
+  const navLinks = [
+    { href: '#experience', text: 'Experience' },
+    { href: '#projects', text: 'Projects' },
+    { href: '#skills', text: 'Skills' },
+    { href: '#education', text: 'Education' },
+    { href: '#contact', text: 'Contact' },
+  ];
+
+
   return (
     <div className={isDarkMode ? 'dark' : ''}>
       <div className="min-h-screen bg-white dark:bg-[#094243] text-gray-900 dark:text-white transition-colors duration-200">
         {/* Navigation */}
         <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-[#094243] shadow-md z-50 transition-colors duration-200">
           <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
-            <a href="#top" className="text-4xl font-bold hover:text-yellow-600 transition-colors mb-4 md:mb-0">
+            <a href="#top" className="text-4xl font-bold dark:text-gray-200 hover:text-yellow-600 transition-colors mb-4 md:mb-0">
               Tamara<span className="text-yellow-600">.</span>
             </a>
+            <button 
+              onClick={toggleMobileMenu} 
+              className="md:hidden p-2 text-gray-700 dark:text-gray-700 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
 
-            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
-              <a href="#experience" className="hover:text-yellow-600 transition-colors">Experience</a>
-              <a href="#projects" className="hover:text-yellow-600 transition-colors">Projects</a>
-              <a href="#education" className="hover:text-yellow-600 transition-colors">Education</a>
-              <a href="#skills" className="hover:text-yellow-600 transition-colors">Skills</a>
-              <a href="#contact" className="hover:text-yellow-600 transition-colors">Contact</a>
-              <button onClick={toggleTheme} className="hover:text-yellow-600 transition-colors">
+            <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:flex flex-wrap justify-center gap-4 md:gap-8`}>
+              {navLinks.map(({ href, text }) => (
+                <a 
+                  key={text}
+                  href={href}
+                  className={`transition-colors ${
+                    activeSection === href.slice(1)
+                      ? 'text-yellow-600 dark:text-yellow-600'
+                      : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
+                  }`}
+                >
+                  {text}
+                </a>
+              ))}
+              <button 
+                onClick={toggleTheme} 
+                className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors"
+              >
                 {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
               </button>
             </div>
 
-            <div className="flex space-x-6 mt-4 md:mt-0">
+            <div className="hidden md:flex space-x-6 mt-4 md:mt-0">
               <a 
                 href="https://github.com/tamara-kostova" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="hover:text-yellow-600 transition-colors"
+                className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors"
               >
                 <Github size={24} />
               </a>
@@ -250,7 +301,7 @@ const Portfolio = () => {
                 href="https://www.linkedin.com/in/tamara-kostova/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="hover:text-yellow-600 transition-colors"
+                className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors"
               >
                 <Linkedin size={24} />
               </a>
@@ -258,7 +309,7 @@ const Portfolio = () => {
                 href="https://x.com/tamarakostova" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="hover:text-yellow-600 transition-colors"
+                className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors"
               >
                 <Twitter size={24} />
               </a>
@@ -271,7 +322,7 @@ const Portfolio = () => {
           <div className="text-center">
             <h1 className="text-6xl font-bold mb-4">Hi, I'm Tamara<span className="text-yellow-600">.</span></h1>
             <p className="text-xl mb-6">I build things for the web and beyond.</p>
-            <p className="text-lg text-gray-600 mt-4 mb-16">I specialize in AI, Machine Learning, and software development.</p>
+            <p className="text-lg dark:text-gray-300 text-gray-600 mt-4 mb-16">I specialize in AI, Machine Learning, and software development.</p>
             <a 
               href="#projects" 
               className="inline-flex items-center px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors"
@@ -478,7 +529,7 @@ const Portfolio = () => {
                   href="https://github.com/tamara-kostova" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="hover:text-yellow-600 transition-colors"
+                  className="hover:text-yellow-600 dark:text-gray-200 transition-colors"
                 >
                   <Github size={24} />
                 </a>
@@ -486,7 +537,7 @@ const Portfolio = () => {
                   href="https://www.linkedin.com/in/tamara-kostova/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="hover:text-yellow-600 transition-colors"
+                  className="hover:text-yellow-600 dark:text-gray-200 transition-colors"
                 >
                   <Linkedin size={24} />
                 </a>
@@ -494,7 +545,7 @@ const Portfolio = () => {
                   href="https://x.com/tamarakostova" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="hover:text-yellow-600 transition-colors"
+                  className="hover:text-yellow-600 dark:text-gray-200 transition-colors"
                 >
                   <Twitter size={24} />
                 </a>
