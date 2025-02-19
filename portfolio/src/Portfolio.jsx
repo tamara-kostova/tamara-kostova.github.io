@@ -32,7 +32,7 @@ const projectsData = [
   },
   {
     title: 'Hybrid RAG',
-    description: 'Graph-enhanced retrieval-augmented generation for medical literature search.',
+    description: 'Graph-enhanced retrieval-augmented generation for medical literature in the field of Alzheimer\'s.',
     link: 'https://github.com/tamara-kostova/HybridRAG',
     image: '/assets/img/hybridrag.png',
   },
@@ -56,7 +56,7 @@ const projectsData = [
   },
   {
     title: 'AI Football',
-    description: 'Reinforcement learning-powered AI soccer agents - 2nd Prize at Robomac, May 2023',
+    description: 'Reinforcement learning-powered AI football agents - 2nd Prize at Robomac, May 2023',
     link: 'https://github.com/tamara-kostova/RoboMac2023_AIFootball',
     image: '/assets/img/robomac.jpg',
   },
@@ -149,7 +149,7 @@ const educationData = [
     ],
   },
   {
-    institution: "Primary School 'Goce Deleev', Bitola",
+    institution: "Primary School 'Goce Delcev', Bitola",
     degree: 'Primary School Diploma',
     date: '01/09/2008 – 10/06/2017',
     achievements: [
