@@ -19,6 +19,11 @@ const skillsData = [
 
 const projectsData = [
   {
+    title: 'Quick Chef',
+    description: ' An AI-powered recipe discovery and generation platform that uses RAG and MCP ',
+    link: 'https://github.com/tamara-kostova/QuickChef',
+    image: '/assets/img/quickchef.png',
+  },{
     title: 'ecoGrad',
     description: 'Eco-friendly web app - 3rd Prize at ITLabs and Best Hackaton, December 2023',
     link: 'https://github.com/tamara-kostova/ecoGrad',
@@ -74,7 +79,7 @@ const experienceData = [
     company: 'ITQuarks, Skopje',
     date: '01/10/2024 – CURRENT',
     description:
-      'Developed an advanced Retrieval-Augmented Generation solution for extracting demographic and specific clinical data from medical documents using Large Language Models. Implemented a chatbot interface for interactive information access.',
+      'Developed an advanced Retrieval-Augmented Generation solution for extracting demographic and specific clinical data from medical documents using Large Language Models. Implemented a chatbot interface for interactive information access. Contributed to scalable backend services using FastAPI and Python integrating ML models for real-time inference and data processing. Currently developing a mobile app built with Python and React Native, providing AI-driven stock analysis and personal portfolio predictions. Integrated chatbot functionality and MCP server connections to deliver predictive insights via APIs and real-time database pipelines.',
   },
   {
     title: 'Machine Learning Intern',
@@ -88,14 +93,14 @@ const experienceData = [
     company: 'Macedonian Academy of Sciences and Art',
     date: '15/09/2024 – CURRENT',
     description:
-      'Developing a Hybrid Retrieval-Augmented Generation (RAG) system integrating lexical, semantic, and graph-based retrieval methods to analyze medical documents in the field of neurology.',
+      'Developed a hybrid RAG system combining lexical, semantic, and graph-based retrieval methods for deep analysis of neurology medical papers. Enhanced retrieval accuracy and response relevance through domain-specific model tuning.',
   },
   {
     title: 'Software Engineering Intern',
     company: 'MCA.mk, Skopje',
     date: '01/08/2023 – 30/10/2023',
     description:
-      'Developed front-end features using Angular and integrated them with .NET back-end functionalities. Applied Entity Core framework for efficient MSSQL database interactions.',
+      'Developed front-end features using Angular and seamlessly integrated them with .NET back-end functionalities. Applied Entity Core framework for efficient MSSQL database interactions, ensuring optimal data management. Collaborated on feature implementation, thriving in a dynamic, Agile-driven team environment.',
   },
   {
     title: 'Bartender',
@@ -115,13 +120,15 @@ const educationData = [
   {
     institution: 'Faculty of Computer Science & Engineering, Skopje',
     degree: 'Computer Science Engineer',
-    date: '01/10/2021 – CURRENT',
-    gpa: 'GPA: 9.65/10',
+    date: '01/10/2021 – 25/06/2025',
+    gpa: 'GPA: 9.72/10',
     achievements: [
-      'Awarded among the top students at FCSE with GPA above 9.5 (9.7/10.0), 2023',
+      'Awarded among the top students at FCSE with GPA above 9.5 (9.72/10.0), 2025',
       'Awarded among the top students at FCSE with GPA above 9.5 (9.65/10.0), 2024',
+      'Awarded among the top students at FCSE with GPA above 9.5 (9.7/10.0), 2023',
       'Second Prize at Robomac 2023, May',
       'Third Prize at ITLabs Web Development Hackathon 2023, December',
+      'First Prize at GlobalGameJam 2020, February',
     ],
     coursework: [
       'Structural Programming',
