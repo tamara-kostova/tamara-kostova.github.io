@@ -231,39 +231,85 @@ const TagCloud = ({ coursework }) => {
 const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMenu, activeSection }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-[#094243] shadow-md z-50 transition-colors duration-200">
-      <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
-        <a href="#top" className="text-4xl font-bold dark:text-gray-200 hover:text-yellow-600 transition-colors mb-4 md:mb-0">
-          Tamara<span className="text-yellow-600">.</span>
-        </a>
-        <button onClick={toggleMobileMenu} className="md:hidden p-2 text-gray-700 dark:text-gray-700 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-        <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:flex flex-wrap justify-center gap-4 md:gap-8`}>
-          {navLinks.map(({ href, text }) => (
-            <a
-              key={text}
-              href={href}
-              className={`transition-colors ${
-                activeSection === href.slice(1) ? 'text-yellow-600 dark:text-yellow-600' : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
-              }`}
-            >
-              {text}
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          <a href="#top" className="text-2xl md:text-4xl font-bold dark:text-gray-200 hover:text-yellow-600 transition-colors">
+            Tamara<span className="text-yellow-600">.</span>
+          </a>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map(({ href, text }) => (
+              <a
+                key={text}
+                href={href}
+                className={`transition-colors ${
+                  activeSection === href.slice(1) ? 'text-yellow-600 dark:text-yellow-600' : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
+                }`}
+              >
+                {text}
+              </a>
+            ))}
+            <button onClick={toggleTheme} className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+              {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+            </button>
+          </div>
+          
+          {/* Desktop Social Links */}
+          <div className="hidden md:flex space-x-6">
+            <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+              <Github size={24} />
             </a>
-          ))}
-          <button onClick={toggleTheme} className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-            {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+            <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+              <Linkedin size={24} />
+            </a>
+            <a href="https://x.com/tamarakostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+              <Twitter size={24} />
+            </a>
+          </div>
+          
+          {/* Mobile Menu Button */}
+          <button onClick={toggleMobileMenu} className="md:hidden p-2 text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-        <div className="hidden md:flex space-x-6 mt-4 md:mt-0">
-          <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-            <Github size={24} />
-          </a>
-          <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-            <Linkedin size={24} />
-          </a>
-          <a href="https://x.com/tamarakostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-            <Twitter size={24} />
-          </a>
+        
+        {/* Mobile Navigation Menu */}
+        <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden mt-6 pb-4 border-t border-gray-200 dark:border-gray-700 pt-6`}>
+          <div className="flex flex-col space-y-4">
+            {navLinks.map(({ href, text }) => (
+              <a
+                key={text}
+                href={href}
+                className={`text-lg py-2 px-4 rounded-lg transition-colors ${
+                  activeSection === href.slice(1) 
+                    ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400' 
+                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {text}
+              </a>
+            ))}
+          </div>
+          
+          {/* Mobile Theme Toggle and Social Links */}
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+            <button onClick={toggleTheme} className="p-2 text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+              {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+            </button>
+            <div className="flex space-x-4">
+              <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+                <Github size={20} />
+              </a>
+              <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+                <Linkedin size={20} />
+              </a>
+              <a href="https://x.com/tamarakostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+                <Twitter size={20} />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
