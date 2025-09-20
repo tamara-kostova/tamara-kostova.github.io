@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, memo, lazy, Suspense } from 'react';
-import { Github, Linkedin, Twitter, ChevronUp, ExternalLink, Moon, Sun, Menu, X } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, ChevronUp, ExternalLink, Moon, Sun, Menu, X } from 'lucide-react';
 import { FaPython, FaJava, FaDocker, FaGit } from 'react-icons/fa';
 import { SiCplusplus, SiC, SiFastapi, SiSpring, SiLangchain } from 'react-icons/si';
 import { VscAzure } from 'react-icons/vsc';
@@ -109,19 +109,7 @@ const experienceData = [
     date: '01/08/2023 – 30/10/2023',
     description:
       'Developed front-end features using Angular and seamlessly integrated them with .NET back-end functionalities. Applied Entity Core framework for efficient MSSQL database interactions, ensuring optimal data management. Collaborated on feature implementation, thriving in a dynamic, Agile-driven team environment.',
-  },
-  {
-    title: 'Bartender',
-    company: 'B6 Beer Bar, Bitola',
-    date: '01/05/2021 – 01/09/2021',
-    description: 'Worked as a bartender, gaining experience in customer service and team collaboration.',
-  },
-  {
-    title: 'Volunteer',
-    company: 'YMCA, American Corner, Forum16, Bitola',
-    date: '01/09/2017 – 30/05/2021',
-    description: 'Volunteered in various community and educational programs, developing communication and organizational skills.',
-  },
+  }
 ];
 
 const educationData = [
@@ -174,11 +162,30 @@ const educationData = [
   },
 ];
 
+
+const certificationsData = [
+  {
+    institution: 'Microsoft Azure AI',
+    degree: 'Azure AI Fundamentals (AI-900)',
+    date: 'Sept 2025',
+    credential: 'https://learn.microsoft.com/api/credentials/share/en-gb/TamaraKostova-0989/1A1288009E6F3DBF?sharingId=BA860F445F708AE9'
+  }]
+
+const PublicationsData = [
+  {
+    title: 'Application of Large Language Models for Summarization of Medical Papers ',
+    conference: 'ICT Innovation International Conference 2025',
+    published: 'full paper will be included in the ICT Innovations 2025 Proceedings published by Springer in Communications in Computer and Information Science Series (CCIS)'
+  }
+]
+
 const navLinks = [
   { href: '#experience', text: 'Experience' },
   { href: '#projects', text: 'Projects' },
   { href: '#skills', text: 'Skills' },
   { href: '#education', text: 'Education' },
+  { href: '#certifications', text: 'Certifications' },
+  { href: '#publications', text: 'Publications' },
   { href: '#contact', text: 'Contact' },
 ];
 
@@ -263,8 +270,8 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
             <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
               <Linkedin size={24} />
             </a>
-            <a href="https://x.com/tamarakostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-              <Twitter size={24} />
+            <a href="mailto:tamarakostova.bt@gmail.com" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+              <Mail size={24} />
             </a>
           </div>
           
@@ -305,8 +312,8 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
               <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
                 <Linkedin size={20} />
               </a>
-              <a href="https://x.com/tamarakostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-                <Twitter size={20} />
+              <a href="mailto:tamarakostova.bt@gmail.com" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
+                <Mail size={20} />
               </a>
             </div>
           </div>
@@ -562,6 +569,63 @@ const EducationSection = memo(({ isVisible }) => {
                   <TagCloud coursework={edu.coursework} />
                 </div>
               )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+});
+
+
+const CerticatesSection = memo(({ isVisible }) => {
+  return (
+    <section id="certifications" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl font-bold text-center mb-16">
+          Certifications<span className="text-yellow-600">.</span>
+        </h2>
+        <div className="space-y-8">
+          {certificationsData.map((cert, index) => (
+            <div
+              key={index}
+              data-animate={`certifications-${index}`}
+              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${
+                isVisible[`certifications-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+              }`}
+            >
+              <h3 className="text-2xl font-bold mb-2">{cert.institution}</h3>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{cert.degree}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{cert.date}</p>
+              <a href={cert.credential} className="text-yellow-600 font-semibold">Credential</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+});
+
+
+const PublicationsSection = memo(({ isVisible }) => {
+  return (
+    <section id="publications" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl font-bold text-center mb-16">
+          Publications<span className="text-yellow-600">.</span>
+        </h2>
+        <div className="space-y-8">
+          {PublicationsData.map((pub, index) => (
+            <div
+              key={index}
+              data-animate={`publications-${index}`}
+              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${
+                isVisible[`publications-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+              }`}
+            >
+              <h3 className="text-2xl font-bold mb-2">{pub.title}</h3>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{pub.conference}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{pub.published}</p>
             </div>
           ))}
         </div>
@@ -886,8 +950,8 @@ const Footer = memo(() => {
             <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-600 dark:text-gray-200 transition-colors">
               <Linkedin size={24} />
             </a>
-            <a href="https://x.com/tamarakostova" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-600 dark:text-gray-200 transition-colors">
-              <Twitter size={24} />
+            <a href="mailto:tamarakostova.bt@gmail.com" className="hover:text-yellow-600 dark:text-gray-200 transition-colors">
+              <Mail size={24} />
             </a>
           </div>
         </div>
@@ -1008,7 +1072,7 @@ const Portfolio = () => {
       }));
     });
 
-    const sections = ['experience', 'projects', 'skills', 'education', 'contact'];
+    const sections = ['experience', 'projects', 'skills', 'education', 'certifications', 'publications','contact'];
     let currentSection = '';
 
     sections.forEach((section) => {
@@ -1075,6 +1139,8 @@ const Portfolio = () => {
           <ProjectsSection isVisible={isVisible} />
           <SkillsSection />
           <EducationSection isVisible={isVisible} />
+          <CerticatesSection isVisible={isVisible} />
+          <PublicationsSection isVisible={isVisible} />
           <CallToActionSection />
           <ContactSection />
           <Footer />
