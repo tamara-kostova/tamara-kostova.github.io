@@ -115,7 +115,17 @@ const experienceData = [
 const educationData = [
   {
     institution: 'Faculty of Computer Science & Engineering, Skopje',
-    degree: 'Computer Science Engineer',
+    degree: 'Master of Science in Data science in Computer Science and Engineering',
+    date: '01/10/2025 – current',
+    achievements:[],
+    coursework: [ 'Data Science',
+      'Data Engineering',
+      'Time Series Analysis and Forecasting',
+      'Applied Machine Learning',]
+  },
+  {
+    institution: 'Faculty of Computer Science & Engineering, Skopje',
+    degree: 'Bachelor of Science in Computer Science Engineering',
     date: '01/10/2021 – 25/06/2025',
     gpa: 'GPA: 9.72/10',
     achievements: [
