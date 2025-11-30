@@ -87,7 +87,7 @@ const experienceData = [
     company: 'ITQuarks, Skopje',
     date: '01/10/2024 – CURRENT',
     description:
-      'Developed an advanced Retrieval-Augmented Generation solution for extracting demographic and specific clinical data from medical documents using Large Language Models. Implemented a chatbot interface for interactive information access. Contributed to scalable backend services using FastAPI and Python integrating ML models for real-time inference and data processing. Currently developing a mobile app built with Python and React Native, providing AI-driven stock analysis and personal portfolio predictions. Integrated chatbot functionality and MCP server connections to deliver predictive insights via APIs and real-time database pipelines.',
+      'Designed and developed an RAG solution using large language models to extract data and infer compliance from documents, supporting automated insurance eligibility assessments. Built an interactive chatbot interface based on processed data for easier information access. Leading development of a mobile app built with Python and React Native, providing a multi-agent workflow with AI-driven stock analysis and personal portfolio predictions. Integrated chatbot functionality and MCP server connections to deliver predictive insights via APIs and real-time database pipelines.',
   },
   {
     title: 'Machine Learning Intern',
@@ -120,8 +120,9 @@ const educationData = [
     achievements:[],
     coursework: [ 'Data Science',
       'Data Engineering',
-      'Time Series Analysis and Forecasting',
-      'Applied Machine Learning',]
+      'Deep learning for Natural Language Processing ',
+      'Applied Machine Learning',
+      'Medical Informatics',]
   },
   {
     institution: 'Faculty of Computer Science & Engineering, Skopje',
@@ -443,7 +444,7 @@ const ProjectsSection = memo(({ isVisible }) => {
   return (
     <section id="projects" className="py-20 bg-gray-50 dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 gradient-text">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 gradient-text leading-tight md:leading-snug">
           My Projects<span className="text-yellow-600">.</span>
         </h2>
         <p className="text-center text-gray-600 dark:text-gray-300 mb-16 max-w-2xl mx-auto">
