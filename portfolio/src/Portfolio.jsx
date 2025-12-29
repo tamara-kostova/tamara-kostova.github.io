@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, memo, lazy, Suspense } from 'react';
-import { Github, Linkedin, Twitter, Mail, ChevronUp, ExternalLink, Moon, Sun, Menu, X } from 'lucide-react';
+import { Github, Linkedin, Mail, ChevronUp, ExternalLink, Moon, Sun, Menu, X } from 'lucide-react';
 import { FaPython, FaJava, FaDocker, FaGit } from 'react-icons/fa';
-import { SiCplusplus, SiC, SiFastapi, SiSpring, SiLangchain } from 'react-icons/si';
+import { SiCplusplus, SiC, SiFastapi, SiSpring, SiLangchain, SiPostgresql, SiAmazonwebservices, SiDotnet, SiDjango, SiTensorflow, SiPytorch } from 'react-icons/si';
+import { Brain, Database, Workflow, Cpu, Server, Clock, Flame, Table, Sigma } from 'lucide-react';
 import { VscAzure } from 'react-icons/vsc';
 import emailjs from '@emailjs/browser';
 import { emailConfig } from './config/emailjs';
@@ -12,70 +13,95 @@ const LoadingSpinner = () => (
   </div>
 );
 
-const skillsData = [
-  { name: 'Python', icon: <FaPython size={40} /> },
-  { name: 'Java', icon: <FaJava size={40} /> },
-  { name: 'C++', icon: <SiCplusplus size={40} /> },
-  { name: 'C', icon: <SiC size={40} /> },
-  { name: 'FastAPI', icon: <SiFastapi size={40} /> },
-  { name: 'Spring', icon: <SiSpring size={40} /> },
-  { name: 'Docker', icon: <FaDocker size={40} /> },
-  { name: 'Git', icon: <FaGit size={40} /> },
-  { name: 'Azure', icon: <VscAzure size={40} /> },
-  { name: 'Langchain', icon: <SiLangchain size={40} /> },
-];
-
+const skillsData = {
+  "Languages": [
+    { name: "Python", icon: <FaPython /> },
+    { name: "Java", icon: <FaJava /> },
+    { name: "C++", icon: <SiCplusplus /> },
+    { name: "C", icon: <SiC /> },
+    { name: "SQL", icon: <SiPostgresql /> },
+  ],
+  "AI / ML": [
+    { name: "RAG Systems", icon: <Database /> },
+    { name: "Strands Agents", icon: <Brain /> },
+    { name: "LangChain", icon: <SiLangchain /> },
+    { name: "LangGraph", icon: <Workflow /> },
+    { name: "Transformers", icon: <Cpu /> },
+  ],
+  "Backend": [
+    { name: "FastAPI", icon: <SiFastapi /> },
+    { name: ".Net", icon: <SiDotnet /> },
+    { name: "Spring Boot", icon: <SiSpring /> },
+    { name: "REST APIs", icon: <Server /> },
+    { name: "Django", icon: <SiDjango /> },
+  ],
+  "Data & Infra": [
+    { name: "PostgreSQL", icon: <SiPostgresql /> },
+    { name: "TimescaleDB", icon: <Clock /> },
+    { name: "Docker", icon: <FaDocker /> },
+    { name: "Azure", icon: <VscAzure /> },
+    { name: "AWS", icon: <SiAmazonwebservices /> },
+  ],
+  "ML Tooling": [
+    { name: "PyTorch", icon: <SiPytorch /> },
+    { name: "Tensorflow", icon: <SiTensorflow /> },
+    { name: "scikit-learn", icon: <Table /> },
+    { name: "Pandas", icon: <Flame /> },
+    { name: "NumPy", icon: <Sigma /> },
+  ],
+};
 const projectsData = [
   {
     title: 'Quick Chef',
-    description: ' An AI-powered recipe discovery and generation platform that uses RAG and MCP ',
+    description: 'AI-driven culinary platform leveraging Retrieval-Augmented Generation (RAG) and Model-Context Protocol (MCP) to generate personalized recipes and optimize ingredient substitutions based on user preferences and dietary constraints.',
     link: 'https://github.com/tamara-kostova/QuickChef',
     image: '/assets/img/quickchef.png',
-  },{
+  },
+  {
     title: 'ecoGrad',
-    description: 'Eco-friendly web app - 3rd Prize at ITLabs and Best Hackaton, December 2023',
+    description: 'Sustainable lifestyle web application designed to promote eco-friendly habits. Awarded 3rd Prize at ITLabs and Best Hackathon, December 2023.',
     link: 'https://github.com/tamara-kostova/ecoGrad',
     image: '/assets/img/ecoGrad.jpg',
   },
   {
     title: 'Smart Vitals',
-    description: 'AI-powered patient monitoring system with real-time analytics.',
+    description: 'AI-enhanced patient monitoring system providing real-time analytics and predictive health scoring. Integrates time-series analysis, anomaly detection, and visualization pipelines to support proactive clinical decision-making.',
     link: 'https://github.com/tamara-kostova/Smart-Vitals',
     image: '/assets/img/smartvitals.png',
   },
   {
     title: 'Hybrid RAG',
-    description: 'Graph-enhanced retrieval-augmented generation for medical literature in the field of Alzheimer\'s.',
+    description: 'Graph-augmented retrieval-augmented generation framework for extracting and synthesizing insights from Alzheimer\'s medical literature. Combines semantic embeddings, graph neural networks, and domain-specific RAG to enhance literature search and knowledge discovery.',
     link: 'https://github.com/tamara-kostova/HybridRAG',
     image: '/assets/img/hybridrag.png',
   },
   {
     title: 'Hot and Cold',
-    description: 'Pygame maze game',
+    description: 'Algorithmically-driven Pygame maze game demonstrating pathfinding, environment simulation, and dynamic difficulty adjustment using procedural generation.',
     link: 'https://github.com/tamara-kostova/Hot-and-cold',
     video: '/assets/videos/HotAndCold.mp4',
   },
   {
     title: 'Bitcoin Price Prediction',
-    description: 'Time-series forecasting of Bitcoin prices using ML models.',
+    description: 'Time-series forecasting of cryptocurrency prices using classical ML and deep learning models. Implements feature engineering, model selection, and evaluation pipelines to optimize predictive accuracy for high-volatility financial data.',
     link: 'https://github.com/tamara-kostova/BitcoinPrediction-ML',
     image: '/assets/img/bitcoin.png',
   },
   {
-    title: 'Super Mario The Plumber, February 2020',
-    description: 'A game created in 48 hours - 1st Prize at Global Game Jam, February 2020.',
+    title: 'Super Mario The Plumber',
+    description: 'Rapid-development 48-hour game prototype that won 1st Prize at Global Game Jam, February 2020. Highlights fast prototyping, interactive design, and collaborative development under time constraints.',
     link: 'https://github.com/tamara-kostova/supermariotheplumber',
     image: '/assets/img/gamejam.jpg',
   },
   {
     title: 'AI Football',
-    description: 'Reinforcement learning-powered AI football agents - 2nd Prize at Robomac, May 2023',
+    description: 'Reinforcement learning-based AI football simulation demonstrating strategy learning, agent coordination, and competitive gameplay. Achieved 2nd Prize at RoboMac, May 2023.',
     link: 'https://github.com/tamara-kostova/RoboMac2023_AIFootball',
     image: '/assets/img/robomac.jpg',
   },
   {
     title: 'BlackJack',
-    description: 'Windows Forms BlackJack game',
+    description: 'Windows Forms-based BlackJack simulator implementing game logic, probability modeling, and interactive GUI design for a controlled user environment.',
     link: 'https://github.com/tamara-kostova/BlackJack',
     image: '/assets/img/blackjack.png',
   },
@@ -87,21 +113,21 @@ const experienceData = [
     company: 'ITQuarks, Skopje',
     date: '01/10/2024 – CURRENT',
     description:
-      'Designed and developed an RAG solution using large language models to extract data and infer compliance from documents, supporting automated insurance eligibility assessments. Built an interactive chatbot interface based on processed data for easier information access. Leading development of a mobile app built with Python and React Native, providing a multi-agent workflow with AI-driven stock analysis and personal portfolio predictions. Integrated chatbot functionality and MCP server connections to deliver predictive insights via APIs and real-time database pipelines.',
+      'Designed and deployed a multi-agent RAG pipeline using large language models to extract data and infer criteria compliance from pdf documents for automated eligibility assessments. Built an interactive chatbot interface based on processed data for easier information access. Contributed to scalable backend services using FastAPI and Python integrating ML models for real-time inference and data processing. Leading development of a mobile app built with Python and React Native, providing AI-driven stock or AI-driven stock analysis and autonomous actionable input using agentic architecture, with portfolio-specific insights and predictive reasoning agents synchronized via MCP APIs.',
   },
   {
     title: 'Machine Learning Intern',
     company: 'ITQuarks, Skopje',
     date: '01/07/2024 – 30/09/2024',
     description:
-      'Developed a Retrieval-Augmented Generation system for trading analysis based on forex signals. Created an automated system for translating WordPress websites using Large Language Models.',
+      'Developed RAG systems for forex market trading analysis using LLMs. Created automated content translation systems for WordPress websites using generative language models to produce unique and localized output',
   },
   {
     title: 'Student Researcher',
     company: 'Macedonian Academy of Sciences and Art',
     date: '15/09/2024 – 30/04/2025',
     description:
-      'Developed a hybrid RAG system combining lexical, semantic, and graph-based retrieval methods for deep analysis of neurology medical papers. Enhanced retrieval accuracy and response relevance through domain-specific model tuning.',
+      'Developed a hybrid RAG system combining lexical, semantic, and graph-based retrieval methods for deep analysis of neurology medical papers. Enhanced retrieval accuracy and response relevance through domain-specific model tuning',
   },
   {
     title: 'Software Engineering Intern',
@@ -522,25 +548,32 @@ const SkillsSection = memo(() => {
   return (
     <section id="skills" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 gradient-text">
-          Skills<span className="text-yellow-600">.</span>
+      <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-yellow-600 bg-clip-text text-transparent">
+          AI-First Expertise<span className="text-yellow-600">.</span>
         </h2>
-        <p className="text-center text-gray-600 dark:text-gray-300 mb-16 max-w-2xl mx-auto">
-          Technologies and tools I use to bring ideas to life.
+        <p className="text-center text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto text-xl">
+          Specialized in agentic AI systems, multi-agent RAG pipelines, and autonomous reasoning frameworks.
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {skillsData.map((skill, index) => (
-            <div 
-              key={index} 
-              className="group flex flex-col items-center justify-center p-6 bg-white dark:bg-[#073031] rounded-xl shadow-lg hover-lift transition-all duration-300 hover:shadow-xl animate-float"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="text-5xl mb-4 text-yellow-600 group-hover:scale-110 transition-transform duration-300 animate-glow">
-                {skill.icon}
+        <div className="space-y-12">
+          {Object.entries(skillsData).map(([category, skills], catIndex) => (
+            <div key={category}>
+              <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">{category}</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                {skills.map((skill, index) => (
+                  <div
+                    key={index}
+                    className="group flex flex-col items-center justify-center p-6 bg-white dark:bg-[#073031] rounded-xl shadow-lg hover-lift transition-all duration-300 hover:shadow-xl animate-float"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="text-5xl mb-4 text-yellow-600 group-hover:scale-110 transition-transform duration-300 animate-glow">
+                      {skill.icon}
+                    </div>
+                    <h4 className="text-lg font-bold text-center text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
+                      {skill.name}
+                    </h4>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-lg font-bold text-center text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
-                {skill.name}
-              </h3>
             </div>
           ))}
         </div>
