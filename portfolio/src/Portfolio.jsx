@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, memo, lazy, Suspense } from 'react';
-import { Github, Linkedin, Mail, ChevronUp, ExternalLink, Moon, Sun, Menu, X } from 'lucide-react';
-import { FaPython, FaJava, FaDocker, FaGit } from 'react-icons/fa';
+import { Mail, ChevronUp, ExternalLink, Moon, Sun, Menu, X, Trophy } from 'lucide-react';
+import { FaPython, FaJava, FaDocker, FaGit, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { SiCplusplus, SiC, SiFastapi, SiSpring, SiLangchain, SiPostgresql, SiAmazonwebservices, SiDotnet, SiDjango, SiTensorflow, SiPytorch } from 'react-icons/si';
 import { Brain, Database, Workflow, Cpu, Server, Clock, Flame, Table, Sigma } from 'lucide-react';
 import { VscAzure } from 'react-icons/vsc';
@@ -105,6 +105,18 @@ const projectsData = [
     link: 'https://github.com/tamara-kostova/BlackJack',
     image: '/assets/img/blackjack.png',
   },
+  {
+    title: 'LangGraph Helper Agent',
+    description: 'AI coding assistant for LangGraph and LangChain developers. Answers API questions, generates graph boilerplate, and explains constructs with context-aware responses.',
+    link: 'https://github.com/tamara-kostova/LangGraph-Helper-Agent',
+    image: '/assets/img/langgraph.png',
+  },
+  {
+    title: 'EEG Seizure Prediction',
+    description: 'Machine learning pipeline for epileptic seizure prediction from EEG signals. Combines signal processing, feature extraction, and classification to identify pre-ictal brain activity.',
+    link: 'https://github.com/tamara-kostova/EEG-epilepsy-seizure-prediction',
+    image: '/assets/img/eeg.png',
+  },
 ];
 
 const experienceData = [
@@ -113,7 +125,7 @@ const experienceData = [
     company: 'ITQuarks, Skopje',
     date: '01/10/2024 – CURRENT',
     description:
-      'Designed and deployed a multi-agent RAG pipeline using large language models to extract data and infer criteria compliance from pdf documents for automated eligibility assessments. Built an interactive chatbot interface based on processed data for easier information access. Contributed to scalable backend services using FastAPI and Python integrating ML models for real-time inference and data processing. Leading development of a mobile app built with Python and React Native, providing AI-driven stock or AI-driven stock analysis and autonomous actionable input using agentic architecture, with portfolio-specific insights and predictive reasoning agents synchronized via MCP APIs.',
+      'Designed and deployed a multi-agent RAG pipeline using large language models to extract data and infer criteria compliance from pdf documents for automated eligibility assessments. Built an interactive chatbot interface based on processed data for easier information access. Contributed to scalable backend services using FastAPI and Python integrating ML models for real-time inference and data processing. Leading development of a mobile app built with Python and React Native, providing AI-driven stock analysis and autonomous actionable input using agentic architecture, with portfolio-specific insights and predictive reasoning agents synchronized via MCP APIs.',
   },
   {
     title: 'Machine Learning Intern',
@@ -124,7 +136,7 @@ const experienceData = [
   },
   {
     title: 'Student Researcher',
-    company: 'Macedonian Academy of Sciences and Art',
+    company: 'Macedonian Academy of Sciences and Arts',
     date: '15/09/2024 – 30/04/2025',
     description:
       'Developed a hybrid RAG system combining lexical, semantic, and graph-based retrieval methods for deep analysis of neurology medical papers. Enhanced retrieval accuracy and response relevance through domain-specific model tuning',
@@ -143,12 +155,13 @@ const educationData = [
     institution: 'Faculty of Computer Science & Engineering, Skopje',
     degree: 'Master of Science in Data science in Computer Science and Engineering',
     date: '01/10/2025 – current',
-    achievements:[],
-    coursework: [ 'Data Science',
+    achievements: [],
+    coursework: ['Data Science',
       'Data Engineering',
       'Deep learning for Natural Language Processing ',
       'Applied Machine Learning',
-      'Medical Informatics',]
+      'Medical Informatics',
+      'Advanced Data Science']
   },
   {
     institution: 'Faculty of Computer Science & Engineering, Skopje',
@@ -156,9 +169,10 @@ const educationData = [
     date: '01/10/2021 – 25/06/2025',
     gpa: 'GPA: 9.72/10',
     achievements: [
-      'Awarded among the top students at FCSE with GPA above 9.5 (9.72/10.0), 2025',
-      'Awarded among the top students at FCSE with GPA above 9.5 (9.65/10.0), 2024',
-      'Awarded among the top students at FCSE with GPA above 9.5 (9.7/10.0), 2023',
+      'Awarded among the top 4th year students at FCSE with GPA above 9.5 (9.72/10.0), 2025',
+      'Awarded among the top 3rd year students at FCSE with GPA above 9.5 (9.63/10.0), 2024',
+      'Awarded among the top 2nd year students at FCSE with GPA above 9.5 (9.65/10.0), 2023',
+      'Awarded among the top 1st year students at FCSE with GPA above 9.5 (9.7/10.0), 2022',
       'Second Prize at Robomac 2023, May',
       'Third Prize at ITLabs Web Development Hackathon 2023, December',
       'First Prize at GlobalGameJam 2020, February',
@@ -212,9 +226,33 @@ const PublicationsData = [
   {
     title: 'Application of Large Language Models for Summarization of Medical Papers ',
     conference: 'ICT Innovation International Conference 2025',
-    published: 'full paper will be included in the ICT Innovations 2025 Proceedings published by Springer in Communications in Computer and Information Science Series (CCIS)'
+    published: 'Full paper will be included in the ICT Innovations 2025 Proceedings published by Springer in Communications in Computer and Information Science Series (CCIS)'
   }
 ]
+
+const blogData = [
+  {
+    title: 'Advisory 2.0: AI Investing Stack That Requests Its Own Tools',
+    outlet: 'ITQuarks Blog',
+    link: 'https://www.itquarks.com/post/advisory-2-0-ai-investing-stack-that-requests-its-own-tools',
+  },
+];
+
+const conferencesData = [
+  {
+    name: 'KSER 2024',
+    fullName: 'Kongres Studenata Elektrotehnike i Računarstva',
+    location: 'Zlatibor, Serbia',
+    year: '2024',
+  },
+  {
+    name: 'Science@FEIT 2024',
+    fullName: 'Science at Faculty of Electrical Engineering and IT',
+    location: 'Skopje, Macedonia',
+    year: '2024',
+  },
+];
+
 
 const navLinks = [
   { href: '#experience', text: 'Experience' },
@@ -280,16 +318,15 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
           <a href="#top" className="text-2xl md:text-4xl font-bold dark:text-gray-200 hover:text-yellow-600 transition-colors">
             Tamara<span className="text-yellow-600">.</span>
           </a>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map(({ href, text }) => (
               <a
                 key={text}
                 href={href}
-                className={`transition-colors ${
-                  activeSection === href.slice(1) ? 'text-yellow-600 dark:text-yellow-600' : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
-                }`}
+                className={`transition-colors ${activeSection === href.slice(1) ? 'text-yellow-600 dark:text-yellow-600' : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
+                  }`}
               >
                 {text}
               </a>
@@ -298,26 +335,26 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
               {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
             </button>
           </div>
-          
+
           {/* Desktop Social Links */}
           <div className="hidden md:flex space-x-6">
             <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-              <Github size={24} />
+              <FaGithub size={24} />
             </a>
             <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-              <Linkedin size={24} />
+              <FaLinkedin size={24} />
             </a>
             <a href="mailto:tamarakostova.bt@gmail.com" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
               <Mail size={24} />
             </a>
           </div>
-          
+
           {/* Mobile Menu Button */}
           <button onClick={toggleMobileMenu} className="md:hidden p-2 text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-        
+
         {/* Mobile Navigation Menu */}
         <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden mt-6 pb-4 border-t border-gray-200 dark:border-gray-700 pt-6`}>
           <div className="flex flex-col space-y-4">
@@ -325,18 +362,17 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
               <a
                 key={text}
                 href={href}
-                className={`text-lg py-2 px-4 rounded-lg transition-colors ${
-                  activeSection === href.slice(1) 
-                    ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400' 
-                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-lg py-2 px-4 rounded-lg transition-colors ${activeSection === href.slice(1)
+                  ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
+                  : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  }`}
+                onClick={toggleMobileMenu}
               >
                 {text}
               </a>
             ))}
           </div>
-          
+
           {/* Mobile Theme Toggle and Social Links */}
           <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
             <button onClick={toggleTheme} className="p-2 text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
@@ -344,10 +380,10 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
             </button>
             <div className="flex space-x-4">
               <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-                <Github size={20} />
+                <FaGithub size={20} />
               </a>
               <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-                <Linkedin size={20} />
+                <FaLinkedin size={20} />
               </a>
               <a href="mailto:tamarakostova.bt@gmail.com" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
                 <Mail size={20} />
@@ -364,7 +400,7 @@ const HeroSection = memo(() => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const fullText = "Hi, I'm Tamara.";
-  
+
   useEffect(() => {
     if (currentIndex < fullText.length) {
       const timeout = setTimeout(() => {
@@ -377,14 +413,7 @@ const HeroSection = memo(() => {
 
   return (
     <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50 to-yellow-50 dark:from-[#094243] dark:via-[#0a4748] dark:to-[#0b4a4c] transition-all duration-500 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-10 dark:opacity-5">
-        <div className="absolute top-20 left-20 w-32 h-32 bg-yellow-400 rounded-full animate-pulse animation-delay-0"></div>
-        <div className="absolute top-40 right-32 w-24 h-24 bg-blue-400 rounded-full animate-bounce animation-delay-1000"></div>
-        <div className="absolute bottom-32 left-32 w-20 h-20 bg-green-400 rounded-full animate-ping animation-delay-2000"></div>
-        <div className="absolute bottom-40 right-20 w-28 h-28 bg-purple-400 rounded-full animate-pulse animation-delay-3000"></div>
-      </div>
-      
+
       <div className="text-center z-10 animate-fade-in-up">
         <div className="mb-8">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-gray-900 via-yellow-600 to-gray-900 dark:from-white dark:via-yellow-400 dark:to-white bg-clip-text text-transparent leading-tight">
@@ -392,18 +421,18 @@ const HeroSection = memo(() => {
           </h1>
           <div className="h-2 w-32 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto rounded-full animate-pulse"></div>
         </div>
-        
+
         <p className="text-xl md:text-2xl mb-6 font-medium text-gray-700 dark:text-gray-200 animate-fade-in-up animation-delay-1000">
           I build things for the web and beyond.
         </p>
-        
+
         <p className="text-lg md:text-xl dark:text-gray-300 text-gray-600 mt-4 mb-12 max-w-2xl mx-auto px-4 animate-fade-in-up animation-delay-1500">
           Passionate about <span className="text-yellow-600 font-semibold">AI</span>, <span className="text-yellow-600 font-semibold">Machine Learning</span>, and creating innovative software solutions that make a difference.
         </p>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-2000">
-          <a 
-            href="#projects" 
+          <a
+            href="#projects"
             className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-full hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium text-lg"
           >
             <span className="mr-2">View My Work</span>
@@ -411,9 +440,9 @@ const HeroSection = memo(() => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
-          
-          <a 
-            href="#contact" 
+
+          <a
+            href="#contact"
             className="group inline-flex items-center px-8 py-4 border-2 border-yellow-600 text-yellow-600 dark:text-yellow-400 rounded-full hover:bg-yellow-600 hover:text-white dark:hover:bg-yellow-600 dark:hover:text-white transition-all duration-300 transform hover:scale-105 font-medium text-lg"
           >
             <span className="mr-2">Get In Touch</span>
@@ -422,7 +451,7 @@ const HeroSection = memo(() => {
             </svg>
           </a>
         </div>
-        
+
         <div className="mt-20 animate-bounce animation-delay-3000">
           <a href="#experience" className="inline-block text-gray-400 hover:text-yellow-600 transition-all duration-300 hover:scale-110">
             <div className="flex flex-col items-center">
@@ -450,9 +479,8 @@ const ExperienceSection = memo(({ isVisible }) => {
             <div
               key={index}
               data-animate={`experience-${index}`}
-              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${
-                isVisible[`experience-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-              }`}
+              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg border-l-4 border-yellow-500 transition-all duration-500 ${isVisible[`experience-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                }`}
             >
               <h3 className="text-2xl font-bold mb-2">{exp.title}</h3>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{exp.company}</p>
@@ -470,20 +498,16 @@ const ProjectsSection = memo(({ isVisible }) => {
   return (
     <section id="projects" className="py-20 bg-gray-50 dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 gradient-text leading-tight md:leading-snug">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
           My Projects<span className="text-yellow-600">.</span>
         </h2>
-        <p className="text-center text-gray-600 dark:text-gray-300 mb-16 max-w-2xl mx-auto">
-          A collection of projects showcasing my passion for innovative solutions and cutting-edge technology.
-        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projectsData.map((project, index) => (
             <div
               key={index}
               data-animate={`project-${index}`}
-              className={`group relative overflow-hidden rounded-xl bg-white dark:bg-[#073031] shadow-lg hover-lift transition-all duration-500 ${
-                isVisible[`project-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-              }`}
+              className={`group relative overflow-hidden rounded-xl bg-white dark:bg-[#073031] shadow-lg hover-lift transition-all duration-500 ${isVisible[`project-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                }`}
             >
               <div className="relative overflow-hidden rounded-t-xl">
                 {project.video ? (
@@ -511,12 +535,16 @@ const ProjectsSection = memo(({ isVisible }) => {
                       </div>
                     </button>
                   </div>
-                ) : (
+                ) : project.image ? (
                   <img src={project.image} alt={project.title} className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" />
+                ) : (
+                  <div className={`w-full h-64 bg-gradient-to-br ${project.gradient || 'from-gray-600 to-gray-800'} flex items-center justify-center`}>
+                    <span className="text-white font-bold select-none" style={{ fontSize: '5rem', opacity: 0.15 }}>{project.title.charAt(0)}</span>
+                  </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-              
+
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
                   {project.title}
@@ -525,9 +553,9 @@ const ProjectsSection = memo(({ isVisible }) => {
                   {project.description}
                 </p>
                 {project.link && (
-                  <a 
-                    href={project.link} 
-                    target="_blank" 
+                  <a
+                    href={project.link}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-yellow-600 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300 font-medium transition-colors group/link"
                   >
@@ -548,24 +576,23 @@ const SkillsSection = memo(() => {
   return (
     <section id="skills" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
-      <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-yellow-600 bg-clip-text text-transparent">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
           AI-First Expertise<span className="text-yellow-600">.</span>
         </h2>
         <p className="text-center text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto text-xl">
           Specialized in agentic AI systems, multi-agent RAG pipelines, and autonomous reasoning frameworks.
         </p>
         <div className="space-y-12">
-          {Object.entries(skillsData).map(([category, skills], catIndex) => (
+          {Object.entries(skillsData).map(([category, skills]) => (
             <div key={category}>
               <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">{category}</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {skills.map((skill, index) => (
                   <div
                     key={index}
-                    className="group flex flex-col items-center justify-center p-6 bg-white dark:bg-[#073031] rounded-xl shadow-lg hover-lift transition-all duration-300 hover:shadow-xl animate-float"
-                    style={{ animationDelay: `${index * 0.1}s` }}
+                    className="group flex flex-col items-center justify-center p-6 bg-white dark:bg-[#073031] rounded-xl shadow-lg hover-lift transition-all duration-300 hover:shadow-xl"
                   >
-                    <div className="text-5xl mb-4 text-yellow-600 group-hover:scale-110 transition-transform duration-300 animate-glow">
+                    <div className="text-5xl mb-4 text-yellow-600 group-hover:scale-110 transition-transform duration-300">
                       {skill.icon}
                     </div>
                     <h4 className="text-lg font-bold text-center text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
@@ -577,6 +604,7 @@ const SkillsSection = memo(() => {
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
@@ -594,19 +622,23 @@ const EducationSection = memo(({ isVisible }) => {
             <div
               key={index}
               data-animate={`education-${index}`}
-              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${
-                isVisible[`education-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-              }`}
+              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${isVisible[`education-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                }`}
             >
               <h3 className="text-2xl font-bold mb-2">{edu.institution}</h3>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{edu.degree}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{edu.date}</p>
               {edu.gpa && <p className="text-gray-700 dark:text-gray-200 mb-4">{edu.gpa}</p>}
-              <ul className="list-disc list-inside text-gray-700 dark:text-gray-200">
-                {edu.achievements.map((achievement, i) => (
-                  <li key={i}>{achievement}</li>
-                ))}
-              </ul>
+              {edu.achievements.length > 0 && (
+                <ul className="space-y-2 mb-4">
+                  {edu.achievements.map((achievement, i) => (
+                    <li key={i} className="flex items-start gap-2 text-gray-700 dark:text-gray-200">
+                      <Trophy className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span>{achievement}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
               {edu.coursework && (
                 <div>
                   <h4 className="text-xl font-bold mb-4">Relevant Coursework</h4>
@@ -634,9 +666,8 @@ const CerticatesSection = memo(({ isVisible }) => {
             <div
               key={index}
               data-animate={`certifications-${index}`}
-              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${
-                isVisible[`certifications-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-              }`}
+              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${isVisible[`certifications-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                }`}
             >
               <h3 className="text-2xl font-bold mb-2">{cert.institution}</h3>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{cert.degree}</p>
@@ -658,20 +689,64 @@ const PublicationsSection = memo(({ isVisible }) => {
         <h2 className="text-4xl font-bold text-center mb-16">
           Publications<span className="text-yellow-600">.</span>
         </h2>
-        <div className="space-y-8">
+        <div className="space-y-8 mb-16">
           {PublicationsData.map((pub, index) => (
             <div
               key={index}
               data-animate={`publications-${index}`}
-              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${
-                isVisible[`publications-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-              }`}
+              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${isVisible[`publications-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                }`}
             >
               <h3 className="text-2xl font-bold mb-2">{pub.title}</h3>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{pub.conference}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{pub.published}</p>
             </div>
           ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
+              Writing<span className="text-yellow-600">.</span>
+            </h3>
+            <div className="flex flex-col gap-4">
+              {blogData.map((post, index) => (
+                <a
+                  key={index}
+                  href={post.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 px-5 py-4 bg-white dark:bg-[#073031] rounded-xl shadow-lg hover-lift transition-all duration-300 group"
+                >
+                  <div className="mt-1 w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0"></div>
+                  <div>
+                    <p className="font-bold text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">{post.title}</p>
+                    <p className="text-sm text-yellow-600 dark:text-yellow-400 font-medium mt-1 flex items-center gap-1">
+                      {post.outlet} <ExternalLink className="w-3 h-3" />
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
+              Conferences<span className="text-yellow-600">.</span>
+            </h3>
+            <div className="flex flex-col gap-4">
+              {conferencesData.map((conf, index) => (
+                <div key={index} className="flex items-start gap-4 px-5 py-4 bg-white dark:bg-[#073031] rounded-xl shadow-lg hover-lift transition-all duration-300">
+                  <div className="mt-1 w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0"></div>
+                  <div>
+                    <p className="font-bold text-gray-900 dark:text-white">{conf.name}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{conf.fullName}</p>
+                    <p className="text-sm text-yellow-600 dark:text-yellow-400 font-medium mt-1">{conf.location} · {conf.year}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -688,12 +763,12 @@ const CallToActionSection = memo(() => {
             Ready to Build Something Amazing?
           </h2>
           <p className="text-lg md:text-xl mb-8 opacity-90 animate-fade-in-up animation-delay-500">
-            I'm always excited to work on innovative projects that push the boundaries of technology. 
+            I'm always excited to work on innovative projects that push the boundaries of technology.
             Let's collaborate and create something extraordinary together.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-1000">
-            <a 
-              href="#contact" 
+            <a
+              href="#contact"
               className="inline-flex items-center px-8 py-4 bg-white text-yellow-600 rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 font-semibold text-lg shadow-lg hover:shadow-xl"
             >
               <span className="mr-2">Start a Project</span>
@@ -701,14 +776,14 @@ const CallToActionSection = memo(() => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
-            <a 
-              href="https://github.com/tamara-kostova" 
+            <a
+              href="https://github.com/tamara-kostova"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 border-2 border-white text-white rounded-full hover:bg-white hover:text-yellow-600 transition-all duration-300 transform hover:scale-105 font-semibold text-lg"
             >
               <span className="mr-2">View GitHub</span>
-              <Github className="w-5 h-5" />
+              <FaGithub className="w-5 h-5" />
             </a>
           </div>
         </div>
@@ -727,41 +802,41 @@ const ContactSection = memo(() => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
-  
+
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
     }
-    
+
     if (!formData.subject.trim()) {
       newErrors.subject = 'Subject is required';
     }
-    
+
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required';
     } else if (formData.message.trim().length < 10) {
       newErrors.message = 'Message should be at least 10 characters long';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
@@ -770,17 +845,17 @@ const ContactSection = memo(() => {
       }));
     }
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
     setSubmitStatus(null);
-    
+
     try {
       // Create template parameters for EmailJS
       const templateParams = {
@@ -790,18 +865,18 @@ const ContactSection = memo(() => {
         message: formData.message,
         to_email: 'tamarakostova.bt@gmail.com',
       };
-      
+
       // Send email using EmailJS
       await emailjs.send(
-        emailConfig.serviceID, 
-        emailConfig.templateID, 
-        templateParams, 
+        emailConfig.serviceID,
+        emailConfig.templateID,
+        templateParams,
         emailConfig.publicKey
       );
-      
+
       setSubmitStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
-      
+
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitStatus('error');
@@ -809,7 +884,7 @@ const ContactSection = memo(() => {
       setIsSubmitting(false);
     }
   };
-  
+
   return (
     <section id="contact" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
@@ -834,20 +909,20 @@ const ContactSection = memo(() => {
                   <p className="text-gray-600 dark:text-gray-300">tamarakostova.bt@gmail.com</p>
                 </div>
               </a>
-              
+
               <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-[#073031] rounded-xl hover-lift transition-all duration-300">
                 <div className="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center">
-                  <Linkedin className="w-6 h-6 text-white" />
+                  <FaLinkedin className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">LinkedIn</h4>
                   <p className="text-gray-600 dark:text-gray-300">linkedin.com/in/tamara-kostova</p>
                 </div>
               </a>
-              
+
               <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-[#073031] rounded-xl hover-lift transition-all duration-300">
                 <div className="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center">
-                  <Github className="w-6 h-6 text-white" />
+                  <FaGithub className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">GitHub</h4>
@@ -856,7 +931,7 @@ const ContactSection = memo(() => {
               </a>
             </div>
           </div>
-          
+
           <div className="bg-white dark:bg-[#073031] p-8 rounded-2xl shadow-xl hover-lift">
             {submitStatus === 'success' && (
               <div className="mb-6 p-4 bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-600 rounded-lg">
@@ -868,7 +943,7 @@ const ContactSection = memo(() => {
                 </div>
               </div>
             )}
-            
+
             {submitStatus === 'error' && (
               <div className="mb-6 p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 rounded-lg">
                 <div className="flex items-center">
@@ -879,7 +954,7 @@ const ContactSection = memo(() => {
                 </div>
               </div>
             )}
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -890,11 +965,10 @@ const ContactSection = memo(() => {
                     type="text"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-lg border ${
-                      errors.name 
-                        ? 'border-red-500 focus:ring-red-500' 
-                        : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
-                    } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 transition-all duration-300`}
+                    className={`w-full px-4 py-3 rounded-lg border ${errors.name
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
+                      } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 transition-all duration-300`}
                     placeholder="Your Name"
                     disabled={isSubmitting}
                   />
@@ -908,11 +982,10 @@ const ContactSection = memo(() => {
                     type="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-lg border ${
-                      errors.email 
-                        ? 'border-red-500 focus:ring-red-500' 
-                        : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
-                    } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 transition-all duration-300`}
+                    className={`w-full px-4 py-3 rounded-lg border ${errors.email
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
+                      } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 transition-all duration-300`}
                     placeholder="your.email@example.com"
                     disabled={isSubmitting}
                   />
@@ -927,11 +1000,10 @@ const ContactSection = memo(() => {
                   type="text"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.subject 
-                      ? 'border-red-500 focus:ring-red-500' 
-                      : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
-                  } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 transition-all duration-300`}
+                  className={`w-full px-4 py-3 rounded-lg border ${errors.subject
+                    ? 'border-red-500 focus:ring-red-500'
+                    : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
+                    } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 transition-all duration-300`}
                   placeholder="What's this about?"
                   disabled={isSubmitting}
                 />
@@ -944,11 +1016,10 @@ const ContactSection = memo(() => {
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.message 
-                      ? 'border-red-500 focus:ring-red-500' 
-                      : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
-                  } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 h-32 resize-none transition-all duration-300`}
+                  className={`w-full px-4 py-3 rounded-lg border ${errors.message
+                    ? 'border-red-500 focus:ring-red-500'
+                    : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
+                    } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 h-32 resize-none transition-all duration-300`}
                   placeholder="Let's discuss your project..."
                   disabled={isSubmitting}
                 />
@@ -989,10 +1060,10 @@ const Footer = memo(() => {
           </div>
           <div className="flex space-x-6">
             <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-600 dark:text-gray-200 transition-colors">
-              <Github size={24} />
+              <FaGithub size={24} />
             </a>
             <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-600 dark:text-gray-200 transition-colors">
-              <Linkedin size={24} />
+              <FaLinkedin size={24} />
             </a>
             <a href="mailto:tamarakostova.bt@gmail.com" className="hover:text-yellow-600 dark:text-gray-200 transition-colors">
               <Mail size={24} />
@@ -1016,7 +1087,7 @@ const Portfolio = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  
+
   // Custom styles for animations
   const customStyles = `
     @keyframes fade-in-up {
@@ -1116,7 +1187,7 @@ const Portfolio = () => {
       }));
     });
 
-    const sections = ['experience', 'projects', 'skills', 'education', 'certifications', 'publications','contact'];
+    const sections = ['experience', 'projects', 'skills', 'education', 'certifications', 'publications', 'contact'];
     let currentSection = '';
 
     sections.forEach((section) => {
@@ -1154,7 +1225,7 @@ const Portfolio = () => {
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen((prev) => !prev);
   }, []);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -1189,8 +1260,8 @@ const Portfolio = () => {
           <ContactSection />
           <Footer />
           {showScrollTop && (
-            <button 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="fixed bottom-8 right-8 p-3 bg-yellow-600 text-white rounded-full shadow-lg hover:bg-yellow-700 transition-all duration-300 transform hover:scale-110 animate-glow"
               aria-label="Scroll to top"
             >
