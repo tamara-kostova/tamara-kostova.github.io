@@ -125,7 +125,7 @@ const experienceData = [
     company: 'ITQuarks, Skopje',
     date: '01/10/2024 – CURRENT',
     description:
-      'Designed and deployed a multi-agent RAG pipeline using large language models to extract data and infer criteria compliance from pdf documents for automated eligibility assessments. Built an interactive chatbot interface based on processed data for easier information access. Contributed to scalable backend services using FastAPI and Python integrating ML models for real-time inference and data processing. Leading development of a mobile app built with Python and React Native, providing AI-driven stock analysis and autonomous actionable input using agentic architecture, with portfolio-specific insights and predictive reasoning agents synchronized via MCP APIs.',
+      'Architecting a HIPAA-aware, enterprise-grade document intelligence platform that orchestrates a swarm of specialized AI agents with no-code DMN rules for deterministic compliance validation and multi-LLM optimization — with compliance templates in production across healthcare, insurance, transportation, and food domains. Designed the end-to-end pipeline covering document ingestion, ambiguity resolution, structured extraction, policy validation, and auditable decision routing. Previously led the multi-agent backend for an AI investing platform (iOS & Android) built with a Strands Agents orchestrator that coordinates market data, financial news, user management, and push notification agents as callable tools. The system monitors users\' portfolios in the background, applies dynamic significance thresholds to filter noise, and delivers proactive, personalized insights without requiring user prompting. Contributed to scalable backend services using FastAPI and Python, integrating ML models for real-time inference and data processing.',
   },
   {
     title: 'Machine Learning Intern',
@@ -222,7 +222,7 @@ const certificationsData = [
     credential: 'https://learn.microsoft.com/api/credentials/share/en-gb/TamaraKostova-0989/1A1288009E6F3DBF?sharingId=BA860F445F708AE9'
   }]
 
-const PublicationsData = [
+const publicationsData = [
   {
     title: 'Application of Large Language Models for Summarization of Medical Papers ',
     conference: 'ICT Innovation International Conference 2025',
@@ -254,6 +254,18 @@ const conferencesData = [
 ];
 
 
+const currentProject = {
+  title: 'Multi-Agent Neuroimaging Classifier',
+  description: 'LangGraph pipeline for automated classification of brain tumour, multiple sclerosis, and stroke from MRI/CT scans — combining a MedGemma triage agent, task-specific CNNs, SAM3 segmentation, and BiomedCLIP zero-shot re-ranking into a single auditable graph.',
+  stack: ['LangGraph', 'MedGemma', 'VGG16 / DenseNet / ResNet', 'SAM3', 'BiomedCLIP'],
+  highlights: [
+    'Binary tumour — 100% accuracy',
+    'Multiclass tumour — 99.0% accuracy',
+    'Stroke — 97.7% accuracy',
+    'SAM3 segmentation Dice = 0.836',
+  ],
+};
+
 const navLinks = [
   { href: '#experience', text: 'Experience' },
   { href: '#projects', text: 'Projects' },
@@ -264,51 +276,43 @@ const navLinks = [
   { href: '#contact', text: 'Contact' },
 ];
 
-const TagCloud = ({ coursework }) => {
-  const tagCloudStyles = `
-    .tag-cloud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-    }
-    .tag {
-      padding: 8px 16px;
-      background-color: #f3f4f6;
-      color: #1f2937;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-    .tag:hover {
-      background-color: #f59e0b;
-      color: white;
-      transform: scale(1.1);
-    }
-    .dark .tag {
-      background-color: #374151;
-      color: #f3f4f6;
-    }
-    .dark .tag:hover {
-      background-color: #f59e0b;
-      color: white;
-    }
-  `;
-
-  return (
-    <div>
-      <style>{tagCloudStyles}</style>
-      <div className="tag-cloud">
-        {coursework.map((course, i) => (
-          <div key={i} className="tag">
-            {course}
+const CurrentlyBuildingSection = memo(() => (
+  <section className="py-6 bg-white dark:bg-[#094243]">
+    <div className="container mx-auto px-4">
+      <div className="max-w-4xl mx-auto p-6 rounded-2xl border border-dashed border-yellow-400 dark:border-yellow-600 bg-yellow-50/40 dark:bg-yellow-900/10">
+        <div className="flex flex-col sm:flex-row sm:items-start gap-5">
+          <div className="flex-shrink-0 flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 dark:text-yellow-500">Currently building</span>
           </div>
-        ))}
+          <div className="flex-1">
+            <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-1">{currentProject.title}</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">{currentProject.description}</p>
+            <div className="flex flex-wrap gap-2">
+              {currentProject.stack.map((s, i) => (
+                <span key={i} className="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-700">
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  );
-};
+  </section>
+));
+
+const TagCloud = ({ coursework }) => (
+  <div className="flex flex-wrap gap-2.5 justify-center">
+    {coursework.map((course, i) => (
+      <div
+        key={i}
+        className="px-4 py-2 bg-gray-100 dark:bg-[#374151] text-gray-800 dark:text-gray-100 rounded-full text-sm font-medium transition-all duration-300 hover:bg-yellow-400 hover:text-white hover:scale-110 cursor-default"
+      >
+        {course}
+      </div>
+    ))}
+  </div>
+);
 
 const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMenu, activeSection }) => {
   return (
@@ -396,20 +400,21 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
   );
 });
 
+const heroFullText = "Hi, I'm Tamara.";
+
 const HeroSection = memo(() => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const fullText = "Hi, I'm Tamara.";
 
   useEffect(() => {
-    if (currentIndex < fullText.length) {
+    if (currentIndex < heroFullText.length) {
       const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + fullText[currentIndex]);
+        setDisplayText(prev => prev + heroFullText[currentIndex]);
         setCurrentIndex(prev => prev + 1);
       }, 100);
       return () => clearTimeout(timeout);
     }
-  }, [currentIndex, fullText]);
+  }, [currentIndex]);
 
   return (
     <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50 to-yellow-50 dark:from-[#094243] dark:via-[#0a4748] dark:to-[#0b4a4c] transition-all duration-500 overflow-hidden">
@@ -521,6 +526,7 @@ const ProjectsSection = memo(({ isVisible }) => {
                         e.preventDefault();
                         e.currentTarget.previousElementSibling.play();
                       }}
+                      aria-label="Play video"
                       className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     >
                       <div className="w-16 h-16 bg-yellow-600 rounded-full flex items-center justify-center animate-pulse">
@@ -572,39 +578,60 @@ const ProjectsSection = memo(({ isVisible }) => {
   );
 });
 
-const SkillsSection = memo(() => {
+const SkillsSection = memo(({ isVisible }) => {
+  const featured = ['AI / ML', 'ML Tooling'];
+  const compact = ['Languages', 'Backend', 'Data & Infra'];
+
   return (
     <section id="skills" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
-          AI-First Expertise<span className="text-yellow-600">.</span>
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
+          Skills<span className="text-yellow-600">.</span>
         </h2>
-        <p className="text-center text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto text-xl">
-          Specialized in agentic AI systems, multi-agent RAG pipelines, and autonomous reasoning frameworks.
-        </p>
         <div className="space-y-12">
-          {Object.entries(skillsData).map(([category, skills]) => (
-            <div key={category}>
-              <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">{category}</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                {skills.map((skill, index) => (
+          {featured.map(category => (
+            <div
+              key={category}
+              data-animate={`skills-${category}`}
+              className={`transition-all duration-500 ${isVisible[`skills-${category}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
+            >
+              <h3 className="text-xl font-semibold mb-4 text-gray-500 dark:text-gray-400 uppercase tracking-widest text-sm">{category}</h3>
+              <div className="flex flex-wrap gap-3">
+                {skillsData[category].map((skill, index) => (
                   <div
                     key={index}
-                    className="group flex flex-col items-center justify-center p-6 bg-white dark:bg-[#073031] rounded-xl shadow-lg hover-lift transition-all duration-300 hover:shadow-xl"
+                    className="group flex items-center gap-3 px-5 py-3 bg-white dark:bg-[#073031] rounded-xl shadow hover-lift transition-all duration-300 border border-transparent hover:border-yellow-500"
                   >
-                    <div className="text-5xl mb-4 text-yellow-600 group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-2xl text-yellow-600 group-hover:scale-110 transition-transform duration-300">
                       {skill.icon}
-                    </div>
-                    <h4 className="text-lg font-bold text-center text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
+                    </span>
+                    <span className="font-semibold text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
                       {skill.name}
-                    </h4>
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-        </div>
 
+          <div
+            data-animate="skills-compact"
+            className={`transition-all duration-500 ${isVisible['skills-compact'] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
+          >
+            <h3 className="text-xl font-semibold mb-4 text-gray-500 dark:text-gray-400 uppercase tracking-widest text-sm">Also in my toolbox</h3>
+            <div className="flex flex-wrap gap-3 max-w-3xl">
+              {compact.flatMap(cat => skillsData[cat]).map((skill, i) => (
+                <span
+                  key={i}
+                  className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-[#073031] rounded-full text-gray-700 dark:text-gray-300 font-medium text-sm hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors cursor-default"
+                >
+                  <span className="text-yellow-600 text-sm">{skill.icon}</span>
+                  {skill.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -641,7 +668,7 @@ const EducationSection = memo(({ isVisible }) => {
               )}
               {edu.coursework && (
                 <div>
-                  <h4 className="text-xl font-bold mb-4">Relevant Coursework</h4>
+                  <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-600 dark:text-gray-300 mb-3">Relevant Coursework</h4>
                   <TagCloud coursework={edu.coursework} />
                 </div>
               )}
@@ -654,7 +681,7 @@ const EducationSection = memo(({ isVisible }) => {
 });
 
 
-const CerticatesSection = memo(({ isVisible }) => {
+const CertificatesSection = memo(({ isVisible }) => {
   return (
     <section id="certifications" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
@@ -690,7 +717,7 @@ const PublicationsSection = memo(({ isVisible }) => {
           Publications<span className="text-yellow-600">.</span>
         </h2>
         <div className="space-y-8 mb-16">
-          {PublicationsData.map((pub, index) => (
+          {publicationsData.map((pub, index) => (
             <div
               key={index}
               data-animate={`publications-${index}`}
@@ -1250,11 +1277,12 @@ const Portfolio = () => {
             activeSection={activeSection}
           />
           <HeroSection />
+          {/* <CurrentlyBuildingSection /> */}
           <ExperienceSection isVisible={isVisible} />
           <ProjectsSection isVisible={isVisible} />
-          <SkillsSection />
+          <SkillsSection isVisible={isVisible} />
           <EducationSection isVisible={isVisible} />
-          <CerticatesSection isVisible={isVisible} />
+          <CertificatesSection isVisible={isVisible} />
           <PublicationsSection isVisible={isVisible} />
           <CallToActionSection />
           <ContactSection />
