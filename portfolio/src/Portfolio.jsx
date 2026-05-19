@@ -125,7 +125,7 @@ const experienceData = [
     company: 'ITQuarks, Skopje',
     date: '01/10/2024 – CURRENT',
     description:
-      'Architecting a HIPAA-aware, enterprise-grade document intelligence platform that orchestrates a swarm of specialized AI agents with no-code DMN rules for deterministic compliance validation and multi-LLM optimization — with compliance templates in production across healthcare, insurance, transportation, and food domains. Designed the end-to-end pipeline covering document ingestion, ambiguity resolution, structured extraction, policy validation, and auditable decision routing. Previously led the multi-agent backend for an AI investing platform (iOS & Android) built with a Strands Agents orchestrator that coordinates market data, financial news, user management, and push notification agents as callable tools. The system monitors users\' portfolios in the background, applies dynamic significance thresholds to filter noise, and delivers proactive, personalized insights without requiring user prompting. Contributed to scalable backend services using FastAPI and Python, integrating ML models for real-time inference and data processing.',
+      'Architecting a HIPAA-aware, enterprise-grade document intelligence platform that orchestrates a swarm of specialized AI agents with no-code DMN rules for deterministic compliance validation and multi-LLM optimization - with compliance templates in production across healthcare, insurance, transportation, and food domains. Designed the end-to-end pipeline covering document ingestion, ambiguity resolution, structured extraction, policy validation, and auditable decision routing. Previously led the multi-agent backend for an AI investing platform (iOS & Android) built with a Strands Agents orchestrator that coordinates market data, financial news, user management, and push notification agents as callable tools. The system monitors users\' portfolios in the background, applies dynamic significance thresholds to filter noise, and delivers proactive, personalized insights without requiring user prompting. Contributed to scalable backend services using FastAPI and Python, integrating ML models for real-time inference and data processing.',
   },
   {
     title: 'Machine Learning Intern',
@@ -256,12 +256,12 @@ const conferencesData = [
 
 const currentProject = {
   title: 'Multi-Agent Neuroimaging Classifier',
-  description: 'LangGraph pipeline for automated classification of brain tumour, multiple sclerosis, and stroke from MRI/CT scans — combining a MedGemma triage agent, task-specific CNNs, SAM3 segmentation, and BiomedCLIP zero-shot re-ranking into a single auditable graph.',
+  description: 'LangGraph pipeline for automated classification of brain tumour, multiple sclerosis, and stroke from MRI/CT scans - combining a MedGemma triage agent, task-specific CNNs, SAM3 segmentation, and BiomedCLIP zero-shot re-ranking into a single auditable graph.',
   stack: ['LangGraph', 'MedGemma', 'VGG16 / DenseNet / ResNet', 'SAM3', 'BiomedCLIP'],
   highlights: [
-    'Binary tumour — 100% accuracy',
-    'Multiclass tumour — 99.0% accuracy',
-    'Stroke — 97.7% accuracy',
+    'Binary tumour - 100% accuracy',
+    'Multiclass tumour - 99.0% accuracy',
+    'Stroke - 97.7% accuracy',
     'SAM3 segmentation Dice = 0.836',
   ],
 };
