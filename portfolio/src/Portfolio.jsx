@@ -224,7 +224,12 @@ const certificationsData = [
 
 const publicationsData = [
   {
-    title: 'Application of Large Language Models for Summarization of Medical Papers ',
+    title: 'Optimizing Visual Feature Extraction in Multimodal Transformers for Neuroimaging Classification',
+    conference: 'MIPRO 2026',
+    published: 'Full paper will be included in the MIPRO 2026 Conference Proceedings volume and the IEEE Xplore Digital Library'
+  },
+  {
+    title: 'Application of Large Language Models for Summarization of Medical Papers',
     conference: 'ICT Innovation International Conference 2025',
     published: 'Full paper will be included in the ICT Innovations 2025 Proceedings published by Springer in Communications in Computer and Information Science Series (CCIS)'
   }
@@ -239,6 +244,18 @@ const blogData = [
 ];
 
 const conferencesData = [
+  {
+    name: 'MIPRO 2026',
+    fullName: 'MIPRO',
+    location: 'Opatija, Croatia',
+    year: '2026',
+  },
+  {
+    name: 'ICT Innovations 2025',
+    fullName: 'ICT Innovations conference',
+    location: 'Ohrid, Macedonia',
+    year: '2025',
+  },
   {
     name: 'KSER 2024',
     fullName: 'Kongres Studenata Elektrotehnike i Računarstva',
