@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, memo, lazy, Suspense } from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, ChevronUp, ExternalLink, Moon, Sun, Menu, X, Trophy } from 'lucide-react';
 import { FaPython, FaJava, FaDocker, FaGit, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { SiCplusplus, SiC, SiFastapi, SiSpring, SiLangchain, SiPostgresql, SiAmazonwebservices, SiDotnet, SiDjango, SiTensorflow, SiPytorch } from 'react-icons/si';
+import { SiCplusplus, SiC, SiFastapi, SiSpring, SiLangchain, SiPostgresql, SiAmazonwebservices, SiDotnet, SiDjango, SiTensorflow, SiPytorch, SiSupabase } from 'react-icons/si';
 import { Brain, Database, Workflow, Cpu, Server, Clock, Flame, Table, Sigma } from 'lucide-react';
 import { VscAzure } from 'react-icons/vsc';
 import emailjs from '@emailjs/browser';
@@ -38,9 +39,11 @@ const skillsData = {
   "Data & Infra": [
     { name: "PostgreSQL", icon: <SiPostgresql /> },
     { name: "TimescaleDB", icon: <Clock /> },
+    { name: "Supabase", icon: <SiSupabase /> },
     { name: "Docker", icon: <FaDocker /> },
     { name: "Azure", icon: <VscAzure /> },
     { name: "AWS", icon: <SiAmazonwebservices /> },
+    { name: "Git", icon: <FaGit /> },
   ],
   "ML Tooling": [
     { name: "PyTorch", icon: <SiPytorch /> },
@@ -50,42 +53,76 @@ const skillsData = {
     { name: "NumPy", icon: <Sigma /> },
   ],
 };
+
+const HeroPatch = () => (
+  <>
+    <p className="text-xl md:text-2xl mb-6 font-medium text-gray-700 dark:text-gray-200 animate-fade-in-up animation-delay-1000">
+      I build AI systems that do real work.
+    </p>
+    <p className="text-lg md:text-xl dark:text-gray-300 text-gray-600 mt-4 mb-12 max-w-2xl mx-auto px-4 animate-fade-in-up animation-delay-1500">
+      Multi-agent platforms in production, neuroimaging pipelines, RAG systems that actually retrieve the right thing. Based in Skopje - working on problems
+      that matter in <span className="text-yellow-600 font-semibold">medical AI</span> and{" "}
+      <span className="text-yellow-600 font-semibold">intelligent automation</span>.
+    </p>
+  </>
+);
+
 const projectsData = [
   {
     title: 'Quick Chef',
-    description: 'AI-driven culinary platform leveraging Retrieval-Augmented Generation (RAG) and Model-Context Protocol (MCP) to generate personalized recipes and optimize ingredient substitutions based on user preferences and dietary constraints.',
+    description:
+      'AI culinary platform using RAG and MCP to generate personalised recipes based on what you actually have and what you can actually eat. Built this partly to explore MCP in a context where tool-calling makes genuine UX sense - ingredient substitution is a retrieval problem dressed up as cooking advice.',
     link: 'https://github.com/tamara-kostova/QuickChef',
     image: '/assets/img/quickchef.png',
   },
   {
-    title: 'ecoGrad',
-    description: 'Sustainable lifestyle web application designed to promote eco-friendly habits. Awarded 3rd Prize at ITLabs and Best Hackathon, December 2023.',
-    link: 'https://github.com/tamara-kostova/ecoGrad',
-    image: '/assets/img/ecoGrad.jpg',
+    title: 'LangGraph Helper Agent',
+    description:
+      'AI coding assistant specifically for LangGraph and LangChain developers. Answers API questions, generates graph boilerplate, and explains constructs - built because the official docs are dense and I kept getting the same questions wrong before I understood the framework well enough.',
+    link: 'https://github.com/tamara-kostova/LangGraph-Helper-Agent',
+    image: '/assets/img/langgraph.png',
   },
   {
-    title: 'Smart Vitals',
-    description: 'AI-enhanced patient monitoring system providing real-time analytics and predictive health scoring. Integrates time-series analysis, anomaly detection, and visualization pipelines to support proactive clinical decision-making.',
-    link: 'https://github.com/tamara-kostova/Smart-Vitals',
-    image: '/assets/img/smartvitals.png',
-  },
-  {
-    title: 'Hybrid RAG',
-    description: 'Graph-augmented retrieval-augmented generation framework for extracting and synthesizing insights from Alzheimer\'s medical literature. Combines semantic embeddings, graph neural networks, and domain-specific RAG to enhance literature search and knowledge discovery.',
+    title: 'Hybrid RAG for Medical Literature',
+    description:
+      'Built for Alzheimer\'s research at the Macedonian Academy - combines BM25 keyword search, dense embeddings, and knowledge graphs to retrieve relevant neurology papers. The hybrid approach consistently outperformed any single retrieval method on specialist queries where terminology matters.',
     link: 'https://github.com/tamara-kostova/HybridRAG',
     image: '/assets/img/hybridrag.png',
   },
   {
-    title: 'Hot and Cold',
-    description: 'Algorithmically-driven Pygame maze game demonstrating pathfinding, environment simulation, and dynamic difficulty adjustment using procedural generation.',
-    link: 'https://github.com/tamara-kostova/Hot-and-cold',
-    video: '/assets/videos/HotAndCold.mp4',
+    title: 'Smart Vitals',
+    description:
+      'Patient monitoring system with real-time analytics and predictive health scoring. Integrates time-series analysis and anomaly detection to flag deteriorating vitals before they become clinical emergencies. Built to explore what proactive monitoring looks like when you move beyond threshold alerts.',
+    link: 'https://github.com/tamara-kostova/Smart-Vitals',
+    image: '/assets/img/smartvitals.png',
   },
   {
     title: 'Bitcoin Price Prediction',
-    description: 'Time-series forecasting of cryptocurrency prices using classical ML and deep learning models. Implements feature engineering, model selection, and evaluation pipelines to optimize predictive accuracy for high-volatility financial data.',
+    description:
+      'Time-series forecasting on cryptocurrency prices using both classical ML and deep learning - the interesting challenge here is feature engineering for a signal with genuine non-stationarity. Compared multiple architectures and built evaluation pipelines for high-volatility financial data.',
     link: 'https://github.com/tamara-kostova/BitcoinPrediction-ML',
     image: '/assets/img/bitcoin.png',
+  },
+  {
+    title: 'EEG Seizure Prediction',
+    description:
+      'ML pipeline for epileptic seizure prediction from EEG signals. Signal processing, feature extraction, and classification to identify pre-ictal brain activity - this sits at the intersection of neuroscience and applied ML in a way I find genuinely interesting.',
+    link: 'https://github.com/tamara-kostova/EEG-epilepsy-seizure-prediction',
+    image: '/assets/img/eeg.png',
+  },
+  {
+    title: 'AI Football',
+    description:
+      'Reinforcement learning simulation where agents learn football strategy from scratch. Placed 2nd at RoboMac 2023. The interesting part wasn\'t the win - it was watching coordination emerge between agents that were only optimising individual reward.',
+    link: 'https://github.com/tamara-kostova/RoboMac2023_AIFootball',
+    image: '/assets/img/robomac.jpg',
+  },
+  {
+    title: 'ecoGrad',
+    description:
+      'Sustainable lifestyle web app built in 48 hours for the ITLabs hackathon. Won 3rd Prize. Included here because it\'s a good example of what I can ship fast when the problem is well-defined - not every project needs six months.',
+    link: 'https://github.com/tamara-kostova/ecoGrad',
+    image: '/assets/img/ecoGrad.jpg',
   },
   {
     title: 'Super Mario The Plumber',
@@ -94,10 +131,10 @@ const projectsData = [
     image: '/assets/img/gamejam.jpg',
   },
   {
-    title: 'AI Football',
-    description: 'Reinforcement learning-based AI football simulation demonstrating strategy learning, agent coordination, and competitive gameplay. Achieved 2nd Prize at RoboMac, May 2023.',
-    link: 'https://github.com/tamara-kostova/RoboMac2023_AIFootball',
-    image: '/assets/img/robomac.jpg',
+    title: 'Hot and Cold',
+    description: 'Algorithmically-driven Pygame maze game demonstrating pathfinding, environment simulation, and dynamic difficulty adjustment using procedural generation.',
+    link: 'https://github.com/tamara-kostova/Hot-and-cold',
+    video: '/assets/videos/HotAndCold.mp4',
   },
   {
     title: 'BlackJack',
@@ -105,86 +142,69 @@ const projectsData = [
     link: 'https://github.com/tamara-kostova/BlackJack',
     image: '/assets/img/blackjack.png',
   },
-  {
-    title: 'LangGraph Helper Agent',
-    description: 'AI coding assistant for LangGraph and LangChain developers. Answers API questions, generates graph boilerplate, and explains constructs with context-aware responses.',
-    link: 'https://github.com/tamara-kostova/LangGraph-Helper-Agent',
-    image: '/assets/img/langgraph.png',
-  },
-  {
-    title: 'EEG Seizure Prediction',
-    description: 'Machine learning pipeline for epileptic seizure prediction from EEG signals. Combines signal processing, feature extraction, and classification to identify pre-ictal brain activity.',
-    link: 'https://github.com/tamara-kostova/EEG-epilepsy-seizure-prediction',
-    image: '/assets/img/eeg.png',
-  },
 ];
 
 const experienceData = [
   {
     title: 'Software Engineer',
     company: 'ITQuarks, Skopje',
-    date: '01/10/2024 – CURRENT',
+    date: '01/10/2024 – Present',
     description:
-      'Architecting a an enterprise-grade document intelligence platform that orchestrates a swarm of specialized AI agents with no-code DMN rules for deterministic compliance validation and multi-LLM optimization - with compliance templates in production across healthcare, insurance, transportation, and food domains. Designed the end-to-end pipeline covering document ingestion, ambiguity resolution, structured extraction, policy validation, and auditable decision routing. Previously led the multi-agent backend for an AI investing platform (iOS & Android) built with a Strands Agents orchestrator that coordinates market data, financial news, user management, and push notification agents as callable tools. The system monitors users\' portfolios in the background, applies dynamic significance thresholds to filter noise, and delivers proactive, personalized insights without requiring user prompting. Contributed to scalable backend services using FastAPI and Python, integrating ML models for real-time inference and data processing.',
+      'Currently building a multi-agent AI platform for document understanding and compliance automation - structured extraction, policy validation, and auditable decision routing through a pipeline I designed end-to-end. Before that, led backend development for an AI investing platform (iOS & Android): a Strands Agents orchestrator that coordinates market data, financial news, and user management agents as callable tools. The interesting part is that it monitors portfolios in the background and sends personalised insights without the user having to ask - dynamic significance thresholds filter out the noise before anything reaches the user. Also contributed FastAPI services with real-time ML inference throughout.',
   },
   {
     title: 'Machine Learning Intern',
     company: 'ITQuarks, Skopje',
     date: '01/07/2024 – 30/09/2024',
     description:
-      'Developed RAG systems for forex market trading analysis using LLMs. Created automated content translation systems for WordPress websites using generative language models to produce unique and localized output',
+      'Built RAG pipelines to process thousands of market analysis articles for automated trading content. Also automated multilingual content generation and translation for unique content across dozens of WordPress sites - saving significant manual effort.',
   },
   {
     title: 'Student Researcher',
     company: 'Macedonian Academy of Sciences and Arts',
     date: '15/09/2024 – 30/04/2025',
     description:
-      'Developed a hybrid RAG system combining lexical, semantic, and graph-based retrieval methods for deep analysis of neurology medical papers. Enhanced retrieval accuracy and response relevance through domain-specific model tuning',
+      'Developed a hybrid RAG system for deep retrieval over neurology medical papers - combining lexical (BM25), semantic (dense embeddings), and graph-based retrieval because each method alone left gaps the others could fill. Tuned domain-specific models to improve relevance for Alzheimer\'s research queries. This was my first serious exposure to the gap between "RAG works in a demo" and "RAG works on specialist literature."',
   },
   {
     title: 'Software Engineering Intern',
     company: 'MCA.mk, Skopje',
     date: '01/08/2023 – 30/10/2023',
     description:
-      'Developed front-end features using Angular and seamlessly integrated them with .NET back-end functionalities. Applied Entity Core framework for efficient MSSQL database interactions, ensuring optimal data management. Collaborated on feature implementation, thriving in a dynamic, Agile-driven team environment.',
-  }
+      'Built Angular front-end features integrated with .NET backends, using Entity Framework Core for MSSQL database interactions. First real exposure to working in an Agile team on a production codebase - useful baseline for everything that came after.',
+  },
 ];
 
 const educationData = [
   {
     institution: 'Faculty of Computer Science & Engineering, Skopje',
-    degree: 'Master of Science in Data science in Computer Science and Engineering',
-    date: '01/10/2025 – current',
+    degree: 'MSc Data Science in Computer Science and Engineering',
+    date: '01/10/2025 - present',
     achievements: [],
-    coursework: ['Data Science',
+    coursework: [
+      'Data Science',
       'Data Engineering',
-      'Deep learning for Natural Language Processing ',
+      'Deep Learning for NLP',
       'Applied Machine Learning',
       'Medical Informatics',
-      'Advanced Data Science']
+      'Advanced Data Science',
+    ],
   },
   {
     institution: 'Faculty of Computer Science & Engineering, Skopje',
-    degree: 'Bachelor of Science in Computer Science Engineering',
-    date: '01/10/2021 – 25/06/2025',
-    gpa: 'GPA: 9.72/10',
+    degree: 'BSc Computer Science and Engineering',
+    date: '01/10/2021 - 25/06/2025',
+    gpa: '9.72 / 10 - ranked among top students every year from 2022 to 2025',
     achievements: [
-      'Awarded among the top 4th year students at FCSE with GPA above 9.5 (9.72/10.0), 2025',
-      'Awarded among the top 3rd year students at FCSE with GPA above 9.5 (9.63/10.0), 2024',
-      'Awarded among the top 2nd year students at FCSE with GPA above 9.5 (9.65/10.0), 2023',
-      'Awarded among the top 1st year students at FCSE with GPA above 9.5 (9.7/10.0), 2022',
-      'Second Prize at Robomac 2023, May',
-      'Third Prize at ITLabs Web Development Hackathon 2023, December',
-      'First Prize at GlobalGameJam 2020, February',
+      'Top student award at FCSE four years running (2022–2025), all with GPA above 9.5',
+      '2nd Prize - RoboMac 2023',
+      '3rd Prize - ITLabs Web Development Hackathon 2023',
+      '1st Prize - Global Game Jam 2020',
     ],
     coursework: [
-      'Structural Programming',
-      'Object-Oriented Programming',
       'Algorithms and Data Structures',
-      'Visual Programming',
       'Web Programming',
       'Databases',
-      'Internet Technologies',
       'Artificial Intelligence',
       'Machine Learning',
       'Deep Learning',
@@ -198,17 +218,9 @@ const educationData = [
     degree: 'High School Diploma',
     date: '01/09/2017 – 10/06/2021',
     achievements: [
-      'Awarded best student in the generation at Josip Broz - Tito',
-      '10 National and 20 Regional 1st, 2nd, and 3rd Prizes in Mathematics, Physics, Informatics, and English',
-    ],
-  },
-  {
-    institution: "Primary School 'Goce Delcev', Bitola",
-    degree: 'Primary School Diploma',
-    date: '01/09/2008 – 10/06/2017',
-    achievements: [
-      'Awarded best student in the generation at Goce Delcev',
-      '2 Bronze medals at the National Mathematics Olympiad',
+      'Best student in the generation',
+      '10 National and 20 Regional prizes in Mathematics, Physics, Informatics, and English',
+      '2 Bronze medals at the National Mathematics Olympiad'
     ],
   },
 ];
@@ -225,15 +237,16 @@ const certificationsData = [
 const publicationsData = [
   {
     title: 'Optimizing Visual Feature Extraction in Multimodal Transformers for Neuroimaging Classification',
-    conference: 'MIPRO 2026',
-    published: 'Full paper will be included in the MIPRO 2026 Conference Proceedings volume and the IEEE Xplore Digital Library'
+    conference: 'Accepted & Presented - MIPRO 2026, Opatija',
+    published: 'To appear in MIPRO 2026 Conference Proceedings / IEEE Xplore Digital Library',
   },
   {
     title: 'Application of Large Language Models for Summarization of Medical Papers',
-    conference: 'ICT Innovation International Conference 2025',
-    published: 'Full paper will be included in the ICT Innovations 2025 Proceedings published by Springer in Communications in Computer and Information Science Series (CCIS)'
-  }
-]
+    conference: 'Accepted & Presented - ICT Innovations 2025, Ohrid',
+    published: 'To appear in ICT Innovations 2025 Proceedings, Springer CCIS Series',
+  },
+];
+
 
 const blogData = [
   {
@@ -271,18 +284,6 @@ const conferencesData = [
 ];
 
 
-const currentProject = {
-  title: 'Multi-Agent Neuroimaging Classifier',
-  description: 'LangGraph pipeline for automated classification of brain tumour, multiple sclerosis, and stroke from MRI/CT scans - combining a MedGemma triage agent, task-specific CNNs, SAM3 segmentation, and BiomedCLIP zero-shot re-ranking into a single auditable graph.',
-  stack: ['LangGraph', 'MedGemma', 'VGG16 / DenseNet / ResNet', 'SAM3', 'BiomedCLIP'],
-  highlights: [
-    'Binary tumour - 100% accuracy',
-    'Multiclass tumour - 99.0% accuracy',
-    'Stroke - 97.7% accuracy',
-    'SAM3 segmentation Dice = 0.836',
-  ],
-};
-
 const navLinks = [
   { href: '#experience', text: 'Experience' },
   { href: '#projects', text: 'Projects' },
@@ -291,32 +292,8 @@ const navLinks = [
   { href: '#certifications', text: 'Certifications' },
   { href: '#publications', text: 'Publications' },
   { href: '#contact', text: 'Contact' },
+  { href: '/about', text: 'About' },
 ];
-
-const CurrentlyBuildingSection = memo(() => (
-  <section className="py-6 bg-white dark:bg-[#094243]">
-    <div className="container mx-auto px-4">
-      <div className="max-w-4xl mx-auto p-6 rounded-2xl border border-dashed border-yellow-400 dark:border-yellow-600 bg-yellow-50/40 dark:bg-yellow-900/10">
-        <div className="flex flex-col sm:flex-row sm:items-start gap-5">
-          <div className="flex-shrink-0 flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 dark:text-yellow-500">Currently building</span>
-          </div>
-          <div className="flex-1">
-            <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-1">{currentProject.title}</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">{currentProject.description}</p>
-            <div className="flex flex-wrap gap-2">
-              {currentProject.stack.map((s, i) => (
-                <span key={i} className="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-700">
-                  {s}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-));
 
 const TagCloud = ({ coursework }) => (
   <div className="flex flex-wrap gap-2.5 justify-center">
@@ -343,14 +320,25 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map(({ href, text }) => (
-              <a
-                key={text}
-                href={href}
-                className={`transition-colors ${activeSection === href.slice(1) ? 'text-yellow-600 dark:text-yellow-600' : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
-                  }`}
-              >
-                {text}
-              </a>
+              href.startsWith('/') && !href.includes('#') ? (
+                <Link
+                  key={text}
+                  to={href}
+                  className={`transition-colors ${activeSection === href.slice(1) ? 'text-yellow-600 dark:text-yellow-600' : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
+                    }`}
+                >
+                  {text}
+                </Link>) : (
+                <a key={text}
+                  href={href}
+                  className={`transition-colors ${activeSection === href.slice(1)
+                    ? 'text-yellow-600 dark:text-yellow-600'
+                    : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
+                    }`}
+                >
+                  {text}
+                </a>
+              )
             ))}
             <button onClick={toggleTheme} className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
               {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
@@ -444,13 +432,7 @@ const HeroSection = memo(() => {
           <div className="h-2 w-32 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto rounded-full animate-pulse"></div>
         </div>
 
-        <p className="text-xl md:text-2xl mb-6 font-medium text-gray-700 dark:text-gray-200 animate-fade-in-up animation-delay-1000">
-          I build things for the web and beyond.
-        </p>
-
-        <p className="text-lg md:text-xl dark:text-gray-300 text-gray-600 mt-4 mb-12 max-w-2xl mx-auto px-4 animate-fade-in-up animation-delay-1500">
-          Passionate about <span className="text-yellow-600 font-semibold">AI</span>, <span className="text-yellow-600 font-semibold">Machine Learning</span>, and creating innovative software solutions that make a difference.
-        </p>
+        <HeroPatch />
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-2000">
           <a
@@ -636,7 +618,7 @@ const SkillsSection = memo(({ isVisible }) => {
             className={`transition-all duration-500 ${isVisible['skills-compact'] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
           >
             <h3 className="text-xl font-semibold mb-4 text-gray-500 dark:text-gray-400 uppercase tracking-widest text-sm">Also in my toolbox</h3>
-            <div className="flex flex-wrap gap-3 max-w-3xl">
+            <div className="flex flex-wrap gap-3 align-center justify-center">
               {compact.flatMap(cat => skillsData[cat]).map((skill, i) => (
                 <span
                   key={i}
@@ -804,7 +786,7 @@ const CallToActionSection = memo(() => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 animate-fade-in-up">
-            Ready to Build Something Amazing?
+            Interested in AI systems, medical AI, multi-agent architectures, or research collaborations?
           </h2>
           <p className="text-lg md:text-xl mb-8 opacity-90 animate-fade-in-up animation-delay-500">
             I'm always excited to work on innovative projects that push the boundaries of technology.
@@ -815,7 +797,7 @@ const CallToActionSection = memo(() => {
               href="#contact"
               className="inline-flex items-center px-8 py-4 bg-white text-yellow-600 rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 font-semibold text-lg shadow-lg hover:shadow-xl"
             >
-              <span className="mr-2">Start a Project</span>
+              <span className="mr-2">Feel free to reach out.</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -1294,7 +1276,6 @@ const Portfolio = () => {
             activeSection={activeSection}
           />
           <HeroSection />
-          {/* <CurrentlyBuildingSection /> */}
           <ExperienceSection isVisible={isVisible} />
           <ProjectsSection isVisible={isVisible} />
           <SkillsSection isVisible={isVisible} />
