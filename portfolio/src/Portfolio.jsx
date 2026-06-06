@@ -313,9 +313,17 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
     <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-[#094243] shadow-md z-50 transition-colors duration-200">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <a href="#top" className="text-2xl md:text-4xl font-bold dark:text-gray-200 hover:text-yellow-600 transition-colors">
+          <button
+            onClick={() =>
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              })
+            }
+            className="text-2xl md:text-4xl font-bold dark:text-gray-200 hover:text-yellow-600 transition-colors"
+          >
             Tamara<span className="text-yellow-600">.</span>
-          </a>
+          </button>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
@@ -389,7 +397,15 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
                     ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
                     : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
-                  onClick={toggleMobileMenu}
+                  onClick={(e) => {
+                    e.preventDefault();
+
+                    document
+                      .querySelector(href)
+                      ?.scrollIntoView({ behavior: 'smooth' });
+
+                    toggleMobileMenu();
+                  }}
                 >
                   {text}
                 </a>
@@ -488,7 +504,7 @@ const HeroSection = memo(() => {
 
 const ExperienceSection = memo(({ isVisible }) => {
   return (
-    <section id="experience" className="py-20 bg-gray-50 dark:bg-[#094243] transition-colors duration-200">
+    <section id="experience" className="scroll-mt-24 py-20 bg-gray-50 dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-16">
           Experience<span className="text-yellow-600">.</span>
@@ -516,7 +532,7 @@ const ExperienceSection = memo(({ isVisible }) => {
 
 const ProjectsSection = memo(({ isVisible }) => {
   return (
-    <section id="projects" className="py-20 bg-gray-50 dark:bg-[#094243] transition-colors duration-200">
+    <section id="projects" className="scroll-mt-24 py-20 bg-gray-50 dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
           My Projects<span className="text-yellow-600">.</span>
@@ -598,7 +614,7 @@ const SkillsSection = memo(({ isVisible }) => {
   const compact = ['Languages', 'Backend', 'Data & Infra'];
 
   return (
-    <section id="skills" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
+    <section id="skills" className="scroll-mt-24 py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
           Skills<span className="text-yellow-600">.</span>
@@ -654,7 +670,7 @@ const SkillsSection = memo(({ isVisible }) => {
 
 const EducationSection = memo(({ isVisible }) => {
   return (
-    <section id="education" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
+    <section id="education" className="scroll-mt-24 py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-16">
           Education<span className="text-yellow-600">.</span>
@@ -698,7 +714,7 @@ const EducationSection = memo(({ isVisible }) => {
 
 const CertificatesSection = memo(({ isVisible }) => {
   return (
-    <section id="certifications" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
+    <section id="certifications" className="scroll-mt-24 py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-16">
           Certifications<span className="text-yellow-600">.</span>
@@ -726,7 +742,7 @@ const CertificatesSection = memo(({ isVisible }) => {
 
 const PublicationsSection = memo(({ isVisible }) => {
   return (
-    <section id="publications" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
+    <section id="publications" className="scroll-mt-24 py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-16">
           Publications<span className="text-yellow-600">.</span>
@@ -797,7 +813,7 @@ const PublicationsSection = memo(({ isVisible }) => {
 
 const CallToActionSection = memo(() => {
   return (
-    <section className="py-20 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white relative overflow-hidden">
+    <section className="scroll-mt-24 py-20 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-10"></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
