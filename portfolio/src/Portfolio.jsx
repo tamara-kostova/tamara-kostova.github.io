@@ -331,6 +331,10 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
                 </Link>) : (
                 <a key={text}
                   href={href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className={`transition-colors ${activeSection === href.slice(1)
                     ? 'text-yellow-600 dark:text-yellow-600'
                     : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
@@ -367,23 +371,34 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
         {/* Mobile Navigation Menu */}
         <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden mt-6 pb-4 border-t border-gray-200 dark:border-gray-700 pt-6`}>
           <div className="flex flex-col space-y-4">
-            {navLinks.map(({ href, text }) => (
-              <a
-                key={text}
-                href={href}
-                className={`text-lg py-2 px-4 rounded-lg transition-colors ${activeSection === href.slice(1)
-                  ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
-                  : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }`}
-                onClick={toggleMobileMenu}
-              >
-                {text}
-              </a>
-            ))}
+            {navLinks.map(({ href, text }) =>
+              href.startsWith('/') && !href.includes('#') ? (
+                <Link
+                  key={text}
+                  to={href}
+                  className="text-lg py-2 px-4 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  onClick={toggleMobileMenu}
+                >
+                  {text}
+                </Link>
+              ) : (
+                <a
+                  key={text}
+                  href={href}
+                  className={`text-lg py-2 px-4 rounded-lg transition-colors ${activeSection === href.slice(1)
+                    ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
+                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
+                    }`}
+                  onClick={toggleMobileMenu}
+                >
+                  {text}
+                </a>
+              )
+            )}
           </div>
 
           {/* Mobile Theme Toggle and Social Links */}
-          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          < div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between" >
             <button onClick={toggleTheme} className="p-2 text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
               {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
             </button>
@@ -401,7 +416,7 @@ const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMe
           </div>
         </div>
       </div>
-    </nav>
+    </nav >
   );
 });
 
@@ -422,7 +437,7 @@ const HeroSection = memo(() => {
   }, [currentIndex]);
 
   return (
-    <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50 to-yellow-50 dark:from-[#094243] dark:via-[#0a4748] dark:to-[#0b4a4c] transition-all duration-500 overflow-hidden">
+    <section className="relative h-screen flex items-center justify-center pt-20 md:pt-0 bg-gradient-to-br from-gray-50 via-blue-50 to-yellow-50 dark:from-[#094243] dark:via-[#0a4748] dark:to-[#0b4a4c] transition-all duration-500 overflow-hidden">
 
       <div className="text-center z-10 animate-fade-in-up">
         <div className="mb-8">
@@ -480,16 +495,17 @@ const ExperienceSection = memo(({ isVisible }) => {
         </h2>
         <div className="space-y-8">
           {experienceData.map((exp, index) => (
-            <div
-              key={index}
-              data-animate={`experience-${index}`}
-              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg border-l-4 border-yellow-500 transition-all duration-500 ${isVisible[`experience-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                }`}
-            >
-              <h3 className="text-2xl font-bold mb-2">{exp.title}</h3>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{exp.company}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{exp.date}</p>
-              <p className="text-gray-700 dark:text-gray-200">{exp.description}</p>
+            <div key={index} data-animate={`experience-${index}`} className={`p-6 bg-white dark:bg-[#073031] rounded-xl shadow-sm hover:shadow-md transition-all duration-500 ${isVisible[`experience-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">{exp.title}</h3>
+                  <p className="text-yellow-600 dark:text-yellow-400 font-medium mt-0.5">{exp.company}</p>
+                </div>
+                <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-[#094243] px-3 py-1 rounded-full whitespace-nowrap self-start">
+                  {exp.date}
+                </span>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{exp.description}</p>
             </div>
           ))}
         </div>
