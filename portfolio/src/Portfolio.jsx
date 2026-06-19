@@ -1,33 +1,33 @@
-import React, { useState, useEffect, useCallback, memo, lazy, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, ChevronUp, ExternalLink, Moon, Sun, Menu, X, Trophy } from 'lucide-react';
+import { Mail, ArrowUpRight, ChevronRight, Trophy, Menu, X } from 'lucide-react';
 import { FaPython, FaJava, FaDocker, FaGit, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { SiCplusplus, SiC, SiFastapi, SiSpring, SiLangchain, SiPostgresql, SiAmazonwebservices, SiDotnet, SiDjango, SiTensorflow, SiPytorch, SiSupabase } from 'react-icons/si';
 import { Brain, Database, Workflow, Cpu, Server, Clock, Flame, Table, Sigma } from 'lucide-react';
 import { VscAzure } from 'react-icons/vsc';
-import emailjs from '@emailjs/browser';
-import { emailConfig } from './config/emailjs';
-
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center min-h-screen bg-white dark:bg-[#094243]">
-    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-600"></div>
-  </div>
-);
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const skillsData = {
-  "Languages": [
-    { name: "Python", icon: <FaPython /> },
-    { name: "Java", icon: <FaJava /> },
-    { name: "C++", icon: <SiCplusplus /> },
-    { name: "C", icon: <SiC /> },
-    { name: "SQL", icon: <SiPostgresql /> },
-  ],
   "AI / ML": [
     { name: "RAG Systems", icon: <Database /> },
     { name: "Strands Agents", icon: <Brain /> },
     { name: "LangChain", icon: <SiLangchain /> },
     { name: "LangGraph", icon: <Workflow /> },
     { name: "Transformers", icon: <Cpu /> },
+  ],
+  "ML Tooling": [
+    { name: "PyTorch", icon: <SiPytorch /> },
+    { name: "TensorFlow", icon: <SiTensorflow /> },
+    { name: "scikit-learn", icon: <Table /> },
+    { name: "Pandas", icon: <Flame /> },
+    { name: "NumPy", icon: <Sigma /> },
+  ],
+  "Languages": [
+    { name: "Python", icon: <FaPython /> },
+    { name: "Java", icon: <FaJava /> },
+    { name: "C++", icon: <SiCplusplus /> },
+    { name: "C", icon: <SiC /> },
+    { name: "SQL", icon: <SiPostgresql /> },
   ],
   "Backend": [
     { name: "FastAPI", icon: <SiFastapi /> },
@@ -45,102 +45,74 @@ const skillsData = {
     { name: "AWS", icon: <SiAmazonwebservices /> },
     { name: "Git", icon: <FaGit /> },
   ],
-  "ML Tooling": [
-    { name: "PyTorch", icon: <SiPytorch /> },
-    { name: "Tensorflow", icon: <SiTensorflow /> },
-    { name: "scikit-learn", icon: <Table /> },
-    { name: "Pandas", icon: <Flame /> },
-    { name: "NumPy", icon: <Sigma /> },
-  ],
 };
-
-const HeroPatch = () => (
-  <>
-    <p className="text-xl md:text-2xl mb-6 font-medium text-gray-700 dark:text-gray-200 animate-fade-in-up animation-delay-1000">
-      I build AI systems that do real work.
-    </p>
-    <p className="text-lg md:text-xl dark:text-gray-300 text-gray-600 mt-4 mb-12 max-w-2xl mx-auto px-4 animate-fade-in-up animation-delay-1500">
-      Multi-agent platforms in production, neuroimaging pipelines, RAG systems that actually retrieve the right thing. Based in Skopje - working on problems
-      that matter in <span className="text-yellow-600 font-semibold">medical AI</span> and{" "}
-      <span className="text-yellow-600 font-semibold">intelligent automation</span>.
-    </p>
-  </>
-);
 
 const projectsData = [
   {
     title: 'Quick Chef',
-    description:
-      'AI culinary platform using RAG and MCP to generate personalised recipes based on what you actually have and what you can actually eat. Built this partly to explore MCP in a context where tool-calling makes genuine UX sense - ingredient substitution is a retrieval problem dressed up as cooking advice.',
+    tag: 'RAG · MCP',
+    description: 'AI culinary platform using RAG and MCP to generate personalised recipes based on what you actually have and what you can actually eat. Built to explore MCP in a context where tool-calling makes genuine UX sense - ingredient substitution is a retrieval problem dressed up as cooking advice.',
     link: 'https://github.com/tamara-kostova/QuickChef',
-    image: '/assets/img/quickchef.png',
   },
   {
     title: 'LangGraph Helper Agent',
-    description:
-      'AI coding assistant specifically for LangGraph and LangChain developers. Answers API questions, generates graph boilerplate, and explains constructs - built because the official docs are dense and I kept getting the same questions wrong before I understood the framework well enough.',
+    tag: 'LLM Agent · LangChain',
+    description: 'AI coding assistant for LangGraph and LangChain developers. Answers API questions, generates graph boilerplate, and explains constructs - built because the official docs are dense and I kept getting the same questions wrong before I understood the framework well enough.',
     link: 'https://github.com/tamara-kostova/LangGraph-Helper-Agent',
-    image: '/assets/img/langgraph.png',
   },
   {
     title: 'Hybrid RAG for Medical Literature',
-    description:
-      'Built for Alzheimer\'s research at the Macedonian Academy - combines BM25 keyword search, dense embeddings, and knowledge graphs to retrieve relevant neurology papers. The hybrid approach consistently outperformed any single retrieval method on specialist queries where terminology matters.',
+    tag: 'Research · RAG',
+    description: "Built for Alzheimer's research at the Macedonian Academy - combines BM25 keyword search, dense embeddings, and knowledge graphs to retrieve relevant neurology papers. The hybrid approach consistently outperformed any single retrieval method on specialist queries where terminology matters.",
     link: 'https://github.com/tamara-kostova/HybridRAG',
-    image: '/assets/img/hybridrag.png',
   },
   {
     title: 'Smart Vitals',
-    description:
-      'Patient monitoring system with real-time analytics and predictive health scoring. Integrates time-series analysis and anomaly detection to flag deteriorating vitals before they become clinical emergencies. Built to explore what proactive monitoring looks like when you move beyond threshold alerts.',
+    tag: 'Healthcare · ML',
+    description: 'Patient monitoring system with real-time analytics and predictive health scoring. Integrates time-series analysis and anomaly detection to flag deteriorating vitals before they become clinical emergencies.',
     link: 'https://github.com/tamara-kostova/Smart-Vitals',
-    image: '/assets/img/smartvitals.png',
   },
   {
     title: 'Bitcoin Price Prediction',
-    description:
-      'Time-series forecasting on cryptocurrency prices using both classical ML and deep learning - the interesting challenge here is feature engineering for a signal with genuine non-stationarity. Compared multiple architectures and built evaluation pipelines for high-volatility financial data.',
+    tag: 'Time Series · ML',
+    description: 'Time-series forecasting on cryptocurrency prices using both classical ML and deep learning. The interesting challenge is feature engineering for a signal with genuine non-stationarity - compared multiple architectures and built evaluation pipelines for high-volatility financial data.',
     link: 'https://github.com/tamara-kostova/BitcoinPrediction-ML',
-    image: '/assets/img/bitcoin.png',
   },
   {
     title: 'EEG Seizure Prediction',
-    description:
-      'ML pipeline for epileptic seizure prediction from EEG signals. Signal processing, feature extraction, and classification to identify pre-ictal brain activity - this sits at the intersection of neuroscience and applied ML in a way I find genuinely interesting.',
+    tag: 'Neuroscience · ML',
+    description: 'ML pipeline for epileptic seizure prediction from EEG signals. Signal processing, feature extraction, and classification to identify pre-ictal brain activity - at the intersection of neuroscience and applied ML.',
     link: 'https://github.com/tamara-kostova/EEG-epilepsy-seizure-prediction',
-    image: '/assets/img/eeg.png',
   },
   {
     title: 'AI Football',
-    description:
-      'Reinforcement learning simulation where agents learn football strategy from scratch. Placed 2nd at RoboMac 2023. The interesting part wasn\'t the win - it was watching coordination emerge between agents that were only optimising individual reward.',
+    tag: 'RL · RoboMac 2023',
+    description: "Reinforcement learning simulation where agents learn football strategy from scratch. Placed 2nd at RoboMac 2023. The interesting part wasn't the win - it was watching coordination emerge between agents that were only optimising individual reward.",
     link: 'https://github.com/tamara-kostova/RoboMac2023_AIFootball',
-    image: '/assets/img/robomac.jpg',
   },
   {
     title: 'ecoGrad',
-    description:
-      'Sustainable lifestyle web app built in 48 hours for the ITLabs hackathon. Won 3rd Prize. Included here because it\'s a good example of what I can ship fast when the problem is well-defined - not every project needs six months.',
+    tag: 'Hackathon · Web',
+    description: "Sustainable lifestyle web app built in 48 hours for the ITLabs hackathon. Won 3rd Prize. A good example of what I can ship fast when the problem is well-defined - not every project needs six months.",
     link: 'https://github.com/tamara-kostova/ecoGrad',
-    image: '/assets/img/ecoGrad.jpg',
   },
   {
     title: 'Super Mario The Plumber',
-    description: 'Rapid-development 48-hour game prototype that won 1st Prize at Global Game Jam, February 2020. Highlights fast prototyping, interactive design, and collaborative development under time constraints.',
+    tag: 'Game Jam · 1st Prize',
+    description: '48-hour game prototype that won 1st Prize at Global Game Jam, February 2020. Fast prototyping, interactive design, and collaborative development under time constraints.',
     link: 'https://github.com/tamara-kostova/supermariotheplumber',
-    image: '/assets/img/gamejam.jpg',
   },
   {
     title: 'Hot and Cold',
+    tag: 'Game · Pygame',
     description: 'Algorithmically-driven Pygame maze game demonstrating pathfinding, environment simulation, and dynamic difficulty adjustment using procedural generation.',
     link: 'https://github.com/tamara-kostova/Hot-and-cold',
-    video: '/assets/videos/HotAndCold.mp4',
   },
   {
     title: 'BlackJack',
+    tag: 'Desktop · C#',
     description: 'Windows Forms-based BlackJack simulator implementing game logic, probability modeling, and interactive GUI design for a controlled user environment.',
     link: 'https://github.com/tamara-kostova/BlackJack',
-    image: '/assets/img/blackjack.png',
   },
 ];
 
@@ -148,30 +120,26 @@ const experienceData = [
   {
     title: 'Software Engineer',
     company: 'ITQuarks, Skopje',
-    date: '01/10/2024 – Present',
-    description:
-      'Currently building a multi-agent AI platform for document understanding and compliance automation - structured extraction, policy validation, and auditable decision routing through a pipeline I designed end-to-end. Before that, led backend development for an AI investing platform (iOS & Android): a Strands Agents orchestrator that coordinates market data, financial news, and user management agents as callable tools. The interesting part is that it monitors portfolios in the background and sends personalised insights without the user having to ask - dynamic significance thresholds filter out the noise before anything reaches the user. Also contributed FastAPI services with real-time ML inference throughout.',
+    date: '10/2024 – Present',
+    description: 'Currently building a multi-agent AI platform for document understanding and compliance automation - structured extraction, policy validation, and auditable decision routing through a pipeline I designed end-to-end. Before that, led backend development for an AI investing platform (iOS & Android): a Strands Agents orchestrator that monitors portfolios in the background and sends personalised insights without the user having to ask. Dynamic significance thresholds filter out noise before anything reaches the user.',
   },
   {
     title: 'Machine Learning Intern',
     company: 'ITQuarks, Skopje',
-    date: '01/07/2024 – 30/09/2024',
-    description:
-      'Built RAG pipelines to process thousands of market analysis articles for automated trading content. Also automated multilingual content generation and translation for unique content across dozens of WordPress sites - saving significant manual effort.',
+    date: '07/2024 – 09/2024',
+    description: 'Built RAG pipelines to process thousands of market analysis articles for automated trading content. Automated multilingual content generation and translation for unique content across dozens of WordPress sites - saving significant manual effort.',
   },
   {
     title: 'Student Researcher',
     company: 'Macedonian Academy of Sciences and Arts',
-    date: '15/09/2024 – 30/04/2025',
-    description:
-      'Developed a hybrid RAG system for deep retrieval over neurology medical papers - combining lexical (BM25), semantic (dense embeddings), and graph-based retrieval because each method alone left gaps the others could fill. Tuned domain-specific models to improve relevance for Alzheimer\'s research queries. This was my first serious exposure to the gap between "RAG works in a demo" and "RAG works on specialist literature."',
+    date: '09/2024 – 04/2025',
+    description: "Developed a hybrid RAG system for deep retrieval over neurology medical papers - combining lexical (BM25), semantic (dense embeddings), and graph-based retrieval because each method alone left gaps the others could fill. This was my first serious exposure to the gap between 'RAG works in a demo' and 'RAG works on specialist literature.'",
   },
   {
     title: 'Software Engineering Intern',
     company: 'MCA.mk, Skopje',
-    date: '01/08/2023 – 30/10/2023',
-    description:
-      'Built Angular front-end features integrated with .NET backends, using Entity Framework Core for MSSQL database interactions. First real exposure to working in an Agile team on a production codebase - useful baseline for everything that came after.',
+    date: '08/2023 – 10/2023',
+    description: 'Built Angular front-end features integrated with .NET backends, using Entity Framework Core for MSSQL database interactions. First real exposure to working in an Agile team on a production codebase.',
   },
 ];
 
@@ -179,21 +147,14 @@ const educationData = [
   {
     institution: 'Faculty of Computer Science & Engineering, Skopje',
     degree: 'MSc Data Science in Computer Science and Engineering',
-    date: '01/10/2025 - present',
+    date: '10/2025 – present',
     achievements: [],
-    coursework: [
-      'Data Science',
-      'Data Engineering',
-      'Deep Learning for NLP',
-      'Applied Machine Learning',
-      'Medical Informatics',
-      'Advanced Data Science',
-    ],
+    coursework: ['Data Science', 'Data Engineering', 'Deep Learning for NLP', 'Applied Machine Learning', 'Medical Informatics', 'Advanced Data Science'],
   },
   {
     institution: 'Faculty of Computer Science & Engineering, Skopje',
     degree: 'BSc Computer Science and Engineering',
-    date: '01/10/2021 - 25/06/2025',
+    date: '10/2021 – 06/2025',
     gpa: '9.72 / 10 - ranked among top students every year from 2022 to 2025',
     achievements: [
       'Top student award at FCSE four years running (2022–2025), all with GPA above 9.5',
@@ -201,38 +162,29 @@ const educationData = [
       '3rd Prize - ITLabs Web Development Hackathon 2023',
       '1st Prize - Global Game Jam 2020',
     ],
-    coursework: [
-      'Algorithms and Data Structures',
-      'Web Programming',
-      'Databases',
-      'Artificial Intelligence',
-      'Machine Learning',
-      'Deep Learning',
-      'Linear Algebra and its Applications',
-      'Probability and Statistics',
-      'Bioinformatics',
-    ],
+    coursework: ['Algorithms and Data Structures', 'Web Programming', 'Databases', 'Artificial Intelligence', 'Machine Learning', 'Deep Learning', 'Linear Algebra and its Applications', 'Probability and Statistics', 'Bioinformatics'],
   },
   {
     institution: "Gymnasium 'Josip Broz - Tito', Bitola",
     degree: 'High School Diploma',
-    date: '01/09/2017 – 10/06/2021',
+    date: '09/2017 – 06/2021',
     achievements: [
       'Best student in the generation',
       '10 National and 20 Regional prizes in Mathematics, Physics, Informatics, and English',
-      '2 Bronze medals at the National Mathematics Olympiad'
+      '2 Bronze medals at the National Mathematics Olympiad',
     ],
+    coursework: [],
   },
 ];
-
 
 const certificationsData = [
   {
     institution: 'Microsoft Azure AI',
     degree: 'Azure AI Fundamentals (AI-900)',
     date: 'Sept 2025',
-    credential: 'https://learn.microsoft.com/api/credentials/share/en-gb/TamaraKostova-0989/1A1288009E6F3DBF?sharingId=BA860F445F708AE9'
-  }]
+    credential: 'https://learn.microsoft.com/api/credentials/share/en-gb/TamaraKostova-0989/1A1288009E6F3DBF?sharingId=BA860F445F708AE9',
+  },
+];
 
 const publicationsData = [
   {
@@ -247,7 +199,6 @@ const publicationsData = [
   },
 ];
 
-
 const blogData = [
   {
     title: 'Advisory 2.0: AI Investing Stack That Requests Its Own Tools',
@@ -257,1079 +208,546 @@ const blogData = [
 ];
 
 const conferencesData = [
-  {
-    name: 'MIPRO 2026',
-    fullName: 'MIPRO',
-    location: 'Opatija, Croatia',
-    year: '2026',
-  },
-  {
-    name: 'ICT Innovations 2025',
-    fullName: 'ICT Innovations conference',
-    location: 'Ohrid, Macedonia',
-    year: '2025',
-  },
-  {
-    name: 'KSER 2024',
-    fullName: 'Kongres Studenata Elektrotehnike i Računarstva',
-    location: 'Zlatibor, Serbia',
-    year: '2024',
-  },
-  {
-    name: 'Science@FEIT 2024',
-    fullName: 'Science at Faculty of Electrical Engineering and IT',
-    location: 'Skopje, Macedonia',
-    year: '2024',
-  },
+  { name: 'MIPRO 2026', fullName: 'MIPRO', location: 'Opatija, Croatia', year: '2026' },
+  { name: 'ICT Innovations 2025', fullName: 'ICT Innovations conference', location: 'Ohrid, Macedonia', year: '2025' },
+  { name: 'KSER 2024', fullName: 'Kongres Studenata Elektrotehnike i Računarstva', location: 'Zlatibor, Serbia', year: '2024' },
+  { name: 'Science@FEIT 2024', fullName: 'Science at Faculty of Electrical Engineering and IT', location: 'Skopje, Macedonia', year: '2024' },
 ];
 
+const currentProject = {
+  title: 'Multi-Agent Neuroimaging Classifier',
+  description: 'LangGraph pipeline for automated classification of brain tumour, multiple sclerosis, and stroke from MRI/CT scans - combining a MedGemma triage agent, task-specific CNNs, SAM3 segmentation, and BiomedCLIP zero-shot re-ranking into a single auditable graph.',
+  stack: ['LangGraph', 'MedGemma', 'VGG16 / DenseNet / ResNet', 'SAM3', 'BiomedCLIP'],
+  link: 'https://github.com/tamara-kostova/MultiAgentMedClassifier',
+};
 
 const navLinks = [
-  { href: '#experience', text: 'Experience' },
+  { href: '#work', text: 'Work' },
   { href: '#projects', text: 'Projects' },
-  { href: '#skills', text: 'Skills' },
+  { href: '#stack', text: 'Stack' },
   { href: '#education', text: 'Education' },
-  { href: '#certifications', text: 'Certifications' },
-  { href: '#publications', text: 'Publications' },
+  { href: '#research', text: 'Research' },
   { href: '#contact', text: 'Contact' },
-  { href: '/about', text: 'About' },
 ];
 
-const TagCloud = ({ coursework }) => (
-  <div className="flex flex-wrap gap-2.5 justify-center">
-    {coursework.map((course, i) => (
-      <div
-        key={i}
-        className="px-4 py-2 bg-gray-100 dark:bg-[#374151] text-gray-800 dark:text-gray-100 rounded-full text-sm font-medium transition-all duration-300 hover:bg-yellow-400 hover:text-white hover:scale-110 cursor-default"
-      >
-        {course}
-      </div>
-    ))}
+function useClock() {
+  const [t, setT] = useState(null);
+  useEffect(() => {
+    setT(new Date());
+    const i = setInterval(() => setT(new Date()), 1000);
+    return () => clearInterval(i);
+  }, []);
+  return t ? t.toLocaleTimeString('en-GB', { hour12: false, timeZone: 'Europe/Skopje' }) : '--:--:--';
+}
+
+function scrollTo(href) {
+  document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+const SectionLabel = ({ index, label }) => (
+  <div className="flex items-baseline gap-4 mb-12">
+    <span className="font-mono text-xs text-signal">{index}</span>
+    <span className="h-px flex-1 bg-bone/10" />
+    <span className="font-mono text-xs uppercase tracking-[0.22em] text-subtle">{label}</span>
   </div>
 );
 
-const Navbar = memo(({ isDarkMode, toggleTheme, isMobileMenuOpen, toggleMobileMenu, activeSection }) => {
-  return (
-    <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-[#094243] shadow-md z-50 transition-colors duration-200">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
-          <button
-            onClick={() =>
-              window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-              })
-            }
-            className="text-2xl md:text-4xl font-bold dark:text-gray-200 hover:text-yellow-600 transition-colors"
-          >
-            Tamara<span className="text-yellow-600">.</span>
-          </button>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(({ href, text }) => (
-              href.startsWith('/') && !href.includes('#') ? (
-                <Link
-                  key={text}
-                  to={href}
-                  className={`transition-colors ${activeSection === href.slice(1) ? 'text-yellow-600 dark:text-yellow-600' : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
-                    }`}
-                >
-                  {text}
-                </Link>) : (
-                <a key={text}
-                  href={href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className={`transition-colors ${activeSection === href.slice(1)
-                    ? 'text-yellow-600 dark:text-yellow-600'
-                    : 'text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600'
-                    }`}
-                >
-                  {text}
-                </a>
-              )
-            ))}
-            <button onClick={toggleTheme} className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-              {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
-            </button>
-          </div>
-
-          {/* Desktop Social Links */}
-          <div className="hidden md:flex space-x-6">
-            <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-              <FaGithub size={24} />
-            </a>
-            <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-              <FaLinkedin size={24} />
-            </a>
-            <a href="mailto:tamarakostova.bt@gmail.com" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-              <Mail size={24} />
-            </a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button onClick={toggleMobileMenu} className="md:hidden p-2 text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation Menu */}
-        <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden mt-6 pb-4 border-t border-gray-200 dark:border-gray-700 pt-6`}>
-          <div className="flex flex-col space-y-4">
-            {navLinks.map(({ href, text }) =>
-              href.startsWith('/') && !href.includes('#') ? (
-                <Link
-                  key={text}
-                  to={href}
-                  className="text-lg py-2 px-4 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                  onClick={toggleMobileMenu}
-                >
-                  {text}
-                </Link>
-              ) : (
-                <a
-                  key={text}
-                  href={href}
-                  className={`text-lg py-2 px-4 rounded-lg transition-colors ${activeSection === href.slice(1)
-                    ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
-                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                  onClick={(e) => {
-                    e.preventDefault();
-
-                    document
-                      .querySelector(href)
-                      ?.scrollIntoView({ behavior: 'smooth' });
-
-                    toggleMobileMenu();
-                  }}
-                >
-                  {text}
-                </a>
-              )
-            )}
-          </div>
-
-          {/* Mobile Theme Toggle and Social Links */}
-          < div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between" >
-            <button onClick={toggleTheme} className="p-2 text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-              {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
-            </button>
-            <div className="flex space-x-4">
-              <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-                <FaGithub size={20} />
-              </a>
-              <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-                <FaLinkedin size={20} />
-              </a>
-              <a href="mailto:tamarakostova.bt@gmail.com" className="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-600 transition-colors">
-                <Mail size={20} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav >
-  );
-});
-
-const heroFullText = "Hi, I'm Tamara.";
-
-const HeroSection = memo(() => {
-  const [displayText, setDisplayText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
+const Nav = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    if (currentIndex < heroFullText.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + heroFullText[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, 100);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex]);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <section className="relative h-screen flex items-center justify-center pt-20 md:pt-0 bg-gradient-to-br from-gray-50 via-blue-50 to-yellow-50 dark:from-[#094243] dark:via-[#0a4748] dark:to-[#0b4a4c] transition-all duration-500 overflow-hidden">
+    <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'backdrop-blur-xl bg-ink/70 border-b border-bone/10' : 'bg-transparent'}`}>
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 group">
+          <span className="w-2 h-2 rounded-full bg-signal shadow-[0_0_12px_#F3A712]" />
+          <span className="font-mono text-xs uppercase tracking-[0.18em] text-bone">tamara.kostova</span>
+        </button>
 
-      <div className="text-center z-10 animate-fade-in-up">
-        <div className="mb-8">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-gray-900 via-yellow-600 to-gray-900 dark:from-white dark:via-yellow-400 dark:to-white bg-clip-text text-transparent leading-tight">
-            {displayText}<span className="animate-pulse">|</span>
-          </h1>
-          <div className="h-2 w-32 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto rounded-full animate-pulse"></div>
+        <nav className="hidden md:flex items-center gap-7 font-mono text-xs uppercase tracking-[0.18em]">
+          {navLinks.map(({ href, text }) => (
+            <a key={href} href={href}
+              onClick={e => { e.preventDefault(); scrollTo(href); }}
+              className="text-subtle hover:text-signal transition-colors">
+              {text}
+            </a>
+          ))}
+          <Link to="/about" className="text-subtle hover:text-signal transition-colors">About</Link>
+        </nav>
+
+        <div className="hidden md:flex items-center gap-1">
+          <a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaGithub size={16} /></a>
+          <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaLinkedin size={16} /></a>
         </div>
 
-        <HeroPatch />
+        <button onClick={() => setMobileOpen(p => !p)} className="md:hidden p-2 text-subtle hover:text-signal transition-colors">
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-2000">
-          <a
-            href="#projects"
-            className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-full hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium text-lg"
-          >
-            <span className="mr-2">View My Work</span>
-            <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-
-          <a
-            href="#contact"
-            className="group inline-flex items-center px-8 py-4 border-2 border-yellow-600 text-yellow-600 dark:text-yellow-400 rounded-full hover:bg-yellow-600 hover:text-white dark:hover:bg-yellow-600 dark:hover:text-white transition-all duration-300 transform hover:scale-105 font-medium text-lg"
-          >
-            <span className="mr-2">Get In Touch</span>
-            <svg className="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-          </a>
+      {mobileOpen && (
+        <div className="md:hidden border-t border-bone/10 bg-ink/95 backdrop-blur-xl px-6 py-6">
+          <div className="space-y-1">
+            {navLinks.map(({ href, text }) => (
+              <a key={href} href={href}
+                onClick={e => { e.preventDefault(); scrollTo(href); setMobileOpen(false); }}
+                className="block font-mono text-xs uppercase tracking-[0.18em] text-subtle hover:text-signal transition-colors py-3 border-b border-bone/10">
+                {text}
+              </a>
+            ))}
+            <Link to="/about"
+              className="block font-mono text-xs uppercase tracking-[0.18em] text-subtle hover:text-signal transition-colors py-3 border-b border-bone/10"
+              onClick={() => setMobileOpen(false)}>
+              About
+            </Link>
+          </div>
+          <div className="flex gap-2 pt-6">
+            <a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaGithub size={16} /></a>
+            <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaLinkedin size={16} /></a>
+            <a href="mailto:tamarakostova.bt@gmail.com" className="p-2 text-subtle hover:text-signal transition-colors"><Mail size={16} /></a>
+          </div>
         </div>
+      )}
+    </header>
+  );
+};
 
-        <div className="mt-20 animate-bounce animation-delay-3000">
-          <a href="#experience" className="inline-block text-gray-400 hover:text-yellow-600 transition-all duration-300 hover:scale-110">
-            <div className="flex flex-col items-center">
-              <span className="text-sm mb-2 opacity-75">Scroll to explore</span>
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
+const HeroSection = () => {
+  const clock = useClock();
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 600], [0, 120]);
+
+  return (
+    <section id="top" className="relative min-h-screen pt-24 pb-16 overflow-hidden">
+      <div className="absolute inset-0 grid-bg opacity-60 pointer-events-none" />
+      <motion.div
+        style={{ y }}
+        className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-signal opacity-[0.05] blur-[120px] pointer-events-none"
+      />
+
+      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 font-mono text-[10px] uppercase tracking-[0.2em] text-subtle mb-20 md:mb-32">
+          <div>
+            <div className="text-bone/40 mb-1">/ status</div>
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
+              shipping
             </div>
-          </a>
+          </div>
+          <div>
+            <div className="text-bone/40 mb-1">/ location</div>
+            <div>Skopje · 41.99°N</div>
+          </div>
+          <div>
+            <div className="text-bone/40 mb-1">/ local time</div>
+            <div>{clock}</div>
+          </div>
+          <div>
+            <div className="text-bone/40 mb-1">/ role</div>
+            <div>SE @ ITQuarks</div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-12 lg:col-span-9">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="font-display text-[clamp(3rem,9vw,9rem)] leading-[0.92] text-bone"
+            >
+              I build <em className="text-signal not-italic">AI systems</em>
+              <br />
+              that do <span className="italic">real work</span>
+              <span className="cursor-blink text-signal">_</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 1 }}
+              className="mt-10 max-w-2xl text-lg md:text-xl text-bone/70 leading-relaxed"
+            >
+              Multi-agent platforms in production, neuroimaging pipelines, and RAG
+              systems that actually retrieve the right thing. I work at the intersection
+              of{' '}
+              <span className="text-bone underline decoration-signal underline-offset-4 decoration-2">medical AI</span>
+              {' '}and{' '}
+              <span className="text-bone underline decoration-signal underline-offset-4 decoration-2">intelligent automation</span>
+              .
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="mt-12 flex flex-wrap gap-3"
+            >
+              <a href="#projects"
+                onClick={e => { e.preventDefault(); scrollTo('#projects'); }}
+                className="group inline-flex items-center gap-2 px-5 py-3 bg-signal text-ink font-mono text-xs uppercase tracking-[0.18em] rounded-sm hover:bg-bone transition-colors">
+                View selected work
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+              <a href="#contact"
+                onClick={e => { e.preventDefault(); scrollTo('#contact'); }}
+                className="group inline-flex items-center gap-2 px-5 py-3 border border-bone/10 text-bone font-mono text-xs uppercase tracking-[0.18em] rounded-sm hover:border-signal hover:text-signal transition-colors">
+                Get in touch
+                <Mail className="w-4 h-4" />
+              </a>
+            </motion.div>
+          </div>
+
+          <div className="col-span-12 lg:col-span-3 lg:pl-6 lg:border-l lg:border-bone/10 mt-12 lg:mt-0">
+            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal mb-4 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
+              now building
+            </div>
+            <h3 className="font-display text-2xl leading-tight mb-3 text-bone">{currentProject.title}</h3>
+            <p className="text-sm text-bone/60 leading-relaxed mb-4">{currentProject.description}</p>
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {currentProject.stack.map(s => (
+                <span key={s} className="font-mono text-[10px] px-2 py-1 border border-bone/10 text-bone/70 rounded-sm">{s}</span>
+              ))}
+            </div>
+            <a href={currentProject.link} target="_blank" rel="noreferrer"
+              className="font-mono text-xs uppercase tracking-[0.18em] text-signal hover:underline inline-flex items-center gap-1">
+              View graph <ArrowUpRight className="w-3 h-3" />
+            </a>
+          </div>
         </div>
       </div>
-    </section>
-  );
-});
 
-const ExperienceSection = memo(({ isVisible }) => {
-  return (
-    <section id="experience" className="scroll-mt-24 py-20 bg-gray-50 dark:bg-[#094243] transition-colors duration-200">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-16">
-          Experience<span className="text-yellow-600">.</span>
-        </h2>
-        <div className="space-y-8">
-          {experienceData.map((exp, index) => (
-            <div key={index} data-animate={`experience-${index}`} className={`p-6 bg-white dark:bg-[#073031] rounded-xl shadow-sm hover:shadow-md transition-all duration-500 ${isVisible[`experience-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">{exp.title}</h3>
-                  <p className="text-yellow-600 dark:text-yellow-400 font-medium mt-0.5">{exp.company}</p>
-                </div>
-                <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-[#094243] px-3 py-1 rounded-full whitespace-nowrap self-start">
-                  {exp.date}
-                </span>
-              </div>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{exp.description}</p>
+      <div className="relative mt-24 md:mt-32 border-y border-bone/10 py-5 overflow-hidden">
+        <div className="ticker flex gap-12 whitespace-nowrap font-display text-3xl md:text-4xl">
+          {Array.from({ length: 2 }).map((_, dup) => (
+            <div key={dup} className="flex gap-12 items-center shrink-0">
+              {['Multi-agent orchestration', '★', 'Hybrid RAG', '★', 'Neuroimaging classification', '★', 'LangGraph pipelines', '★', 'Production ML inference', '★', 'Auditable AI', '★'].map((w, i) => (
+                <span key={i} className={i % 2 ? 'text-signal' : 'italic text-bone/80'}>{w}</span>
+              ))}
             </div>
           ))}
         </div>
       </div>
     </section>
   );
-});
+};
 
-const ProjectsSection = memo(({ isVisible }) => {
-  return (
-    <section id="projects" className="scroll-mt-24 py-20 bg-gray-50 dark:bg-[#094243] transition-colors duration-200">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-          My Projects<span className="text-yellow-600">.</span>
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projectsData.map((project, index) => (
-            <div
-              key={index}
-              data-animate={`project-${index}`}
-              className={`group relative overflow-hidden rounded-xl bg-white dark:bg-[#073031] shadow-lg hover-lift transition-all duration-500 ${isVisible[`project-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                }`}
-            >
-              <div className="relative overflow-hidden rounded-t-xl">
-                {project.video ? (
-                  <div className="relative">
-                    <video className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
-                      <source src={project.video} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.currentTarget.previousElementSibling.play();
-                      }}
-                      aria-label="Play video"
-                      className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    >
-                      <div className="w-16 h-16 bg-yellow-600 rounded-full flex items-center justify-center animate-pulse">
-                        <svg className="w-8 h-8 text-white ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M14.752 11.168l-6.44-4.96a1 1 0 00-1.56.82v9.92a1 1 0 001.56.82l6.44-4.96a1 1 0 000-1.64z"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                  </div>
-                ) : project.image ? (
-                  <img src={project.image} alt={project.title} className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" />
-                ) : (
-                  <div className={`w-full h-64 bg-gradient-to-br ${project.gradient || 'from-gray-600 to-gray-800'} flex items-center justify-center`}>
-                    <span className="text-white font-bold select-none" style={{ fontSize: '5rem', opacity: 0.15 }}>{project.title.charAt(0)}</span>
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-                  {project.description}
-                </p>
-                {project.link && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-yellow-600 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300 font-medium transition-colors group/link"
-                  >
-                    <span className="mr-2">View on GitHub</span>
-                    <ExternalLink className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
+const ExperienceSection = () => (
+  <section id="work" className="relative py-32 px-6 lg:px-10">
+    <div className="max-w-[1400px] mx-auto">
+      <SectionLabel index="01 -" label="Experience / Log" />
+      <div className="grid grid-cols-12 gap-6">
+        <div className="col-span-12 md:col-span-4 mb-10 md:mb-0">
+          <h2 className="font-display text-5xl md:text-6xl leading-[0.95] text-bone">
+            Work<em className="text-signal">.</em>
+          </h2>
+          <p className="mt-6 text-bone/60 max-w-xs">
+            Roles where I built things that ended up in production - and a couple of stops along the way.
+          </p>
+        </div>
+        <div className="col-span-12 md:col-span-8 md:border-l md:border-bone/10 md:pl-10">
+          <div className="space-y-12">
+            {experienceData.map((exp, i) => (
+              <motion.article
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6, delay: i * 0.05 }}
+                className="group relative pl-6 border-l border-bone/10 hover:border-signal transition-colors"
+              >
+                <span className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-ink border border-bone/10 group-hover:bg-signal group-hover:border-signal group-hover:shadow-[0_0_12px_#F3A712] transition-all" />
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtle mb-2">{exp.date}</div>
+                <h3 className="font-display text-3xl mb-1 text-bone">{exp.title}</h3>
+                <div className="text-signal font-mono text-sm mb-4">→ {exp.company}</div>
+                <p className="text-bone/70 leading-relaxed max-w-3xl">{exp.description}</p>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </div>
-    </section>
-  );
-});
+    </div>
+  </section>
+);
 
-const SkillsSection = memo(({ isVisible }) => {
-  const featured = ['AI / ML', 'ML Tooling'];
-  const compact = ['Languages', 'Backend', 'Data & Infra'];
-
-  return (
-    <section id="skills" className="scroll-mt-24 py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-          Skills<span className="text-yellow-600">.</span>
+const ProjectsSection = () => (
+  <section id="projects" className="relative py-32 px-6 lg:px-10 border-t border-bone/10">
+    <div className="max-w-[1400px] mx-auto">
+      <SectionLabel index="02 -" label="Selected projects" />
+      <div className="flex items-end justify-between mb-16 flex-wrap gap-6">
+        <h2 className="font-display text-5xl md:text-7xl leading-[0.95] max-w-2xl text-bone">
+          Things I've <em className="text-signal">built</em>,<br />
+          (broken :)) and<br />rebuilt.
         </h2>
-        <div className="space-y-12">
-          {featured.map(category => (
-            <div
-              key={category}
-              data-animate={`skills-${category}`}
-              className={`transition-all duration-500 ${isVisible[`skills-${category}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
-            >
-              <h3 className="text-xl font-semibold mb-4 text-gray-500 dark:text-gray-400 uppercase tracking-widest text-sm">{category}</h3>
-              <div className="flex flex-wrap gap-3">
-                {skillsData[category].map((skill, index) => (
-                  <div
-                    key={index}
-                    className="group flex items-center gap-3 px-5 py-3 bg-white dark:bg-[#073031] rounded-xl shadow hover-lift transition-all duration-300 border border-transparent hover:border-yellow-500"
-                  >
-                    <span className="text-2xl text-yellow-600 group-hover:scale-110 transition-transform duration-300">
-                      {skill.icon}
-                    </span>
-                    <span className="font-semibold text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
-                      {skill.name}
-                    </span>
+        <div className="font-mono text-xs uppercase tracking-[0.22em] text-subtle">
+          {String(projectsData.length).padStart(2, '0')} entries · v1.0
+        </div>
+      </div>
+
+      <div className="border-t border-bone/10">
+        {projectsData.map((p, i) => (
+          <motion.a
+            key={p.title}
+            href={p.link}
+            target="_blank"
+            rel="noreferrer"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5 }}
+            className="group relative grid grid-cols-12 gap-4 items-start py-8 border-b border-bone/10 hover:bg-bone/[0.02] transition-colors px-2 -mx-2"
+          >
+            <div className="col-span-1 font-mono text-xs text-subtle pt-2">
+              {String(i + 1).padStart(2, '0')}
+            </div>
+            <div className="col-span-11 md:col-span-4">
+              <h3 className="font-display text-3xl md:text-4xl leading-tight text-bone group-hover:text-signal transition-colors">
+                {p.title}
+              </h3>
+              {p.tag && (
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal/70 mt-2">{p.tag}</div>
+              )}
+            </div>
+            <div className="col-span-12 md:col-span-6 text-bone/65 leading-relaxed">
+              {p.description}
+            </div>
+            <div className="col-span-12 md:col-span-1 flex md:justify-end">
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-bone/10 group-hover:border-signal group-hover:bg-signal group-hover:text-ink text-bone/60 transition-all shrink-0">
+                <ArrowUpRight className="w-4 h-4" />
+              </span>
+            </div>
+          </motion.a>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const StackSection = () => (
+  <section id="stack" className="relative py-32 px-6 lg:px-10 border-t border-bone/10">
+    <div className="max-w-[1400px] mx-auto">
+      <SectionLabel index="03 -" label="Stack / Tooling" />
+      <div className="grid grid-cols-12 gap-6">
+        <div className="col-span-12 md:col-span-4">
+          <h2 className="font-display text-5xl md:text-6xl leading-[0.95] text-bone">
+            The <em className="text-signal">tools</em><br />
+            I reach for.
+          </h2>
+          <p className="mt-6 text-bone/60 max-w-xs">
+            Languages, frameworks, infrastructure. Grouped by where they live in the stack.
+          </p>
+        </div>
+        <div className="col-span-12 md:col-span-8 space-y-10">
+          {Object.entries(skillsData).map(([cat, items]) => (
+            <div key={cat} className="grid grid-cols-12 gap-4 items-start pb-8 border-b border-bone/10 last:border-0">
+              <div className="col-span-12 md:col-span-3">
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal">{cat}</div>
+              </div>
+              <div className="col-span-12 md:col-span-9 flex flex-wrap gap-2">
+                {items.map(s => (
+                  <div key={s.name} className="group inline-flex items-center gap-2 px-3 py-2 border border-bone/10 rounded-sm hover:border-signal hover:bg-signal/5 transition-all">
+                    <span className="w-4 h-4 text-signal flex items-center justify-center text-sm shrink-0">{s.icon}</span>
+                    <span className="font-mono text-xs text-bone/90">{s.name}</span>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-
-          <div
-            data-animate="skills-compact"
-            className={`transition-all duration-500 ${isVisible['skills-compact'] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
-          >
-            <h3 className="text-xl font-semibold mb-4 text-gray-500 dark:text-gray-400 uppercase tracking-widest text-sm">Also in my toolbox</h3>
-            <div className="flex flex-wrap gap-3 align-center justify-center">
-              {compact.flatMap(cat => skillsData[cat]).map((skill, i) => (
-                <span
-                  key={i}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-[#073031] rounded-full text-gray-700 dark:text-gray-300 font-medium text-sm hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors cursor-default"
-                >
-                  <span className="text-yellow-600 text-sm">{skill.icon}</span>
-                  {skill.name}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
-    </section>
-  );
-});
+    </div>
+  </section>
+);
 
-const EducationSection = memo(({ isVisible }) => {
-  return (
-    <section id="education" className="scroll-mt-24 py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-16">
-          Education<span className="text-yellow-600">.</span>
+const EducationSection = () => (
+  <section id="education" className="relative py-32 px-6 lg:px-10 border-t border-bone/10">
+    <div className="max-w-[1400px] mx-auto">
+      <SectionLabel index="04 -" label="Education & Awards" />
+      <div className="grid grid-cols-12 gap-6 mb-16">
+        <h2 className="col-span-12 md:col-span-8 font-display text-5xl md:text-7xl leading-[0.95] text-bone">
+          Where I <em className="text-signal">learned</em><br />
+          how to learn and ask better questions.
         </h2>
-        <div className="space-y-8">
-          {educationData.map((edu, index) => (
-            <div
-              key={index}
-              data-animate={`education-${index}`}
-              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${isVisible[`education-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                }`}
-            >
-              <h3 className="text-2xl font-bold mb-2">{edu.institution}</h3>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{edu.degree}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{edu.date}</p>
-              {edu.gpa && <p className="text-gray-700 dark:text-gray-200 mb-4">{edu.gpa}</p>}
+      </div>
+      <div className="space-y-6">
+        {educationData.map((edu, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="grid grid-cols-12 gap-4 p-6 md:p-8 border border-bone/10 rounded-sm hover:border-signal/50 transition-colors"
+          >
+            <div className="col-span-12 md:col-span-3 font-mono text-[10px] uppercase tracking-[0.22em] text-subtle">{edu.date}</div>
+            <div className="col-span-12 md:col-span-9">
+              <h3 className="font-display text-2xl md:text-3xl mb-1 text-bone">{edu.institution}</h3>
+              <p className="text-signal font-mono text-sm mb-4">→ {edu.degree}</p>
+              {edu.gpa && <p className="text-bone/80 mb-4">{edu.gpa}</p>}
               {edu.achievements.length > 0 && (
-                <ul className="space-y-2 mb-4">
-                  {edu.achievements.map((achievement, i) => (
-                    <li key={i} className="flex items-start gap-2 text-gray-700 dark:text-gray-200">
-                      <Trophy className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
-                      <span>{achievement}</span>
+                <ul className="space-y-2 mb-6">
+                  {edu.achievements.map((a, j) => (
+                    <li key={j} className="flex items-start gap-2 text-bone/75">
+                      <Trophy className="w-3.5 h-3.5 text-signal flex-shrink-0 mt-1.5" />
+                      <span>{a}</span>
                     </li>
                   ))}
                 </ul>
               )}
-              {edu.coursework && (
+              {edu.coursework && edu.coursework.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-600 dark:text-gray-300 mb-3">Relevant Coursework</h4>
-                  <TagCloud coursework={edu.coursework} />
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtle mb-3">coursework</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {edu.coursework.map(c => (
+                      <span key={c} className="px-2.5 py-1 font-mono text-[11px] border border-bone/10 text-bone/80 rounded-sm">{c}</span>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="mt-16">
+        <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal mb-6">Certifications</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {certificationsData.map((cert, i) => (
+            <a key={i} href={cert.credential} target="_blank" rel="noreferrer"
+              className="group block p-6 border border-bone/10 rounded-sm hover:border-signal transition-colors">
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtle mb-2">{cert.date}</div>
+              <h4 className="font-display text-xl mb-1 text-bone group-hover:text-signal transition-colors">{cert.degree}</h4>
+              <p className="text-sm text-bone/60">{cert.institution}</p>
+              <div className="mt-4 font-mono text-xs text-signal inline-flex items-center gap-1">
+                verify <ArrowUpRight className="w-3 h-3" />
+              </div>
+            </a>
           ))}
         </div>
-      </div>
-    </section>
-  );
-});
-
-
-const CertificatesSection = memo(({ isVisible }) => {
-  return (
-    <section id="certifications" className="scroll-mt-24 py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-16">
-          Certifications<span className="text-yellow-600">.</span>
-        </h2>
-        <div className="space-y-8">
-          {certificationsData.map((cert, index) => (
-            <div
-              key={index}
-              data-animate={`certifications-${index}`}
-              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${isVisible[`certifications-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                }`}
-            >
-              <h3 className="text-2xl font-bold mb-2">{cert.institution}</h3>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{cert.degree}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{cert.date}</p>
-              <a href={cert.credential} className="text-yellow-600 font-semibold">Credential</a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-});
-
-
-const PublicationsSection = memo(({ isVisible }) => {
-  return (
-    <section id="publications" className="scroll-mt-24 py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-16">
-          Publications<span className="text-yellow-600">.</span>
-        </h2>
-        <div className="space-y-8 mb-16">
-          {publicationsData.map((pub, index) => (
-            <div
-              key={index}
-              data-animate={`publications-${index}`}
-              className={`p-6 bg-white dark:bg-[#073031] rounded-lg shadow-lg transition-all duration-500 ${isVisible[`publications-${index}`] ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                }`}
-            >
-              <h3 className="text-2xl font-bold mb-2">{pub.title}</h3>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">{pub.conference}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{pub.published}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
-              Writing<span className="text-yellow-600">.</span>
-            </h3>
-            <div className="flex flex-col gap-4">
-              {blogData.map((post, index) => (
-                <a
-                  key={index}
-                  href={post.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-4 px-5 py-4 bg-white dark:bg-[#073031] rounded-xl shadow-lg hover-lift transition-all duration-300 group"
-                >
-                  <div className="mt-1 w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0"></div>
-                  <div>
-                    <p className="font-bold text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">{post.title}</p>
-                    <p className="text-sm text-yellow-600 dark:text-yellow-400 font-medium mt-1 flex items-center gap-1">
-                      {post.outlet} <ExternalLink className="w-3 h-3" />
-                    </p>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
-              Conferences<span className="text-yellow-600">.</span>
-            </h3>
-            <div className="flex flex-col gap-4">
-              {conferencesData.map((conf, index) => (
-                <div key={index} className="flex items-start gap-4 px-5 py-4 bg-white dark:bg-[#073031] rounded-xl shadow-lg hover-lift transition-all duration-300">
-                  <div className="mt-1 w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0"></div>
-                  <div>
-                    <p className="font-bold text-gray-900 dark:text-white">{conf.name}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{conf.fullName}</p>
-                    <p className="text-sm text-yellow-600 dark:text-yellow-400 font-medium mt-1">{conf.location} · {conf.year}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-});
-
-const CallToActionSection = memo(() => {
-  return (
-    <section className="scroll-mt-24 py-20 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-black opacity-10"></div>
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 animate-fade-in-up">
-            Interested in AI systems, medical AI, multi-agent architectures, or research collaborations?
-          </h2>
-          <p className="text-lg md:text-xl mb-8 opacity-90 animate-fade-in-up animation-delay-500">
-            I'm always excited to work on innovative projects that push the boundaries of technology.
-            Let's collaborate and create something extraordinary together.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-1000">
-            <a
-              href="#contact"
-              className="inline-flex items-center px-8 py-4 bg-white text-yellow-600 rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 font-semibold text-lg shadow-lg hover:shadow-xl"
-            >
-              <span className="mr-2">Feel free to reach out.</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </a>
-            <a
-              href="https://github.com/tamara-kostova"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-8 py-4 border-2 border-white text-white rounded-full hover:bg-white hover:text-yellow-600 transition-all duration-300 transform hover:scale-105 font-semibold text-lg"
-            >
-              <span className="mr-2">View GitHub</span>
-              <FaGithub className="w-5 h-5" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-});
-
-const ContactSection = memo(() => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.subject.trim()) {
-      newErrors.subject = 'Subject is required';
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message should be at least 10 characters long';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    try {
-      // Create template parameters for EmailJS
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        to_email: 'tamarakostova.bt@gmail.com',
-      };
-
-      // Send email using EmailJS
-      await emailjs.send(
-        emailConfig.serviceID,
-        emailConfig.templateID,
-        templateParams,
-        emailConfig.publicKey
-      );
-
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <section id="contact" className="py-20 bg-white dark:bg-[#094243] transition-colors duration-200">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 gradient-text">
-          Get In Touch<span className="text-yellow-600">.</span>
-        </h2>
-        <p className="text-center text-gray-600 dark:text-gray-300 mb-16 max-w-2xl mx-auto">
-          Have a project in mind or just want to chat? I'd love to hear from you.
-        </p>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          <div className="space-y-8">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Let's Connect</h3>
-            <div className="space-y-6">
-              <a href="mailto:tamarakostova.bt@gmail.com" className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-[#073031] rounded-xl hover-lift transition-all duration-300">
-                <div className="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">Email</h4>
-                  <p className="text-gray-600 dark:text-gray-300">tamarakostova.bt@gmail.com</p>
-                </div>
-              </a>
-
-              <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-[#073031] rounded-xl hover-lift transition-all duration-300">
-                <div className="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center">
-                  <FaLinkedin className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">LinkedIn</h4>
-                  <p className="text-gray-600 dark:text-gray-300">linkedin.com/in/tamara-kostova</p>
-                </div>
-              </a>
-
-              <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-[#073031] rounded-xl hover-lift transition-all duration-300">
-                <div className="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center">
-                  <FaGithub className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">GitHub</h4>
-                  <p className="text-gray-600 dark:text-gray-300">github.com/tamara-kostova</p>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-[#073031] p-8 rounded-2xl shadow-xl hover-lift">
-            {submitStatus === 'success' && (
-              <div className="mb-6 p-4 bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-600 rounded-lg">
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <p className="text-green-700 dark:text-green-300 font-medium">Message sent successfully! I'll get back to you soon.</p>
-                </div>
-              </div>
-            )}
-
-            {submitStatus === 'error' && (
-              <div className="mb-6 p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 rounded-lg">
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 text-red-600 dark:text-red-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  <p className="text-red-700 dark:text-red-300 font-medium">Failed to send message. Please try again or contact me directly via email.</p>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="block text-sm font-medium mb-2 dark:text-gray-200">Name *</label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-lg border ${errors.name
-                      ? 'border-red-500 focus:ring-red-500'
-                      : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
-                      } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 transition-all duration-300`}
-                    placeholder="Your Name"
-                    disabled={isSubmitting}
-                  />
-                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-medium mb-2 dark:text-gray-200">Email *</label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-lg border ${errors.email
-                      ? 'border-red-500 focus:ring-red-500'
-                      : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
-                      } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 transition-all duration-300`}
-                    placeholder="your.email@example.com"
-                    disabled={isSubmitting}
-                  />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="subject" className="block text-sm font-medium mb-2 dark:text-gray-200">Subject *</label>
-                <input
-                  id="subject"
-                  name="subject"
-                  type="text"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-lg border ${errors.subject
-                    ? 'border-red-500 focus:ring-red-500'
-                    : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
-                    } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 transition-all duration-300`}
-                  placeholder="What's this about?"
-                  disabled={isSubmitting}
-                />
-                {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="message" className="block text-sm font-medium mb-2 dark:text-gray-200">Message *</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-lg border ${errors.message
-                    ? 'border-red-500 focus:ring-red-500'
-                    : 'border-gray-300 dark:border-gray-600 focus:ring-yellow-500'
-                    } focus:outline-none focus:ring-2 focus:border-transparent dark:bg-[#094243] dark:text-white placeholder-gray-400 h-32 resize-none transition-all duration-300`}
-                  placeholder="Let's discuss your project..."
-                  disabled={isSubmitting}
-                />
-                {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full px-6 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 transform hover:scale-[1.02] font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none`}
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Sending...
-                  </div>
-                ) : (
-                  'Send Message'
-                )}
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-});
-
-const Footer = memo(() => {
-  return (
-    <footer className="bg-gray-900 dark:bg-[#073031] text-white py-12 transition-colors duration-200">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="text-2xl font-bold mb-4 md:mb-0">
-            Tamara<span className="text-yellow-600">.</span>
-          </div>
-          <div className="flex space-x-6">
-            <a href="https://github.com/tamara-kostova" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-600 dark:text-gray-200 transition-colors">
-              <FaGithub size={24} />
-            </a>
-            <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-600 dark:text-gray-200 transition-colors">
-              <FaLinkedin size={24} />
-            </a>
-            <a href="mailto:tamarakostova.bt@gmail.com" className="hover:text-yellow-600 dark:text-gray-200 transition-colors">
-              <Mail size={24} />
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-});
-
-const Portfolio = () => {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('darkMode') === 'true';
-    }
-    return false;
-  });
-  const [showScrollTop, setShowScrollTop] = useState(false);
-  const [isVisible, setIsVisible] = useState({});
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Custom styles for animations
-  const customStyles = `
-    @keyframes fade-in-up {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0px);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
-    }
-    
-    @keyframes glow {
-      0%, 100% {
-        box-shadow: 0 0 5px rgba(245, 158, 11, 0.5);
-      }
-      50% {
-        box-shadow: 0 0 20px rgba(245, 158, 11, 0.8), 0 0 30px rgba(245, 158, 11, 0.6);
-      }
-    }
-    
-    .animate-fade-in-up {
-      animation: fade-in-up 0.8s ease-out;
-    }
-    
-    .animate-float {
-      animation: float 3s ease-in-out infinite;
-    }
-    
-    .animate-glow {
-      animation: glow 2s ease-in-out infinite;
-    }
-    
-    .animation-delay-0 { animation-delay: 0s; }
-    .animation-delay-1000 { animation-delay: 1s; }
-    .animation-delay-1500 { animation-delay: 1.5s; }
-    .animation-delay-2000 { animation-delay: 2s; }
-    .animation-delay-3000 { animation-delay: 3s; }
-    
-    .hover-lift {
-      transition: all 0.3s ease;
-    }
-    
-    .hover-lift:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    }
-    
-    .dark .hover-lift:hover {
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    }
-    
-    .gradient-text {
-      background: linear-gradient(135deg, #f59e0b, #d97706, #92400e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .dark .gradient-text {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .shake {
-      animation: shake 0.5s ease-in-out;
-    }
-    
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-  `;
-
-  const handleScroll = useCallback(() => {
-    setShowScrollTop(window.scrollY > 560);
-
-    document.querySelectorAll('[data-animate]').forEach((element) => {
-      const rect = element.getBoundingClientRect();
-      const isElementVisible = rect.top < window.innerHeight - 100;
-      setIsVisible((prev) => ({
-        ...prev,
-        [element.dataset.animate]: isElementVisible,
-      }));
-    });
-
-    const sections = ['experience', 'projects', 'skills', 'education', 'certifications', 'publications', 'contact'];
-    let currentSection = '';
-
-    sections.forEach((section) => {
-      const element = document.getElementById(section);
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        if (rect.top <= 150 && rect.bottom >= 150) {
-          currentSection = section;
-        }
-      }
-    });
-
-    if (window.scrollY < 100) {
-      currentSection = 'home';
-    }
-
-    setActiveSection(currentSection);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  const toggleTheme = useCallback(() => {
-    setIsDarkMode((prev) => {
-      const newValue = !prev;
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('darkMode', newValue.toString());
-      }
-      return newValue;
-    });
-  }, []);
-
-  const toggleMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen((prev) => !prev);
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
-  return (
-    <div className={isDarkMode ? 'dark' : ''}>
-      <style>{customStyles}</style>
-      <div className="min-h-screen bg-white dark:bg-[#094243] text-gray-900 dark:text-white transition-colors duration-200">
-        <Suspense fallback={<LoadingSpinner />}>
-          <Navbar
-            isDarkMode={isDarkMode}
-            toggleTheme={toggleTheme}
-            isMobileMenuOpen={isMobileMenuOpen}
-            toggleMobileMenu={toggleMobileMenu}
-            activeSection={activeSection}
-          />
-          <HeroSection />
-          <ExperienceSection isVisible={isVisible} />
-          <ProjectsSection isVisible={isVisible} />
-          <SkillsSection isVisible={isVisible} />
-          <EducationSection isVisible={isVisible} />
-          <CertificatesSection isVisible={isVisible} />
-          <PublicationsSection isVisible={isVisible} />
-          <CallToActionSection />
-          <ContactSection />
-          <Footer />
-          {showScrollTop && (
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="fixed bottom-8 right-8 p-3 bg-yellow-600 text-white rounded-full shadow-lg hover:bg-yellow-700 transition-all duration-300 transform hover:scale-110 animate-glow"
-              aria-label="Scroll to top"
-            >
-              <ChevronUp size={24} />
-            </button>
-          )}
-        </Suspense>
       </div>
     </div>
-  );
-};
+  </section>
+);
+
+const ResearchSection = () => (
+  <section id="research" className="relative py-32 px-6 lg:px-10 border-t border-bone/10">
+    <div className="max-w-[1400px] mx-auto">
+      <SectionLabel index="05 -" label="Research / Writing" />
+      <h2 className="font-display text-5xl md:text-7xl leading-[0.95] mb-16 max-w-3xl text-bone">
+        Papers, posts, and <em className="text-signal">places</em> I've spoken and listened.
+      </h2>
+
+      <div className="grid grid-cols-12 gap-6">
+        <div className="col-span-12 md:col-span-7 space-y-4">
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal mb-4">Publications</div>
+          {publicationsData.map((pub, i) => (
+            <article key={i} className="p-6 border border-bone/10 rounded-sm hover:border-signal/50 transition-colors">
+              <h3 className="font-display text-xl md:text-2xl leading-tight mb-3 text-bone">"{pub.title}"</h3>
+              <p className="text-signal font-mono text-xs mb-2">→ {pub.conference}</p>
+              <p className="text-sm text-bone/55 font-mono">{pub.published}</p>
+            </article>
+          ))}
+
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal mt-10 mb-4">Writing</div>
+          {blogData.map((post, i) => (
+            <a key={i} href={post.link} target="_blank" rel="noreferrer"
+              className="group block p-6 border border-bone/10 rounded-sm hover:border-signal transition-colors">
+              <h3 className="font-display text-xl leading-tight mb-2 text-bone group-hover:text-signal transition-colors">{post.title}</h3>
+              <p className="font-mono text-xs text-subtle inline-flex items-center gap-1">
+                {post.outlet} <ArrowUpRight className="w-3 h-3" />
+              </p>
+            </a>
+          ))}
+        </div>
+
+        <div className="col-span-12 md:col-span-5">
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal mb-4">Conferences attended</div>
+          <div className="border-t border-bone/10">
+            {conferencesData.map((conf, i) => (
+              <div key={i} className="grid grid-cols-12 gap-2 py-4 border-b border-bone/10 items-baseline">
+                <div className="col-span-2 font-mono text-signal text-sm">{conf.year}</div>
+                <div className="col-span-7">
+                  <div className="font-display text-lg leading-tight text-bone">{conf.name}</div>
+                  <div className="text-xs text-bone/50 font-mono mt-0.5">{conf.fullName}</div>
+                </div>
+                <div className="col-span-3 text-right font-mono text-[10px] uppercase tracking-[0.18em] text-subtle">{conf.location}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const ContactSection = () => (
+  <section id="contact" className="relative py-32 px-6 lg:px-10 border-t border-bone/10 overflow-hidden">
+    <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
+    <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-signal opacity-[0.08] blur-[120px] pointer-events-none" />
+
+    <div className="relative max-w-[1400px] mx-auto">
+      <SectionLabel index="06 -" label="Contact / End of file" />
+
+      <div className="grid grid-cols-12 gap-8 items-end">
+        <div className="col-span-12 md:col-span-8">
+          <h2 className="font-display text-6xl md:text-8xl leading-[0.9] text-bone">
+            Have a hard<br />
+            <em className="text-signal">problem</em>?<br />
+            Let's talk.
+          </h2>
+        </div>
+        <div className="col-span-12 md:col-span-4 md:text-right">
+          <p className="text-bone/60 mb-6">I'd lvoe to get in touch. Feel free to reach out!</p>
+          <a href="mailto:tamarakostova.bt@gmail.com"
+            className="font-display italic text-3xl md:text-4xl text-signal hover:underline underline-offset-4 break-all">
+            tamarakostova.bt<br />@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div className="mt-20 flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-bone/10">
+        <div className="flex gap-3">
+          {[
+            { href: 'https://github.com/tamara-kostova', Icon: FaGithub, label: 'GitHub' },
+            { href: 'https://www.linkedin.com/in/tamara-kostova/', Icon: FaLinkedin, label: 'LinkedIn' },
+            { href: 'mailto:tamarakostova.bt@gmail.com', Icon: Mail, label: 'Email' },
+          ].map(({ href, Icon, label }) => (
+            <a key={label} href={href}
+              target={href.startsWith('mailto') ? undefined : '_blank'}
+              rel="noreferrer"
+              className="group inline-flex items-center gap-2 px-4 py-2.5 border border-bone/10 rounded-sm hover:border-signal hover:text-signal transition-colors font-mono text-xs uppercase tracking-[0.18em] text-bone/60">
+              <Icon size={14} />
+              {label}
+              <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </a>
+          ))}
+        </div>
+        <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtle">
+          © 2026 Tamara Kostova
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const Portfolio = () => (
+  <main className="min-h-screen text-bone bg-ink">
+    <Nav />
+    <HeroSection />
+    <ExperienceSection />
+    <ProjectsSection />
+    <StackSection />
+    <EducationSection />
+    <ResearchSection />
+    <ContactSection />
+  </main>
+);
 
 export default Portfolio;
