@@ -5,7 +5,7 @@ import { FaPython, FaJava, FaDocker, FaGit, FaGithub, FaLinkedin } from 'react-i
 import { SiCplusplus, SiC, SiFastapi, SiSpring, SiLangchain, SiPostgresql, SiAmazonwebservices, SiDotnet, SiDjango, SiTensorflow, SiPytorch, SiSupabase } from 'react-icons/si';
 import { Brain, Database, Workflow, Cpu, Server, Clock, Flame, Table, Sigma } from 'lucide-react';
 import { VscAzure } from 'react-icons/vsc';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 
 const skillsData = {
   "AI / ML": [
@@ -53,54 +53,63 @@ const projectsData = [
     tag: 'RAG · MCP',
     description: 'AI culinary platform using RAG and MCP to generate personalised recipes based on what you actually have and what you can actually eat. Built to explore MCP in a context where tool-calling makes genuine UX sense - ingredient substitution is a retrieval problem dressed up as cooking advice.',
     link: 'https://github.com/tamara-kostova/QuickChef',
+    image: '/assets/img/quickchef.png',
   },
   {
     title: 'LangGraph Helper Agent',
     tag: 'LLM Agent · LangChain',
     description: 'AI coding assistant for LangGraph and LangChain developers. Answers API questions, generates graph boilerplate, and explains constructs - built because the official docs are dense and I kept getting the same questions wrong before I understood the framework well enough.',
     link: 'https://github.com/tamara-kostova/LangGraph-Helper-Agent',
+    image: '/assets/img/langgraph.png',
   },
   {
     title: 'Hybrid RAG for Medical Literature',
     tag: 'Research · RAG',
     description: "Built for Alzheimer's research at the Macedonian Academy - combines BM25 keyword search, dense embeddings, and knowledge graphs to retrieve relevant neurology papers. The hybrid approach consistently outperformed any single retrieval method on specialist queries where terminology matters.",
     link: 'https://github.com/tamara-kostova/HybridRAG',
+    image: '/assets/img/hybridrag.png',
   },
   {
     title: 'Smart Vitals',
     tag: 'Healthcare · ML',
     description: 'Patient monitoring system with real-time analytics and predictive health scoring. Integrates time-series analysis and anomaly detection to flag deteriorating vitals before they become clinical emergencies.',
     link: 'https://github.com/tamara-kostova/Smart-Vitals',
+    image: '/assets/img/smartvitals.png',
   },
   {
     title: 'Bitcoin Price Prediction',
     tag: 'Time Series · ML',
     description: 'Time-series forecasting on cryptocurrency prices using both classical ML and deep learning. The interesting challenge is feature engineering for a signal with genuine non-stationarity - compared multiple architectures and built evaluation pipelines for high-volatility financial data.',
     link: 'https://github.com/tamara-kostova/BitcoinPrediction-ML',
+    image: '/assets/img/bitcoin.png',
   },
   {
     title: 'EEG Seizure Prediction',
     tag: 'Neuroscience · ML',
     description: 'ML pipeline for epileptic seizure prediction from EEG signals. Signal processing, feature extraction, and classification to identify pre-ictal brain activity - at the intersection of neuroscience and applied ML.',
     link: 'https://github.com/tamara-kostova/EEG-epilepsy-seizure-prediction',
+    image: '/assets/img/eeg.png',
   },
   {
     title: 'AI Football',
     tag: 'RL · RoboMac 2023',
     description: "Reinforcement learning simulation where agents learn football strategy from scratch. Placed 2nd at RoboMac 2023. The interesting part wasn't the win - it was watching coordination emerge between agents that were only optimising individual reward.",
     link: 'https://github.com/tamara-kostova/RoboMac2023_AIFootball',
+    image: '/assets/img/robomac.jpg',
   },
   {
     title: 'ecoGrad',
     tag: 'Hackathon · Web',
     description: "Sustainable lifestyle web app built in 48 hours for the ITLabs hackathon. Won 3rd Prize. A good example of what I can ship fast when the problem is well-defined - not every project needs six months.",
     link: 'https://github.com/tamara-kostova/ecoGrad',
+    image: '/assets/img/ecoGrad.jpg',
   },
   {
     title: 'Super Mario The Plumber',
     tag: 'Game Jam · 1st Prize',
     description: '48-hour game prototype that won 1st Prize at Global Game Jam, February 2020. Fast prototyping, interactive design, and collaborative development under time constraints.',
     link: 'https://github.com/tamara-kostova/supermariotheplumber',
+    image: '/assets/img/gamejam.jpg',
   },
   {
     title: 'Hot and Cold',
@@ -113,6 +122,7 @@ const projectsData = [
     tag: 'Desktop · C#',
     description: 'Windows Forms-based BlackJack simulator implementing game logic, probability modeling, and interactive GUI design for a controlled user environment.',
     link: 'https://github.com/tamara-kostova/BlackJack',
+    image: '/assets/img/blackjack.png',
   },
 ];
 
@@ -255,11 +265,28 @@ const SectionLabel = ({ index, label }) => (
 const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActiveSection(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: '-30% 0px -60% 0px' }
+    );
+    navLinks.forEach(({ href }) => {
+      const el = document.querySelector(href);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -274,7 +301,7 @@ const Nav = () => {
           {navLinks.map(({ href, text }) => (
             <a key={href} href={href}
               onClick={e => { e.preventDefault(); scrollTo(href); }}
-              className="text-subtle hover:text-signal transition-colors">
+              className={`transition-colors ${activeSection === href ? 'text-signal' : 'text-subtle hover:text-signal'}`}>
               {text}
             </a>
           ))}
@@ -282,11 +309,11 @@ const Nav = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-1">
-          <a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaGithub size={16} /></a>
-          <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaLinkedin size={16} /></a>
+          <a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" aria-label="GitHub" className="p-2 text-subtle hover:text-signal transition-colors"><FaGithub size={16} /></a>
+          <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="p-2 text-subtle hover:text-signal transition-colors"><FaLinkedin size={16} /></a>
         </div>
 
-        <button onClick={() => setMobileOpen(p => !p)} className="md:hidden p-2 text-subtle hover:text-signal transition-colors">
+        <button onClick={() => setMobileOpen(p => !p)} aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen} className="md:hidden p-2 text-subtle hover:text-signal transition-colors">
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
@@ -308,9 +335,9 @@ const Nav = () => {
             </Link>
           </div>
           <div className="flex gap-2 pt-6">
-            <a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaGithub size={16} /></a>
-            <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaLinkedin size={16} /></a>
-            <a href="mailto:tamarakostova.bt@gmail.com" className="p-2 text-subtle hover:text-signal transition-colors"><Mail size={16} /></a>
+            <a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" aria-label="GitHub" className="p-2 text-subtle hover:text-signal transition-colors"><FaGithub size={16} /></a>
+            <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="p-2 text-subtle hover:text-signal transition-colors"><FaLinkedin size={16} /></a>
+            <a href="mailto:tamarakostova.bt@gmail.com" aria-label="Email" className="p-2 text-subtle hover:text-signal transition-colors"><Mail size={16} /></a>
           </div>
         </div>
       )}
@@ -477,58 +504,91 @@ const ExperienceSection = () => (
   </section>
 );
 
-const ProjectsSection = () => (
-  <section id="projects" className="relative py-32 px-6 lg:px-10 border-t border-bone/10">
-    <div className="max-w-[1400px] mx-auto">
-      <SectionLabel index="02 -" label="Selected projects" />
-      <div className="flex items-end justify-between mb-16 flex-wrap gap-6">
-        <h2 className="font-display text-5xl md:text-7xl leading-[0.95] max-w-2xl text-bone">
-          Things I've <em className="text-signal">built</em>,<br />
-          (broken :)) and<br />rebuilt.
-        </h2>
-        <div className="font-mono text-xs uppercase tracking-[0.22em] text-subtle">
-          {String(projectsData.length).padStart(2, '0')} entries · v1.0
+const ProjectsSection = () => {
+  const [hoveredImage, setHoveredImage] = useState(null);
+  const reducedMotion = useReducedMotion();
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const previewX = useSpring(mouseX, { stiffness: 260, damping: 28, mass: 0.6 });
+  const previewY = useSpring(mouseY, { stiffness: 260, damping: 28, mass: 0.6 });
+
+  const onMouseMove = e => {
+    mouseX.set(e.clientX + 28);
+    mouseY.set(e.clientY - 110);
+  };
+
+  return (
+    <section id="projects" className="relative py-32 px-6 lg:px-10 border-t border-bone/10">
+      <div className="max-w-[1400px] mx-auto">
+        <SectionLabel index="02 -" label="Selected projects" />
+        <div className="flex items-end justify-between mb-16 flex-wrap gap-6">
+          <h2 className="font-display text-5xl md:text-7xl leading-[0.95] max-w-2xl text-bone">
+            Things I've <em className="text-signal">built</em>,<br />
+            (broken :)) and<br />rebuilt.
+          </h2>
+          <div className="font-mono text-xs uppercase tracking-[0.22em] text-subtle">
+            {String(projectsData.length).padStart(2, '0')} entries · v1.0
+          </div>
+        </div>
+
+        {!reducedMotion && (
+          <motion.div
+            style={{ x: previewX, y: previewY }}
+            className="pointer-events-none fixed top-0 left-0 z-40 hidden lg:block"
+            aria-hidden="true"
+          >
+            {projectsData.filter(p => p.image).map(p => (
+              <img
+                key={p.title}
+                src={p.image}
+                alt=""
+                loading="lazy"
+                className={`absolute top-0 left-0 w-80 max-h-56 object-cover object-top border border-bone/20 rounded-sm shadow-2xl shadow-ink/80 transition-all duration-200 ${hoveredImage === p.image ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+              />
+            ))}
+          </motion.div>
+        )}
+
+        <div className="border-t border-bone/10" onMouseMove={onMouseMove} onMouseLeave={() => setHoveredImage(null)}>
+          {projectsData.map((p, i) => (
+            <motion.a
+              key={p.title}
+              href={p.link}
+              target="_blank"
+              rel="noreferrer"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5 }}
+              onMouseEnter={() => setHoveredImage(p.image || null)}
+              className="group relative grid grid-cols-12 gap-4 items-start py-8 border-b border-bone/10 hover:bg-bone/[0.02] transition-colors px-2 -mx-2"
+            >
+              <div className="col-span-1 font-mono text-xs text-subtle pt-2">
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <div className="col-span-11 md:col-span-4">
+                <h3 className="font-display text-3xl md:text-4xl leading-tight text-bone group-hover:text-signal transition-colors">
+                  {p.title}
+                </h3>
+                {p.tag && (
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal/70 mt-2">{p.tag}</div>
+                )}
+              </div>
+              <div className="col-span-12 md:col-span-6 text-bone/65 leading-relaxed">
+                {p.description}
+              </div>
+              <div className="col-span-12 md:col-span-1 flex md:justify-end">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-bone/10 group-hover:border-signal group-hover:bg-signal group-hover:text-ink text-bone/60 transition-all shrink-0">
+                  <ArrowUpRight className="w-4 h-4" />
+                </span>
+              </div>
+            </motion.a>
+          ))}
         </div>
       </div>
-
-      <div className="border-t border-bone/10">
-        {projectsData.map((p, i) => (
-          <motion.a
-            key={p.title}
-            href={p.link}
-            target="_blank"
-            rel="noreferrer"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.5 }}
-            className="group relative grid grid-cols-12 gap-4 items-start py-8 border-b border-bone/10 hover:bg-bone/[0.02] transition-colors px-2 -mx-2"
-          >
-            <div className="col-span-1 font-mono text-xs text-subtle pt-2">
-              {String(i + 1).padStart(2, '0')}
-            </div>
-            <div className="col-span-11 md:col-span-4">
-              <h3 className="font-display text-3xl md:text-4xl leading-tight text-bone group-hover:text-signal transition-colors">
-                {p.title}
-              </h3>
-              {p.tag && (
-                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal/70 mt-2">{p.tag}</div>
-              )}
-            </div>
-            <div className="col-span-12 md:col-span-6 text-bone/65 leading-relaxed">
-              {p.description}
-            </div>
-            <div className="col-span-12 md:col-span-1 flex md:justify-end">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-bone/10 group-hover:border-signal group-hover:bg-signal group-hover:text-ink text-bone/60 transition-all shrink-0">
-                <ArrowUpRight className="w-4 h-4" />
-              </span>
-            </div>
-          </motion.a>
-        ))}
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const StackSection = () => (
   <section id="stack" className="relative py-32 px-6 lg:px-10 border-t border-bone/10">
@@ -651,7 +711,7 @@ const ResearchSection = () => (
             <article key={i} className="p-6 border border-bone/10 rounded-sm hover:border-signal/50 transition-colors">
               <h3 className="font-display text-xl md:text-2xl leading-tight mb-3 text-bone">"{pub.title}"</h3>
               <p className="text-signal font-mono text-xs mb-2">→ {pub.conference}</p>
-              <p className="text-sm text-bone/55 font-mono">{pub.published}</p>
+              <p className="text-sm text-bone/65 font-mono">{pub.published}</p>
             </article>
           ))}
 
@@ -675,7 +735,7 @@ const ResearchSection = () => (
                 <div className="col-span-2 font-mono text-signal text-sm">{conf.year}</div>
                 <div className="col-span-7">
                   <div className="font-display text-lg leading-tight text-bone">{conf.name}</div>
-                  <div className="text-xs text-bone/50 font-mono mt-0.5">{conf.fullName}</div>
+                  <div className="text-xs text-bone/65 font-mono mt-0.5">{conf.fullName}</div>
                 </div>
                 <div className="col-span-3 text-right font-mono text-[10px] uppercase tracking-[0.18em] text-subtle">{conf.location}</div>
               </div>
@@ -704,7 +764,7 @@ const ContactSection = () => (
           </h2>
         </div>
         <div className="col-span-12 md:col-span-4 md:text-right">
-          <p className="text-bone/60 mb-6">I'd lvoe to get in touch. Feel free to reach out!</p>
+          <p className="text-bone/60 mb-6">My inbox is open. Feel free to reach out!</p>
           <a href="mailto:tamarakostova.bt@gmail.com"
             className="font-display italic text-3xl md:text-4xl text-signal hover:underline underline-offset-4 break-all">
             tamarakostova.bt<br />@gmail.com

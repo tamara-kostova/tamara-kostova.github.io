@@ -45,6 +45,12 @@
   button {
     cursor: pointer;
   }
+
+  :focus-visible {
+    outline: 2px solid #F3A712;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
 }
 
 @layer utilities {
@@ -78,4 +84,16 @@
 @keyframes ticker {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker,
+  .cursor-blink,
+  .animate-pulse {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }

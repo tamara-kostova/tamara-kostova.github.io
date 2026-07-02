@@ -65,9 +65,9 @@ const About = () => (
           <ArrowLeft className="w-4 h-4" /> Back to index
         </Link>
         <div className="flex gap-1">
-          <a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaGithub size={16} /></a>
-          <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" className="p-2 text-subtle hover:text-signal transition-colors"><FaLinkedin size={16} /></a>
-          <a href="mailto:tamarakostova.bt@gmail.com" className="p-2 text-subtle hover:text-signal transition-colors"><Mail size={16} /></a>
+          <a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" aria-label="GitHub" className="p-2 text-subtle hover:text-signal transition-colors"><FaGithub size={16} /></a>
+          <a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="p-2 text-subtle hover:text-signal transition-colors"><FaLinkedin size={16} /></a>
+          <a href="mailto:tamarakostova.bt@gmail.com" aria-label="Email" className="p-2 text-subtle hover:text-signal transition-colors"><Mail size={16} /></a>
         </div>
       </div>
     </header>
