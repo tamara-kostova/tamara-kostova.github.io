@@ -198,9 +198,19 @@ const certificationsData = [
 
 const publicationsData = [
   {
+    title: 'Evaluating SAM3 and MedGemma for Brain Tumor MRI: Zero-Shot Segmentation, Linear Probing, and Multimodal Diagnosis',
+    conference: 'Accepted & Presented - DeLTA 2026, Porto',
+    published: 'To appear in DeLTA 2026 Conference Proceedings',
+    award: {
+      text: 'Best Student Paper Award - DeLTA International Conference 2026',
+      link: 'https://delta.scitevents.org/PreviousAwards.aspx#2026',
+    },
+  },
+  {
     title: 'Optimizing Visual Feature Extraction in Multimodal Transformers for Neuroimaging Classification',
     conference: 'Accepted & Presented - MIPRO 2026, Opatija',
-    published: 'To appear in MIPRO 2026 Conference Proceedings / IEEE Xplore Digital Library',
+    published: 'Published in MIPRO 2026 Conference Proceedings / IEEE Xplore Digital Library',
+    link: 'https://ieeexplore.ieee.org/abstract/document/11591941',
   },
   {
     title: 'Application of Large Language Models for Summarization of Medical Papers',
@@ -218,6 +228,7 @@ const blogData = [
 ];
 
 const conferencesData = [
+  { name: 'DeLTA 2026', fullName: 'DeLTA', location: 'Porto, Portugal', year: '2026' },
   { name: 'MIPRO 2026', fullName: 'MIPRO', location: 'Opatija, Croatia', year: '2026' },
   { name: 'ICT Innovations 2025', fullName: 'ICT Innovations conference', location: 'Ohrid, Macedonia', year: '2025' },
   { name: 'KSER 2024', fullName: 'Kongres Studenata Elektrotehnike i Računarstva', location: 'Zlatibor, Serbia', year: '2024' },
@@ -712,6 +723,20 @@ const ResearchSection = () => (
               <h3 className="font-display text-xl md:text-2xl leading-tight mb-3 text-bone">"{pub.title}"</h3>
               <p className="text-signal font-mono text-xs mb-2">→ {pub.conference}</p>
               <p className="text-sm text-bone/65 font-mono">{pub.published}</p>
+              {pub.award && (
+                <a href={pub.award.link} target="_blank" rel="noreferrer"
+                  className="group mt-4 inline-flex items-center gap-2 px-3 py-1.5 border border-signal/40 rounded-sm text-signal hover:bg-signal/10 transition-colors">
+                  <span className="font-mono text-xs">{pub.award.text}</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </a>
+              )}
+              {pub.link && (
+                <a href={pub.link} target="_blank" rel="noreferrer"
+                  className="group mt-4 inline-flex items-center gap-2 px-3 py-1.5 border border-bone/10 rounded-sm text-bone/70 hover:border-signal hover:text-signal transition-colors">
+                  <span className="font-mono text-xs">View on IEEE Xplore</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </a>
+              )}
             </article>
           ))}
 
