@@ -200,7 +200,7 @@ const publicationsData = [
   {
     title: 'Evaluating SAM3 and MedGemma for Brain Tumor MRI: Zero-Shot Segmentation, Linear Probing, and Multimodal Diagnosis',
     conference: 'Accepted & Presented - DeLTA 2026, Porto',
-    published: 'To appear in DeLTA 2026 Conference Proceedings',
+    published: 'To appear in DeLTA 2026 Conference Proceedings, Springer CCIS Series',
     award: {
       text: 'Best Student Paper Award - DeLTA International Conference 2026',
       link: 'https://delta.scitevents.org/PreviousAwards.aspx#2026',
