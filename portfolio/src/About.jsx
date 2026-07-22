@@ -8,12 +8,12 @@ const outsideItems = [
   {
     emoji: '⛰️',
     label: 'Hiking',
-    description: "Somewhere in the mountains is where I actually decompress. Macedonia has nature and trails that most people don't know exist - I try to make the most of that.",
+    description: "Somewhere in the mountains is where I actually switch off. Macedonia has nature and trails that most people don't know exist and I try to make the most of that.",
   },
   {
     emoji: '🏃',
     label: 'Running',
-    description: 'From time to time. Not fast - just a reliable way to clear the head before or after a long day of thinking in code.',
+    description: 'From time to time. Not fast, but it\'s a reliable way to clear the head before or after a long day of thinking in code.',
   },
   {
     emoji: '⛷️',
@@ -28,7 +28,12 @@ const outsideItems = [
   {
     emoji: '🏕️',
     label: 'Camping',
-    description: "I love being outside properly - no signal, sleeping under stars, waking up cold. It resets something that a weekend at home doesn't.",
+    description: "I love being outside properly. No signal, sleeping under stars, waking up cold. It resets something that a weekend at home doesn't.",
+  },
+  {
+    emoji: '✈️',
+    label: 'Travelling',
+    description: "Any excuse to see a new place. Different food, different pace, and enough distance from routine to actually notice things.",
   },
 ];
 
@@ -109,9 +114,8 @@ const About = () => (
 
     <section className="py-10">
       <div className="max-w-3xl mx-auto px-6">
-        <div className="relative p-6 md:p-8 border border-dashed border-signal/40 rounded-sm bg-signal/[0.03]">
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
+        <div className="relative p-6 md:p-8 border border-bone/10 rounded-sm hover:border-signal/50 transition-colors">
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-signal mb-3">
             currently building
           </div>
           <h3 className="font-display text-2xl md:text-3xl mb-3 text-bone">{currentProject.title}</h3>
@@ -158,7 +162,7 @@ const About = () => (
     <Section num="03 -" label="On learning">
       <Heading>On learning<span className="text-signal">.</span></Heading>
       <div className="space-y-4 text-lg text-bone/80 leading-relaxed">
-        <p>I genuinely enjoy learning - not in a LinkedIn-caption way, but in the sense that finding out how something works is its own reward for me. That's probably why getting the Bachelor's degree did not mean the end of the education course for me, alongside having a full-time job. It's also why I entered hackathons and competitions all throughout primary and high school and continued in university: not for the prizes (though winning them brings great satisfaction as well), but because constrained problems force you to learn fast.</p>
+        <p>I genuinely enjoy learning. Finding out how something works is its own reward for me. That's probably why getting the Bachelor's degree did not mean the end of the education course for me, alongside having a full-time job. It's also why I entered hackathons and competitions all throughout primary and high school and continued in university: not for the prizes (though winning them brings great satisfaction as well), but because constrained problems force you to learn fast.</p>
         <p>The things I'm most interested in right now are at the intersection of ML and medicine - where the stakes make the accuracy numbers mean something real. And multi-agent systems, because I think we're still in the early innings of figuring out how to make them reliable.</p>
       </div>
     </Section>
@@ -166,9 +170,9 @@ const About = () => (
     <Section num="04 -" label="Where I'm from">
       <Heading>Where I'm from<span className="text-signal">.</span></Heading>
       <div className="space-y-4 text-lg text-bone/80 leading-relaxed">
-        <p>I grew up in Bitola - a city in the south of Macedonia that most people have never heard of but once they visit it, they certainly find it as one of the most beautiful towns they've seen. It's a small city with Roman ruins in the middle of it (Heraclea Lyncestis, if you want to look it up), a long main street where everyone seems to know everyone, and a pace of life that's genuinely one of a kind.</p>
-        <p>I did my first competitions there - mathematics, physics, informatics. The teachers who pushed me were from Bitola. The habits that got me through university and are still with me were formed there.</p>
-        <p>Pelister National Park is right next to the city. That's partly why hiking became a thing for me - it was the obvious weekend option growing up. I still go back when I can.</p>
+        <p>I grew up in Bitola, a city in the south of Macedonia that most people have never heard of but once they visit it, they certainly find it as one of the most beautiful towns they've seen. It's a small city with Roman ruins in the middle of it (Heraclea Lyncestis, if you want to look it up), a long main street where everyone seems to know everyone, and a pace of life that's genuinely one of a kind.</p>
+        <p>I did my first competitions there (mathematics, physics, informatics). The teachers who pushed me were from Bitola. The habits that got me through university and are still with me were formed there.</p>
+        <p>Pelister National Park is right next to the city. That's partly why hiking became a thing for me since it was the obvious weekend option growing up. I still go back as often and as much as I can.</p>
       </div>
     </Section>
 

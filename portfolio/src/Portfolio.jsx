@@ -51,21 +51,21 @@ const projectsData = [
   {
     title: 'Quick Chef',
     tag: 'RAG · MCP',
-    description: 'AI culinary platform using RAG and MCP to generate personalised recipes based on what you actually have and what you can actually eat. Built to explore MCP in a context where tool-calling makes genuine UX sense - ingredient substitution is a retrieval problem dressed up as cooking advice.',
+    description: 'AI culinary platform using RAG and MCP to generate personalised recipes based on what you actually have and what you can actually eat. Built to explore MCP in a context where tool-calling makes genuine UX sense. Ingredient substitution is a retrieval problem dressed up as cooking advice.',
     link: 'https://github.com/tamara-kostova/QuickChef',
     image: '/assets/img/quickchef.png',
   },
   {
     title: 'LangGraph Helper Agent',
     tag: 'LLM Agent · LangChain',
-    description: 'AI coding assistant for LangGraph and LangChain developers. Answers API questions, generates graph boilerplate, and explains constructs - built because the official docs are dense and I kept getting the same questions wrong before I understood the framework well enough.',
+    description: 'AI coding assistant for LangGraph and LangChain developers. Answers API questions, generates graph boilerplate, and explains constructs.',
     link: 'https://github.com/tamara-kostova/LangGraph-Helper-Agent',
     image: '/assets/img/langgraph.png',
   },
   {
     title: 'Hybrid RAG for Medical Literature',
     tag: 'Research · RAG',
-    description: "Built for Alzheimer's research at the Macedonian Academy - combines BM25 keyword search, dense embeddings, and knowledge graphs to retrieve relevant neurology papers. The hybrid approach consistently outperformed any single retrieval method on specialist queries where terminology matters.",
+    description: "Built for Alzheimer's research at the Macedonian Academy. Combines BM25 keyword search, dense embeddings, and knowledge graphs to retrieve relevant neurology papers. The hybrid approach consistently outperformed any single retrieval method on specialist queries where terminology matters.",
     link: 'https://github.com/tamara-kostova/HybridRAG',
     image: '/assets/img/hybridrag.png',
   },
@@ -79,28 +79,28 @@ const projectsData = [
   {
     title: 'Bitcoin Price Prediction',
     tag: 'Time Series · ML',
-    description: 'Time-series forecasting on cryptocurrency prices using both classical ML and deep learning. The interesting challenge is feature engineering for a signal with genuine non-stationarity - compared multiple architectures and built evaluation pipelines for high-volatility financial data.',
+    description: 'Time-series forecasting on cryptocurrency prices using both classical ML and deep learning. The interesting challenge is feature engineering for a signal with genuine non-stationarity. Compared multiple architectures and built evaluation pipelines for high-volatility financial data.',
     link: 'https://github.com/tamara-kostova/BitcoinPrediction-ML',
     image: '/assets/img/bitcoin.png',
   },
   {
     title: 'EEG Seizure Prediction',
     tag: 'Neuroscience · ML',
-    description: 'ML pipeline for epileptic seizure prediction from EEG signals. Signal processing, feature extraction, and classification to identify pre-ictal brain activity - at the intersection of neuroscience and applied ML.',
+    description: 'ML pipeline for epileptic seizure prediction from EEG signals. Signal processing, feature extraction, and classification to identify pre-ictal brain activity.',
     link: 'https://github.com/tamara-kostova/EEG-epilepsy-seizure-prediction',
     image: '/assets/img/eeg.png',
   },
   {
     title: 'AI Football',
     tag: 'RL · RoboMac 2023',
-    description: "Reinforcement learning simulation where agents learn football strategy from scratch. Placed 2nd at RoboMac 2023. The interesting part wasn't the win - it was watching coordination emerge between agents that were only optimising individual reward.",
+    description: "Reinforcement learning simulation where agents learn football strategy from scratch. Placed 2nd at RoboMac 2023.",
     link: 'https://github.com/tamara-kostova/RoboMac2023_AIFootball',
     image: '/assets/img/robomac.jpg',
   },
   {
     title: 'ecoGrad',
     tag: 'Hackathon · Web',
-    description: "Sustainable lifestyle web app built in 48 hours for the ITLabs hackathon. Won 3rd Prize. A good example of what I can ship fast when the problem is well-defined - not every project needs six months.",
+    description: "Sustainable lifestyle web app built in 48 hours for the ITLabs hackathon. Won 3rd Prize. A good example of how a team can ship fast when they organize well and work together.",
     link: 'https://github.com/tamara-kostova/ecoGrad',
     image: '/assets/img/ecoGrad.jpg',
   },
@@ -131,19 +131,19 @@ const experienceData = [
     title: 'Software Engineer',
     company: 'ITQuarks, Skopje',
     date: '10/2024 – Present',
-    description: 'Currently building a multi-agent AI platform for document understanding and compliance automation - structured extraction, policy validation, and auditable decision routing through a pipeline I designed end-to-end. Before that, led backend development for an AI investing platform (iOS & Android): a Strands Agents orchestrator that monitors portfolios in the background and sends personalised insights without the user having to ask. Dynamic significance thresholds filter out noise before anything reaches the user.',
+    description: 'Currently building a multi-agent AI platform for document understanding and compliance automation - structured extraction, policy validation, and decision routing through a pipeline designed end-to-end. Before that, led backend development for an AI investing platform (iOS & Android): a Strands Agents orchestrator that monitors portfolios in the background and sends personalised insights without the user having to ask. Dynamic significance thresholds filter out noise before anything reaches the user.',
   },
   {
     title: 'Machine Learning Intern',
     company: 'ITQuarks, Skopje',
     date: '07/2024 – 09/2024',
-    description: 'Built RAG pipelines to process thousands of market analysis articles for automated trading content. Automated multilingual content generation and translation for unique content across dozens of WordPress sites - saving significant manual effort.',
+    description: 'Built RAG pipelines to process thousands of market analysis articles for automated trading content. Automated multilingual content generation and translation for unique content across dozens of WordPress sites. Saved significant manual effort.',
   },
   {
     title: 'Student Researcher',
     company: 'Macedonian Academy of Sciences and Arts',
     date: '09/2024 – 04/2025',
-    description: "Developed a hybrid RAG system for deep retrieval over neurology medical papers - combining lexical (BM25), semantic (dense embeddings), and graph-based retrieval because each method alone left gaps the others could fill. This was my first serious exposure to the gap between 'RAG works in a demo' and 'RAG works on specialist literature.'",
+    description: "Developed a hybrid RAG system for deep retrieval over neurology medical papers - combining lexical (BM25), semantic (dense embeddings), and graph-based retrieval because each method alone left gaps the others could fill.",
   },
   {
     title: 'Software Engineering Intern',
@@ -237,7 +237,7 @@ const conferencesData = [
 
 const currentProject = {
   title: 'Multi-Agent Neuroimaging Classifier',
-  description: 'LangGraph pipeline for automated classification of brain tumour, multiple sclerosis, and stroke from MRI/CT scans - combining a MedGemma triage agent, task-specific CNNs, SAM3 segmentation, and BiomedCLIP zero-shot re-ranking into a single auditable graph.',
+  description: 'LangGraph pipeline for automated classification of brain tumour, multiple sclerosis, and stroke from MRI/CT scans. Combining a MedGemma triage agent, task-specific CNNs, SAM3 segmentation, and BiomedCLIP zero-shot re-ranking into a single graph workflow.',
   stack: ['LangGraph', 'MedGemma', 'VGG16 / DenseNet / ResNet', 'SAM3', 'BiomedCLIP'],
   link: 'https://github.com/tamara-kostova/MultiAgentMedClassifier',
 };
@@ -372,19 +372,19 @@ const HeroSection = () => {
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 font-mono text-[10px] uppercase tracking-[0.2em] text-subtle mb-20 md:mb-32">
           <div>
-            <div className="text-bone/40 mb-1">/ status</div>
+            <div className="text-bone/40 mb-1">/ focus</div>
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
-              shipping
+              AI Systems & Research
             </div>
           </div>
           <div>
             <div className="text-bone/40 mb-1">/ location</div>
-            <div>Skopje · 41.99°N</div>
+            <div>Skopje</div>
           </div>
           <div>
-            <div className="text-bone/40 mb-1">/ local time</div>
-            <div>{clock}</div>
+            <div className="text-bone/40 mb-1">/ education</div>
+            <div>MSc Data Science</div>
           </div>
           <div>
             <div className="text-bone/40 mb-1">/ role</div>
@@ -466,7 +466,7 @@ const HeroSection = () => {
         <div className="ticker flex gap-12 whitespace-nowrap font-display text-3xl md:text-4xl">
           {Array.from({ length: 2 }).map((_, dup) => (
             <div key={dup} className="flex gap-12 items-center shrink-0">
-              {['Multi-agent orchestration', '★', 'Hybrid RAG', '★', 'Neuroimaging classification', '★', 'LangGraph pipelines', '★', 'Production ML inference', '★', 'Auditable AI', '★'].map((w, i) => (
+              {['Multi-agent orchestration', '·', 'Hybrid RAG', '·', 'Neuroimaging classification', '·', 'LangGraph pipelines', '·', 'Production ML inference', '·', 'Auditable AI', '·'].map((w, i) => (
                 <span key={i} className={i % 2 ? 'text-signal' : 'italic text-bone/80'}>{w}</span>
               ))}
             </div>
@@ -487,7 +487,7 @@ const ExperienceSection = () => (
             Work<em className="text-signal">.</em>
           </h2>
           <p className="mt-6 text-bone/60 max-w-xs">
-            Roles where I built things that ended up in production - and a couple of stops along the way.
+            Roles where I built things that ended up in production. And a couple of stops along the way.
           </p>
         </div>
         <div className="col-span-12 md:col-span-8 md:border-l md:border-bone/10 md:pl-10">
