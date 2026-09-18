@@ -7,6 +7,18 @@
   <link rel="alternate icon" type="image/png" href="/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#efe9df" />
+  <script>
+    // Resolve the theme before first paint, otherwise a dark-mode visitor gets a flash of
+    // parchment. An explicit choice wins over the OS preference; ThemeToggle keeps both
+    // the attribute and the stored value in sync from here on.
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('theme'); } catch (e) { /* private mode */ }
+      var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      document.querySelector('meta[name="theme-color"]').content = dark ? '#1c1411' : '#efe9df';
+    })();
+  </script>
   <title>Tamara Kostova - AI Software Engineer</title>
   <meta name="description"
     content="Software engineer building production AI systems - multi-agent platforms, RAG pipelines, neuroimaging classifiers. Based in Skopje." />
@@ -24,6 +36,38 @@
   <meta name="twitter:description"
     content="Software engineer building production AI systems - multi-agent platforms, RAG pipelines, neuroimaging classifiers. Based in Skopje." />
   <meta name="twitter:image" content="https://tamara-kostova.github.io/assets/img/og-card.png" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Tamara Kostova",
+      "url": "https://tamara-kostova.github.io/",
+      "image": "https://tamara-kostova.github.io/assets/img/me-portrait.jpg",
+      "jobTitle": "Software Engineer",
+      "email": "mailto:tamarakostova.bt@gmail.com",
+      "worksFor": { "@type": "Organization", "name": "ITQuarks" },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Faculty of Computer Science and Engineering, Ss. Cyril and Methodius University"
+      },
+      "address": { "@type": "PostalAddress", "addressLocality": "Skopje", "addressCountry": "MK" },
+      "knowsAbout": ["Multi-agent systems", "Retrieval-augmented generation", "Medical imaging", "Machine learning"],
+      "sameAs": [
+        "https://github.com/tamara-kostova",
+        "https://www.linkedin.com/in/tamara-kostova/"
+      ]
+    }
+  </script>
+  <script>
+    // 404.html bounces deep links back here as /?redirect=/about — restore the real URL
+    // before React Router reads it. Also catches links to the old /#/about hash routes.
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var target = params.get('redirect');
+      if (!target && window.location.hash.indexOf('#/') === 0) target = window.location.hash.slice(1);
+      if (target) window.history.replaceState(null, '', target);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tamara-kostova.github.io/sitemap.xml

@@ -1,8 +1,15 @@
-# React + Vite
+# tamara-kostova.github.io
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal site — React 18 + Vite, deployed to GitHub Pages.
 
-Currently, two official plugins are available:
+```bash
+npm install
+npm run dev       # dev server with HMR
+npm run build     # production build into dist/
+npm run preview   # serve the built output
+npm run lint
+npm run deploy    # build, then publish dist/ to the gh-pages branch
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Page content lives in the data arrays at the top of `src/Portfolio.jsx` and `src/About.jsx`;
+styling is one hand-written file, `src/index.css`. See `../CLAUDE.md` for the longer tour.

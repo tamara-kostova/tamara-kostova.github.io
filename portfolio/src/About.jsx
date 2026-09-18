@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 
 const outdoors = [
   ['Hiking', "Somewhere in the mountains is where I actually switch off. Macedonia has nature and trails that most people don't know exist and I try to make the most of that."],
@@ -12,7 +13,7 @@ const outdoors = [
 
 const Copy = ({ children }) => <div className="about-copy">{children}</div>;
 const About = () => <div className="about-page">
-  <header className="site-header"><div className="about-shell about-nav"><Link to="/">← Back to the index</Link><div><a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div></div></header>
+  <header className="site-header"><div className="about-shell about-nav"><Link to="/">← Back to the index</Link><div><a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer">LinkedIn ↗</a><ThemeToggle /></div></div></header>
   <main className="about-shell">
     <section className="about-hero"><div className="about-hero-text"><h1><span>The longer</span><i>version.</i></h1><p>Software engineer, researcher, and someone who spends a lot of time in the mountains when not in front of a screen.</p></div><figure className="about-portrait"><img src="/assets/img/me-portrait.jpg" width="640" height="800" alt="Tamara Kostova" /><figcaption>Skopje, 2025</figcaption></figure></section>
     <section className="about-section"><h2>The work</h2><Copy>

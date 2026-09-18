@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaTrophy } from 'react-icons/fa';
+import ThemeToggle from './ThemeToggle';
 
 const projectsData = [
   ['Multi-Agent Medical Classifier', 'Multi Agent · LangGraph · Thesis', 'Three progressively more agentic systems for the same neuroimaging problem: a MedGemma → SAM3 → CNN → BiomedCLIP pipeline, a debate between advocates and a judge, and a forest of specialised agents voting by majority.', 'https://github.com/tamara-kostova/MultiAgentMedClassifier/'],
@@ -11,6 +12,17 @@ const projectsData = [
   ['Quick Chef', 'RAG · MCP', 'AI recipe platform using retrieval and tool calling around available ingredients and dietary constraints.', 'https://github.com/tamara-kostova/QuickChef'],
   ['LangGraph Helper Agent', 'LLM Agent · LangChain', 'Coding assistant for LangGraph and LangChain developers.', 'https://github.com/tamara-kostova/LangGraph-Helper-Agent'],
 ];
+// One mark per featured project, in the same dots-and-edges language as SystemDiagram.
+// Indexes line up with projectsData; `hollow` nodes render as outlines rather than fills.
+const projectGlyphs = [
+  { nodes: { a:[5,4], b:[5,13], c:[5,22], hub:[24,13], out:[39,13] }, edges:[['a','hub'],['b','hub'],['c','hub'],['hub','out']], hollow:['a','b','c'] },
+  { nodes: { s1:[8,3], s2:[8,10], s3:[8,17], s4:[8,24], probe:[37,13] }, edges:[['s1','s2'],['s2','s3'],['s3','s4'],['s2','probe'],['s3','probe']], hollow:['s1','s2','s3','s4'] },
+  { nodes: { k1:[14,3], k2:[4,13], k3:[14,23], k4:[24,13], out:[39,13] }, edges:[['k1','k2'],['k2','k3'],['k3','k4'],['k4','k1'],['k1','k3'],['k4','out']], hollow:['k1','k3'] },
+  { lines:[[4,4,40,4],[4,11,33,11],[4,18,25,18],[4,25,15,25]] },
+  { nodes: { src:[4,13], core:[19,13], t1:[36,4], t2:[40,13], t3:[36,22] }, edges:[['src','core'],['core','t1'],['core','t2'],['core','t3']], hollow:['t1','t2','t3'] },
+  { nodes: { n1:[11,4], n2:[11,22], n3:[27,13], out:[40,13] }, edges:[['n1','n2'],['n2','n3'],['n3','n1'],['n3','out']], hollow:['n2'] },
+];
+
 const moreProjectsData = [
   ['Smart Vitals', 'Time series · Anomaly detection', 'https://github.com/tamara-kostova/Smart-Vitals'],
   ['EEG Seizure Prediction', 'Signal processing · ML', 'https://github.com/tamara-kostova/EEG-epilepsy-seizure-prediction'],
@@ -73,7 +85,6 @@ const systems = [
 
 function Portfolio() {
   const [system, setSystem] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [current, setCurrent] = useState('');
   useEffect(() => {
     const section = document.getElementById('systems');
@@ -82,7 +93,10 @@ function Portfolio() {
     let frame = 0;
     const read = () => {
       frame = 0;
-      setProgress(window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight));
+      // written straight to CSS rather than state: this runs every frame while scrolling,
+      // and re-rendering the whole page for a 3px bar is not worth it
+      const ratio = window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      document.documentElement.style.setProperty('--scroll', String(ratio));
       if (!section) return;
       const rect = section.getBoundingClientRect();
       const span = rect.height - window.innerHeight - lead;
@@ -113,8 +127,8 @@ function Portfolio() {
   };
   return <div className="portfolio-redesign">
     <div className="ambient ambient-one" /><div className="ambient ambient-two" />
-    <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
-    <header className="site-header"><div className="shell nav-shell"><a href="#top" onClick={(event) => scrollToSection(event, 'top')} className="brand">Tamara Kostova</a><nav>{navSections.map(([id, label]) => <a key={id} href={`#${id}`} className={current === id ? 'current' : undefined} aria-current={current === id ? 'true' : undefined} onClick={(event) => scrollToSection(event, id)}>{label}</a>)}<Link to="/about">About</Link></nav><div className="nav-socials"><a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" aria-label="GitHub"><FaGithub /></a><a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><FaLinkedin /></a></div></div></header>
+    <div className="scroll-progress" />
+    <header className="site-header"><div className="shell nav-shell"><a href="#top" onClick={(event) => scrollToSection(event, 'top')} className="brand">Tamara Kostova</a><nav>{navSections.map(([id, label]) => <a key={id} href={`#${id}`} className={current === id ? 'current' : undefined} aria-current={current === id ? 'true' : undefined} onClick={(event) => scrollToSection(event, id)}>{label}</a>)}<Link to="/about">About</Link></nav><div className="nav-socials"><a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" aria-label="GitHub"><FaGithub /></a><a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><FaLinkedin /></a></div><ThemeToggle /></div></header>
     <main id="top">
       <section className="hero shell"><span className="hero-eyebrow">I build</span><h1><span>AI systems</span><span>that do</span><i>real work</i></h1><div className="hero-bottom"><p>Multi-agent systems, medical AI pipelines and RAG. <br />Research prototypes through to software running in production.<br />Software engineer at ITQuarks, MSc Data Science at FCSE.</p><div className="hero-links"><a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="mailto:tamarakostova.bt@gmail.com">Email ↗</a></div></div></section>
       <section id="systems" className="systems">
@@ -133,7 +147,7 @@ function Portfolio() {
         </div>
       </section>
       <section id="work" className="shell split-section"><aside><h2>Work</h2><p>Production systems, research, and the internships that led there.</p></aside><div className="list">{experienceData.map(([title, company, date, description]) => <article key={title}><header><h3>{title}</h3><time>{date}</time></header><div className="accent">{company}</div><p>{description}</p></article>)}</div></section>
-      <section id="projects" className="shell projects"><div className="section-heading"><h2>Projects</h2><span className="kicker">Selected work first — everything else below</span></div><div className="project-list">{projectsData.map(([title, tag, description, link], i) => <a href={link} target="_blank" rel="noreferrer" key={title}><small>{String(i + 1).padStart(2, '0')}</small><div><h3>{title}</h3><span className="tag">{tag}</span></div><p>{description}</p><b>↗</b></a>)}</div><div className="more-projects"><span className="more-projects-label">Other Projects:</span><div className="more-projects-list">{moreProjectsData.map(([title, tag, link]) => <a href={link} target="_blank" rel="noreferrer" key={title}><span>{title}</span><small>{tag}</small></a>)}</div><a className="more-projects-all" href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer">All on GitHub ↗</a></div></section>
+      <section id="projects" className="shell projects"><div className="section-heading"><h2>Projects</h2><span className="kicker">Selected work first — everything else below</span></div><div className="project-list">{projectsData.map(([title, tag, description, link], i) => <a href={link} target="_blank" rel="noreferrer" key={title}><small>{String(i + 1).padStart(2, '0')}</small><ProjectGlyph index={i} /><div><h3>{title}</h3><span className="tag">{tag}</span></div><p>{description}</p><b>↗</b></a>)}</div><div className="more-projects"><span className="more-projects-label">Other Projects:</span><div className="more-projects-list">{moreProjectsData.map(([title, tag, link]) => <a href={link} target="_blank" rel="noreferrer" key={title}><span>{title}</span><small>{tag}</small></a>)}</div><a className="more-projects-all" href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer">All on GitHub ↗</a></div></section>
       <section id="stack" className="shell skills-section"><div className="skills-intro"><h2>The tools<br /><i>I reach for.</i></h2><p>Languages, frameworks, infrastructure, and the building blocks behind the systems above.</p></div><div className="skill-groups">{skillGroups.map(([group, items]) => <div className="skill-group" key={group}><h3>{group}</h3><div>{items.map((item) => <span key={item}>{item}</span>)}</div></div>)}</div></section>
       <section id="research" className="shell research"><h2>Research &amp; writing</h2><div className="research-grid"><div className="publication-list">{publicationsData.map(([title, conference, published, link, award]) => <article key={title}>{award && <span className="award">{award}</span>}<h3>{title}</h3><p>{conference}. {published}</p><a href={link} target="_blank" rel="noreferrer">Read the paper ↗</a></article>)}</div><div className="conferences"><span className="conferences-label">Presented at</span>{[['2026','DeLTA','Porto, PT'],['2026','MIPRO','Opatija, HR'],['2025','ICT Innovations','Ohrid, MK'],['2024','KSER','Zlatibor, RS'],['2024','Science@FEIT','Skopje, MK']].map(row => <div key={row[1]}><span>{row[0]}</span><b>{row[1]}</b><small>{row[2]}</small></div>)}<span className="conferences-label">Writing</span><a href="https://www.itquarks.com/post/advisory-2-0-ai-investing-stack-that-requests-its-own-tools" target="_blank" rel="noreferrer">Advisory 2.0: AI Investing Stack That Requests Its Own Tools <span>ITQuarks Blog ↗</span></a></div></div></section>
       <section id="education" className="shell split-section education"><aside><h2>Education</h2><p>Top student at FCSE four years running, all with a GPA above 9.5.</p></aside><div className="list">{educationData.map(({ degree, school, date, gpa, courses, awards }) => <article key={degree}><header><h3>{degree}</h3><time>{date}</time></header><div className="accent">{school}</div>{gpa && <div className="gpa"><b>GPA {gpa}</b></div>}{courses && <p className="courses">{courses}</p>}{awards && <ul className="awards">{awards.map((award) => <li key={award}><FaTrophy /><span>{award}</span></li>)}</ul>}</article>)}<h3 className="certificate-heading">Certifications</h3><a className="certificate" href="https://learn.microsoft.com/api/credentials/share/en-gb/TamaraKostova-0989/1A1288009E6F3DBF?sharingId=BA860F445F708AE9" target="_blank" rel="noreferrer">Azure AI Fundamentals (AI-900) ↗ <span>Microsoft · Sept 2025</span></a></div></section>
@@ -149,6 +163,16 @@ const graphLayouts = [
   { nodes: { scan:[7,30], ag1:[32,6], ag2:[32,22], ag3:[32,38], ag4:[32,54], ag5:[52,14], ag6:[52,46], vote:[74,30], out:[92,30] }, edges:[['scan','ag1'],['scan','ag2'],['scan','ag3'],['scan','ag4'],['scan','ag5'],['scan','ag6'],['ag1','vote'],['ag2','vote'],['ag3','vote'],['ag4','vote'],['ag5','vote'],['ag6','vote'],['vote','out']] },
 ];
 const graphLabels = { scan:'MRI / CT', triage:'MedGemma', seg:'SAM3', cls:'CNN', rank:'BiomedCLIP', judge:'Judge', vote:'Majority', out:'Diagnosis' };
+
+function ProjectGlyph({ index }) {
+  const glyph = projectGlyphs[index];
+  if (!glyph) return null;
+  return <svg className="project-glyph" viewBox="0 0 44 26" aria-hidden="true" focusable="false">
+    {glyph.lines?.map(([x1, y1, x2, y2]) => <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} />)}
+    {glyph.edges?.map(([from, to]) => <line key={`${from}-${to}`} x1={glyph.nodes[from][0]} y1={glyph.nodes[from][1]} x2={glyph.nodes[to][0]} y2={glyph.nodes[to][1]} />)}
+    {glyph.nodes && Object.entries(glyph.nodes).map(([id, [x, y]]) => <circle key={id} cx={x} cy={y} r="2.5" className={glyph.hollow?.includes(id) ? 'hollow' : undefined} />)}
+  </svg>;
+}
 
 function SystemDiagram({ index, name }) {
   const graph = graphLayouts[index];
