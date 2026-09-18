@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Tamara Kostova</title>
+  <script>
+    // GitHub Pages has no server-side rewrite, so a deep link like /about serves this
+    // file. Encode the path into a query string and hand it back to index.html, which
+    // restores the real URL before React Router mounts.
+    var l = window.location;
+    l.replace(l.origin + '/?redirect=' + encodeURIComponent(l.pathname + l.search + l.hash));
+  </script>
+</head>
+
+<body></body>
+
+</html>
