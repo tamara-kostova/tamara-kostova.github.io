@@ -34,7 +34,7 @@ const moreProjectsData = [
   ['BlackJack', 'Windows Forms · Probability', 'https://github.com/tamara-kostova/BlackJack'],
 ];
 const experienceData = [
-  ['Software Engineer', 'ITQuarks, Skopje', '10/2024 – Present', "Right now, I'm building a multi-agent document-understanding and compliance platform: structured extraction, policy validation and auditable decision routing. Also working on an AI-governance certification simulations product. Before that, led backend development for an AI investing platform (iOS & Android) — a Strands Agents orchestrator coordinating market data, financial news and user management agents as callable tools, monitoring portfolios in the background and pushing personalised insights"],
+  ['Software Engineer', 'ITQuarks, Skopje', '10/2024 – Present', "Right now, I'm building a multi-agent document-understanding and compliance platform: structured extraction, policy validation and auditable decision routing. Also working on an AI-governance certification simulations product. Before that, led backend development for an AI investing platform (iOS & Android) — a Strands Agents orchestrator coordinating market data, financial news and user management agents as callable tools, monitoring portfolios in the background and pushing personalised insights."],
   ['Machine Learning Intern', 'ITQuarks, Skopje', '07/2024 – 09/2024', 'Built RAG pipelines to process thousands of market-analysis articles for automated trading content, and automated multilingual content generation and translation across dozens of WordPress sites — saving significant manual effort.'],
   ['Student Researcher', 'Macedonian Academy of Sciences and Arts', '09/2024 – 04/2025', 'Developed a hybrid RAG system for deep retrieval over neurology papers, combining lexical BM25, dense embeddings and knowledge-graph retrieval.'],
   ['Software Engineering Intern', 'MCA.mk, Skopje', '08/2023 – 10/2023', 'Built Angular front-end features integrated with .NET backends, using Entity Framework Core for MSSQL. First experience working on a production codebase as part of an Agile team.'],
@@ -62,15 +62,17 @@ const educationData = [
   },
 ];
 const publicationsData = [
+  ['Role-Diverse Agent Forests for Neuroimaging Triage: When Does Prompt-Induced Role Diversity Help?', 'Accepted – REALM Workshop, EMNLP 2026', 'With Sonja Gievska. To appear in the REALM 2026 Workshop Proceedings', 'https://realm-workshop.github.io/accepted_papers/'],
   ['Evaluating SAM3 and MedGemma for Brain Tumor MRI: Zero-Shot Segmentation, Linear Probing, and Multimodal Diagnosis', 'Accepted & Presented – DeLTA 2026, Porto', 'To appear in DeLTA 2026 Conference Proceedings, Springer CCIS Series', 'https://chatmed-project.eu/wp-content/uploads/2026/08/delta_2026_29_cr.pdf', 'Best Student Paper – DeLTA 2026'],
   ['Optimizing Visual Feature Extraction in Multimodal Transformers for Neuroimaging Classification', 'Accepted & Presented – MIPRO 2026, Opatija', 'Published in MIPRO 2026 Conference Proceedings / IEEE Xplore', 'https://ieeexplore.ieee.org/abstract/document/11591941'],
   ['Application of Large Language Models for Summarization of Medical Papers', 'Accepted & Presented – ICT Innovations 2025, Ohrid', 'To appear in ICT Innovations 2025 Proceedings, Springer CCIS Series', 'https://link.springer.com/book/9783032303202'],
 ];
 const skillGroups = [
-  ['AI / ML', ['RAG Systems', 'Strands Agents', 'LangChain', 'LangGraph', 'Transformers']],
+  ['AI / ML', ['RAG Systems', 'Strands Agents', 'LangChain', 'LangGraph', 'MCP', 'Transformers']],
   ['ML Tooling', ['PyTorch', 'TensorFlow', 'scikit-learn', 'Pandas', 'NumPy']],
-  ['Languages', ['Python', 'Java', 'C++', 'C', 'SQL']],
+  ['Languages', ['Python', 'TypeScript', 'JavaScript', 'Java', 'C++', 'C', 'SQL']],
   ['Backend', ['FastAPI', '.NET', 'Spring Boot', 'REST APIs', 'Django']],
+  ['Frontend', ['Next.js', 'React', 'React Native', 'Tailwind CSS']],
   ['Data & Infra', ['PostgreSQL', 'TimescaleDB', 'Supabase', 'Docker', 'Azure', 'AWS', 'Git']],
 ];
 const navSections = [
