@@ -34,21 +34,41 @@ const moreProjectsData = [
   ['BlackJack', 'Windows Forms · Probability', 'https://github.com/tamara-kostova/BlackJack'],
 ];
 const experienceData = [
-  // a description can be a string or an array of short paragraphs
-  ['Software Engineer', 'ITQuarks, Skopje', '10/2024 – Present', [
-    "Right now, I'm building a multi-agent document-understanding and compliance platform: structured extraction, policy validation and auditable decision routing, deployed on AWS and Azure.",
-    'Alongside it, an AI-governance certification platform that generates personalised courses and board simulations for executives, where I work across backend and frontend.',
-    'Before that, led backend development for an AI investing platform (iOS & Android): a Strands Agents orchestrator coordinating market data, financial news and user management agents as callable tools, monitoring portfolios in the background and pushing personalised insights.',
-  ]],
-  ['Machine Learning Intern', 'ITQuarks, Skopje', '07/2024 – 09/2024', 'Built RAG pipelines to process thousands of market-analysis articles for automated trading content, and automated multilingual content generation and translation across dozens of WordPress sites — saving significant manual effort.'],
-  ['Student Researcher', 'Macedonian Academy of Sciences and Arts', '09/2024 – 04/2025', 'Developed a hybrid RAG system for deep retrieval over neurology papers, combining lexical BM25, dense embeddings and knowledge-graph retrieval.'],
-  ['Software Engineering Intern', 'MCA.mk, Skopje', '08/2023 – 10/2023', 'Built Angular front-end features integrated with .NET backends, using Entity Framework Core for MSSQL. First experience working on a production codebase as part of an Agile team.'],
+  ['Software Engineer', 'ITQuarks, Skopje', '10/2024 – Present'],
+  ['Student Researcher', 'Macedonian Academy of Sciences and Arts, Skopje', '09/2024 – 04/2025'],
+  ['Machine Learning Intern', 'ITQuarks, Skopje', '07/2024 – 09/2024'],
+  ['Software Engineering Intern', 'MCA.mk, Skopje', '08/2023 – 10/2023'],
+];
+const workProjectsData = [
+  { title: 'Document compliance platform', date: '11/2025 – Present', tech: 'Python · FastAPI · LLMs · AWS · Azure · PostgreSQL · Next.js · TypeScript', lead: 'Companies upload documents and get back a compliance report: which criteria are met, with the evidence for each one.', points: [
+    'Built the asynchronous processing pipeline (API Gateway → Lambda → SQS → Fargate worker → PostgreSQL) with Textract OCR for Latin and Cyrillic scans, and the GitHub Actions deployments to AWS and an Azure enterprise environment',
+    'Built a two-pass LLM pipeline that turns a policy PDF into a DMN decision model, so the business rules live as data people can review and edit, not in code',
+    "Linked each criterion's verdict to the page and passage it came from, with a PDF viewer that highlights the evidence",
+  ] },
+  { title: 'AI-governance certification platform', date: '07/2026 – Present', tech: 'Python · FastAPI · Agno · Langfuse · Supabase · React · TypeScript', lead: 'A training platform that generates personalised AI-governance courses and board simulations for executives.', points: [
+    'Backend features for LLM-generated courses: validation and repair of generated content, source grounding for claims, and versioned course editions',
+    'The video pipeline for AI avatar characters, with recovery for failed renders',
+    'Frontend work across the learning screens, and the handoffs with the client and the design team',
+  ] },
+  { title: 'Multi-agent financial advisor app', date: '09/2025 – 04/2026', tech: 'Python · Strands Agents · MCP · Claude and OpenAI models · Docker', lead: 'Led the backend of an iOS and Android advisor: a multi-agent system that answers questions and sends portfolio insights in the background.', points: [
+    'Built the orchestrator: a conversational agent that calls market-data, financial-news, user-management and notification agents, each exposed as an MCP server',
+    'Background jobs that watch portfolios and the news, use an LLM step to judge what is worth sending, and push personalised insights',
+    'Production hardening: streaming and polling APIs, keeping the answer when a client disconnects, recovering from invalid tool calls',
+  ], link: ['Read the design write-up ↗', 'https://www.itquarks.com/post/advisory-2-0-ai-investing-stack-that-requests-its-own-tools'] },
+  { title: 'Writing-style R&D sprint and MVP', date: '05/2026 – 10/2026', tech: 'Python · scikit-learn · spaCy · FastAPI · Next.js · pytest', lead: 'A time-boxed sprint testing whether AI can measurably write in a specific person\'s style, decided by Go/No-Go thresholds agreed up front.', points: [
+    'Built and evaluated the style scorer, persona extraction and best-of-N generation, with frozen data splits and versioned models so results can be reproduced',
+    'Built the MVP web app: auth, billing, a public API and MCP server integration, with tests and CI',
+  ] },
+  { title: 'Earlier', tech: '', lead: '', points: [
+    'An MCP server that gives an agent the database schema, so users can search a vehicle marketplace in plain language',
+    'Internship (2024): RAG pipelines over thousands of market-analysis articles for automated trading content; automated multilingual content generation and translation for dozens of WordPress sites',
+  ] },
 ];
 const educationData = [
   {
     degree: 'MSc Data Science in Computer Science and Engineering',
     school: 'Faculty of Computer Science & Engineering, Skopje',
-    date: '10/2025 – present',
+    date: '10/2025 – Present',
     courses: 'Data Science · Data Engineering · Deep Learning for NLP · Applied Machine Learning · Medical Informatics · Advanced Data Science',
   },
   {
@@ -57,14 +77,20 @@ const educationData = [
     date: '10/2021 – 06/2025',
     gpa: '9.72 / 10',
     courses: 'Algorithms and Data Structures · Web Programming · Databases · Artificial Intelligence · Machine Learning · Deep Learning · Linear Algebra and its Applications · Probability and Statistics · Bioinformatics',
-    awards: ['Top student at FCSE four years running (2022–2025), every year with a GPA above 9.5', '2nd Prize — RoboMac 2023', '3rd Prize — ITLabs Web Development Hackathon 2023', '1st Prize — Global Game Jam 2020'],
   },
   {
     degree: 'High School Diploma',
     school: "Gymnasium 'Josip Broz - Tito', Bitola",
     date: '09/2017 – 06/2021',
-    awards: ['Best student in the generation', '10 national and 20 regional prizes in Mathematics, Physics, Informatics and English', '2 bronze medals at the National Mathematics Olympiad'],
   },
+];
+const awardsData = [
+  ['2022 – 2025', 'Top Student Award, four years running', 'FCSE Skopje, every year with a GPA above 9.5'],
+  ['12/2023', '3rd place', 'ITLabs & BEST Web Development Hackathon · Spring Boot, PostgreSQL, JavaScript'],
+  ['05/2023', '2nd place', 'RoboMac 2023 · Deep Q-learning agent in PyTorch for 3v3 football'],
+  ['2021', 'Best student of the generation', "Gymnasium 'Josip Broz - Tito', Bitola"],
+  ['02/2020', '1st place', 'Global Game Jam · a game built in 48 hours'],
+  ['2017 – 2021', '2 bronze medals', 'National Mathematics Olympiad; 30 prizes in national and regional competitions in mathematics, physics, informatics and English'],
 ];
 const publicationsData = [
   ['Role-Diverse Agent Forests for Neuroimaging Triage: When Does Prompt-Induced Role Diversity Help?', 'Accepted – REALM Workshop, EMNLP 2026', 'With Sonja Gievska. To appear in the REALM 2026 Workshop Proceedings', 'https://realm-workshop.github.io/accepted_papers/'],
@@ -81,8 +107,8 @@ const skillGroups = [
   ['Data & Infra', ['PostgreSQL', 'TimescaleDB', 'Supabase', 'Docker', 'Azure', 'AWS', 'Git']],
 ];
 const navSections = [
-  ['systems', 'Current project'], ['work', 'Work'], ['projects', 'Projects'], ['stack', 'Skills'],
-  ['research', 'Research'], ['education', 'Education'], ['contact', 'Contact'],
+  ['work', 'Work'], ['projects', 'Projects'], ['stack', 'Skills'], ['research', 'Research'],
+  ['education', 'Education'], ['awards', 'Awards'], ['contact', 'Contact'],
 ];
 const systems = [
   ['A', 'Pipeline', 'A direct, auditable path: MedGemma triage → SAM3 lesion segmentation → task-specific CNN → BiomedCLIP re-ranking.', 'Fixed order, nothing to negotiate'],
@@ -138,9 +164,13 @@ function Portfolio() {
     <header className="site-header"><div className="shell nav-shell"><a href="#top" onClick={(event) => scrollToSection(event, 'top')} className="brand">Tamara Kostova</a><nav>{navSections.map(([id, label]) => <a key={id} href={`#${id}`} className={current === id ? 'current' : undefined} aria-current={current === id ? 'true' : undefined} onClick={(event) => scrollToSection(event, id)}>{label}</a>)}<Link to="/about">About</Link></nav><div className="nav-socials"><a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer" aria-label="GitHub"><FaGithub /></a><a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><FaLinkedin /></a></div><ThemeToggle /></div></header>
     <main id="top">
       <section className="hero shell"><span className="hero-eyebrow">I build</span><h1><span>AI systems</span><span>that do</span><i>real work</i></h1><div className="hero-bottom"><p>Multi-agent systems, medical AI pipelines and RAG. <br />Research prototypes through to software running in production.<br />Software engineer at ITQuarks, MSc Data Science at FCSE.</p><div className="hero-links"><a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="mailto:tamarakostova.bt@gmail.com">Email ↗</a></div></div></section>
+      <section id="work" className="shell split-section"><aside><h2>Work</h2></aside><div className="list compact">{experienceData.map(([title, company, date]) => <article key={title}><header><h3>{title}</h3><time>{date}</time></header><div className="accent">{company}</div></article>)}</div></section>
+      <section id="projects" className="shell split-section"><aside><h2>Projects</h2><p>Production systems, and my part in each one.</p></aside><div className="list">{workProjectsData.map(({ title, date, tech, lead, points, link }) => <article key={title}><header><h3>{title}</h3>{date && <time>{date}</time>}</header>{tech && <div className="accent">{tech}</div>}{lead && <p>{lead}</p>}<ul className="points">{points.map((point) => <li key={point}>{point}</li>)}</ul>{link && <a href={link[1]} target="_blank" rel="noreferrer">{link[0]}</a>}</article>)}</div></section>
+      <section id="stack" className="shell skills-section"><div className="skills-intro"><h2>The tools<br /><i>I reach for.</i></h2><p>Languages, frameworks, infrastructure, and the building blocks behind the systems above.</p></div><div className="skill-groups">{skillGroups.map(([group, items]) => <div className="skill-group" key={group}><h3>{group}</h3><div>{items.map((item) => <span key={item}>{item}</span>)}</div></div>)}</div></section>
+      <section id="research" className="research-wrap">
       <section id="systems" className="systems">
         <div className="shell systems-intro">
-          <div className="systems-heading"><span className="kicker">Current project</span><span className="kicker">MSc thesis · FCSE Skopje</span></div>
+          <div className="systems-heading"><span className="kicker">MSc thesis</span><span className="kicker">FCSE Skopje</span></div>
           <h2>One problem,<br /><i>three architectures</i></h2>
           <div className="systems-intro-grid">
             <p>Classify a brain tumour from an MRI scan. Same data, same models with the only thing changing being how much autonomy the arrangement hands the agents: a fixed pipeline, a debate settled by a judge, a forest of independent voters. Building all three is how the thesis measures what agency actually buys you.</p>
@@ -153,18 +183,16 @@ function Portfolio() {
           <div className="systems-grid"><SystemDiagram index={system} name={active[1]} /><div><div className="system-title"><strong>{active[0]}</strong><h3>{active[1]}</h3></div><p>{active[2]}</p><div className="system-actions">{systems.map((item, i) => <button className={i === system ? 'selected' : ''} onClick={() => setSystem(i)} key={item[0]} aria-pressed={i === system} aria-label={`Show system ${item[0]}: ${item[1]}`}>{item[0]}</button>)}<a className="pill" href="https://github.com/tamara-kostova/MultiAgentMedClassifier" target="_blank" rel="noreferrer">Repository ↗</a></div></div></div>
         </div>
       </section>
-      <section id="work" className="shell split-section"><aside><h2>Work</h2><p>Production systems, research, and the internships that led there.</p></aside><div className="list">{experienceData.map(([title, company, date, description]) => <article key={title}><header><h3>{title}</h3><time>{date}</time></header><div className="accent">{company}</div>{[].concat(description).map((text) => <p key={text}>{text}</p>)}</article>)}</div></section>
-      <section id="projects" className="shell projects"><div className="section-heading"><h2>Projects</h2><span className="kicker">Selected work first — everything else below</span></div><div className="project-list">{projectsData.map(([title, tag, description, link], i) => <a href={link} target="_blank" rel="noreferrer" key={title}><small>{String(i + 1).padStart(2, '0')}</small><ProjectGlyph index={i} /><div><h3>{title}</h3><span className="tag">{tag}</span></div><p>{description}</p><b>↗</b></a>)}</div><div className="more-projects"><span className="more-projects-label">Other Projects:</span><div className="more-projects-list">{moreProjectsData.map(([title, tag, link]) => <a href={link} target="_blank" rel="noreferrer" key={title}><span>{title}</span><small>{tag}</small></a>)}</div><a className="more-projects-all" href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer">All on GitHub ↗</a></div></section>
-      <section id="stack" className="shell skills-section"><div className="skills-intro"><h2>The tools<br /><i>I reach for.</i></h2><p>Languages, frameworks, infrastructure, and the building blocks behind the systems above.</p></div><div className="skill-groups">{skillGroups.map(([group, items]) => <div className="skill-group" key={group}><h3>{group}</h3><div>{items.map((item) => <span key={item}>{item}</span>)}</div></div>)}</div></section>
-      <section id="research" className="shell research"><h2>Research &amp; writing</h2><div className="research-grid"><div className="publication-list">{publicationsData.map(([title, conference, published, link, award]) => <article key={title}>{award && <span className="award">{award}</span>}<h3>{title}</h3><p>{conference}. {published}</p><a href={link} target="_blank" rel="noreferrer">Read the paper ↗</a></article>)}</div><div className="conferences"><span className="conferences-label">Presented at</span>{[['2026','DeLTA','Porto, PT'],['2026','MIPRO','Opatija, HR'],['2025','ICT Innovations','Ohrid, MK'],['2024','KSER','Zlatibor, RS'],['2024','Science@FEIT','Skopje, MK']].map(row => <div key={row[1]}><span>{row[0]}</span><b>{row[1]}</b><small>{row[2]}</small></div>)}<span className="conferences-label">Writing</span><a href="https://www.itquarks.com/post/advisory-2-0-ai-investing-stack-that-requests-its-own-tools" target="_blank" rel="noreferrer">Advisory 2.0: AI Investing Stack That Requests Its Own Tools <span>ITQuarks Blog ↗</span></a></div></div></section>
-      <section id="education" className="shell split-section education"><aside><h2>Education</h2><p>BSc and MSc at FCSE Skopje.</p></aside><div className="list">{educationData.map(({ degree, school, date, gpa, courses, awards }) => <article key={degree}><header><h3>{degree}</h3><time>{date}</time></header><div className="accent">{school}</div>{gpa && <div className="gpa"><b>GPA {gpa}</b></div>}{courses && <p className="courses">{courses}</p>}{awards && <ul className="awards">{awards.map((award) => <li key={award}><FaTrophy /><span>{award}</span></li>)}</ul>}</article>)}<h3 className="certificate-heading">Certifications</h3><a className="certificate" href="https://learn.microsoft.com/api/credentials/share/en-gb/TamaraKostova-0989/1A1288009E6F3DBF?sharingId=BA860F445F708AE9" target="_blank" rel="noreferrer">Azure AI Fundamentals (AI-900) ↗ <span>Microsoft · Sept 2025</span></a></div></section>
+      <section className="shell research"><h2>Research &amp; writing</h2><div className="research-grid"><div className="publication-list">{publicationsData.map(([title, conference, published, link, award]) => <article key={title}>{award && <span className="award">{award}</span>}<h3>{title}</h3><p>{conference}. {published}</p><a href={link} target="_blank" rel="noreferrer">Read the paper ↗</a></article>)}</div><div className="conferences"><span className="conferences-label">Presented at</span>{[['2026','DeLTA','Porto, PT'],['2026','MIPRO','Opatija, HR'],['2025','ICT Innovations','Ohrid, MK'],['2024','KSER','Zlatibor, RS'],['2024','Science@FEIT','Skopje, MK']].map(row => <div key={row[1]}><span>{row[0]}</span><b>{row[1]}</b><small>{row[2]}</small></div>)}<span className="conferences-label">Writing</span><a href="https://www.itquarks.com/post/advisory-2-0-ai-investing-stack-that-requests-its-own-tools" target="_blank" rel="noreferrer">Advisory 2.0: AI Investing Stack That Requests Its Own Tools <span>ITQuarks Blog ↗</span></a></div></div><div className="repos"><span className="repos-label">Repositories</span><div className="project-list">{projectsData.map(([title, tag, description, link], i) => <a href={link} target="_blank" rel="noreferrer" key={title}><small>{String(i + 1).padStart(2, '0')}</small><ProjectGlyph index={i} /><div><h3>{title}</h3><span className="tag">{tag}</span></div><p>{description}</p><b>↗</b></a>)}</div><div className="more-projects"><span className="more-projects-label">Other Projects:</span><div className="more-projects-list">{moreProjectsData.map(([title, tag, link]) => <a href={link} target="_blank" rel="noreferrer" key={title}><span>{title}</span><small>{tag}</small></a>)}</div><a className="more-projects-all" href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer">All on GitHub ↗</a></div></div></section>
+      </section>
+      <section id="education" className="shell split-section education"><aside><h2>Education</h2><p>BSc and MSc at FCSE Skopje.</p></aside><div className="list">{educationData.map(({ degree, school, date, gpa, courses }) => <article key={degree}><header><h3>{degree}</h3><time>{date}</time></header><div className="accent">{school}</div>{gpa && <div className="gpa"><b>GPA {gpa}</b></div>}{courses && <p className="courses">{courses}</p>}</article>)}<h3 className="certificate-heading">Certifications</h3><a className="certificate" href="https://learn.microsoft.com/api/credentials/share/en-gb/TamaraKostova-0989/1A1288009E6F3DBF?sharingId=BA860F445F708AE9" target="_blank" rel="noreferrer">Azure AI Fundamentals (AI-900) ↗ <span>Microsoft · Sept 2025</span></a></div></section>
+      <section id="awards" className="shell split-section"><aside><h2>Awards</h2></aside><div className="list compact">{awardsData.map(([date, result, detail]) => <article key={result + date}><header><h3><FaTrophy />{result}</h3><time>{date}</time></header><div className="accent">{detail}</div></article>)}</div></section>
       <section id="contact" className="contact"><div className="shell"><figure className="contact-portrait"><img src="/assets/img/me-full.jpg" width="420" height="630" loading="lazy" alt="Tamara Kostova" /><figcaption>Tamara Kostova<span>Skopje, Macedonia</span></figcaption></figure><div className="contact-main"><h2>Have a hard problem?<br /><i>Let&apos;s talk.</i></h2><a className="email" href="mailto:tamarakostova.bt@gmail.com">tamarakostova.bt@gmail.com</a><div className="contact-links"><a href="https://github.com/tamara-kostova" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/tamara-kostova/" target="_blank" rel="noreferrer">LinkedIn ↗</a><Link to="/about">The longer version →</Link></div></div><footer>© 2026 Tamara Kostova · Skopje</footer></div></section>
     </main>
   </div>;
 }
 export default Portfolio;
 
-// `box` overrides the default viewBox: the pipeline is a single row, so a full-height box would be mostly empty
 const graphLayouts = [
   { box: '0 18 100 28', nodes: { scan:[7,30], triage:[27,30], seg:[47,30], cls:[67,30], rank:[90,30] }, edges:[['scan','triage'],['triage','seg'],['seg','cls'],['cls','rank']] },
   { nodes: { scan:[7,30], cls:[31,8], rank:[31,52], seg:[50,8], triage:[50,52], judge:[72,30], out:[92,30] }, edges:[['scan','cls'],['scan','rank'],['scan','seg'],['seg','judge'],['triage','judge'],['cls','judge'],['rank','judge'],['judge','out']] },
